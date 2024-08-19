@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/item_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/_space4dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/_space16dp"
+            android:paddingStart="@dimen/_space8dp"
+            android:paddingVertical="@dimen/_space12dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/txt_room_name"
+                style="@style/theme_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawablePadding="@dimen/_space12dp"
+                android:text="@string/txt_living_room" />
+
+            <ImageView
+                android:id="@+id/img_show_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginStart="@dimen/_space8dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/baseline_unfold_more_24" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/base_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="?backgroundItemRipple" />
+    </LinearLayout>
+</layout>

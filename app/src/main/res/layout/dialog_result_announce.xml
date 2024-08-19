@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_radius_20"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation_view"
+                android:layout_width="@dimen/_space128dp"
+                android:layout_height="@dimen/_space128dp"
+                android:layout_marginVertical="@dimen/_space16dp"
+                app:lottie_rawRes="@raw/anim_paimon_like"
+                app:lottie_autoPlay="true" />
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/theme_title_text"
+                android:layout_marginBottom="@dimen/space_screen_super_small"
+                android:gravity="center"
+                tools:text="Title" />
+
+            <TextView
+                android:id="@+id/txt_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_screen_normal"
+                style="@style/theme_content_text"
+                android:gravity="center"
+                tools:text="message"
+                android:layout_marginHorizontal="@dimen/_space32dp"/>
+
+<!--            <androidx.appcompat.widget.AppCompatImageView-->
+<!--                android:id="@+id/btn_confirm"-->
+<!--                android:layout_width="@dimen/_space64dp"-->
+<!--                android:layout_height="@dimen/img_size_large"-->
+<!--                android:background="@drawable/bg_next_button"-->
+<!--                android:layout_marginBottom="@dimen/space_screen_normal"-->
+<!--                android:scaleType="centerInside"-->
+<!--                android:src="@drawable/ic_done_light"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_goneMarginTop="@dimen/space_screen_small" />-->
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

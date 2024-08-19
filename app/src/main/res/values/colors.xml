@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="blue">#03A9F4</color>
+    <color name="pink">#FF6096</color>
+    <color name="gray">#E3E3E3</color>
+    <color name="green">#4CAF50</color>
+    <color name="gray_pressing">#B5B5B5</color>
+    <color name="red_error">#F44336</color>
+
+    <color name="bg_loading">#4D000000</color>
+
+    //bottom nav
+    <color name="nav_bg">#54C1D9</color>
+    <color name="nav_icon_tint">#ffffff</color>
+    <color name="nav_text_color">#ffffff</color>
+    <color name="nav_fab_color">#6B79CC</color>
+<!--    <color name="nav_fab_color">#B985FB</color>-->
+
+    //daylight theme color
+    <color name="bg_item_daylight">#F8F8F8</color>
+    <color name="bg_item_ripple_daylight">#CDCDCD</color>
+    <color name="bg_color_daylight">#FFFFFF</color>
+    <color name="bg_header_daylight">#EFFDFF</color>
+    <color name="text_header_color_daylight">#404849</color>
+    <color name="text_normal_color_daylight">#292929</color>
+    <color name="text_hint_color_daylight">#606060</color>
+    <color name="tint_icon_daylight">#222222</color>
+    <color name="color_ripple_daylight">#C5C5C5</color>
+    <color name="accent_color_daylight">#6B79CC</color>
+
+    //darkmode theme color
+    <color name="bg_item_darkmode">#191919</color>
+    <color name="bg_item_ripple_darkmode">#4C4C4C</color>
+    <color name="bg_color_darkmode">#000000</color>
+    <color name="bg_header_darkmode">#565C5C</color>
+    <color name="text_header_color_darkmode">#D3EAED</color>
+    <color name="text_normal_color_darkmode">#AFAFAF</color>
+    <color name="text_hint_color_darkmode">#DADADA</color>
+    <color name="tint_icon_darkmode">#E6E6E6</color>
+    <color name="color_ripple_darkmode">#555555</color>
+    <color name="accent_color_darkmode">#6B79CC</color>
+
+
+
+
+</resources>

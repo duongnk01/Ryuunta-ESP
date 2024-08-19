@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "724916075490",
+    "firebase_url": "https://iot-craft-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "iot-craft",
+    "storage_bucket": "iot-craft.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724916075490:android:13ae2daababbdac987d7bb",
+        "android_client_info": {
+          "package_name": "com.ryuunta.iot.esp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "724916075490-mnsi715i8rm86bqo7eu4feq03pe31o1o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ryuunta.iot.esp",
+            "certificate_hash": "d1bdf2df7d253649f25c3eddd771f6754bfec2bf"
+          }
+        },
+        {
+          "client_id": "724916075490-35mea4n7ol5r4iavj13t82co2e6mj1sv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3nmR10RoyStn5Jfr7OmUkTXM7nXFNliI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724916075490-35mea4n7ol5r4iavj13t82co2e6mj1sv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724916075490:android:604f4eb8a701575887d7bb",
+        "android_client_info": {
+          "package_name": "ryuunta.iot.ryuuntaesp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "724916075490-a3m34u6uhg2uhe90epo50bs81mqbr2ve.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ryuunta.iot.ryuuntaesp",
+            "certificate_hash": "be1d61eab8f031f5c15d418ff4b0785fd6411e09"
+          }
+        },
+        {
+          "client_id": "724916075490-35mea4n7ol5r4iavj13t82co2e6mj1sv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3nmR10RoyStn5Jfr7OmUkTXM7nXFNliI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724916075490-35mea4n7ol5r4iavj13t82co2e6mj1sv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

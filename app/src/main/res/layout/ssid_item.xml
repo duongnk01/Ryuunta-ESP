@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    
+    <data>
+        <variable
+            name="ssid"
+            type="String" />
+        <variable
+            name="rssi"
+            type="Integer" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ln_ssid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_margin="4dp"
+        android:background="@drawable/bg_gray_item_selector"
+        android:orientation="vertical">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{String.format("ssid: %s", ssid)}'
+            tools:text="ssid: {}"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            android:text='@{String.format("rssi = %d", rssi)}'
+            tools:text="rssi = 0"
+            android:textSize="14sp"/>
+    </LinearLayout>
+</layout>

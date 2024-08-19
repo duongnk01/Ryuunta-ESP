@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_home"
+        android:title="@string/title_bottom_nav_home" />
+
+    <item
+        android:id="@+id/notificationFragment"
+        android:icon="@drawable/ic_notification"
+        android:title="@string/title_bottom_nav_noti" />
+
+    <item
+        android:id="@+id/placeholder"
+        android:title="@string/title_bottom_nav_add_dev" />
+
+    <item
+        android:id="@+id/manageFragment"
+        android:icon="@drawable/ic_scenarios"
+        android:title="@string/txt_manage" />
+
+    <item
+        android:id="@+id/userFragment"
+        android:icon="@drawable/ic_user"
+        android:title="@string/title_bottom_nav_user" />
+</menu>

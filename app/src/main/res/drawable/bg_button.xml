@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="?colorRipple">
+    <item>
+        <shape>
+            <solid android:color="?android:selectableItemBackgroundBorderless"/>
+            <corners android:radius="@dimen/_space8dp"/>
+            <padding android:bottom="@dimen/_space4dp"
+                android:left="@dimen/_space4dp"
+                android:right="@dimen/_space4dp"
+                android:top="@dimen/_space4dp"/>
+        </shape>
+
+    </item>
+</ripple>

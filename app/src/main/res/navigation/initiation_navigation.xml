@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/initiation_navigation"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="ryuunta.iot.ryuuntaesp.SplashFragment"
+        android:label="SplashFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        tools:layout="@layout/fragment_splash_screen">
+        <action
+            android:id="@+id/action_splashFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/initiation_navigation"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/userFragment2"
+        android:name="ryuunta.iot.ryuuntaesp.authentication.UserFragment"
+        android:label="UserFragment"
+        tools:layout="@layout/fragment_user" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="ryuunta.iot.ryuuntaesp.authentication.SignInFragment"
+        android:label="SignInFragment"
+        app:enterAnim="@anim/slide_in_bottom"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_bottom"
+        tools:layout="@layout/fragment_sign_in" />
+</navigation>

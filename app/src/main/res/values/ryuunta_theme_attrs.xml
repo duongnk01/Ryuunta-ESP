@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="backgroundColor" format="reference|color"/>
+    <attr name="backgroundHeaderColor" format="reference|color"/>
+    <attr name="backgroundItem" format="reference|color"/>
+    <attr name="tintIcon" format="reference|color"/>
+    <attr name="colorRipple" format="reference|color"/>
+    <attr name="backgroundItemRipple" format="reference|color"/>
+    <attr name="textHeaderColor" format="reference|color"/>
+    <attr name="textNormalColor" format="reference|color"/>
+    <attr name="textHintColor" format="reference|color"/>
+    <attr name="accentColor" format="reference|color"/>
+</resources>
