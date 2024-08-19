@@ -54,7 +54,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
-                    //TODO("Not yet implemented")
+
                 }
 
             }

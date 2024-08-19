@@ -22,7 +22,7 @@ fun fadeIn(view: View, duration: Long = 1000, onStart: () -> Unit = {}, onEnd: (
         }
 
         override fun onAnimationRepeat(p0: Animation?) {
-            //TODO("Not yet implemented")
+
         }
 
 
@@ -46,7 +46,7 @@ fun fadeOut(view: View, duration: Long = 1000, onStart: () -> Unit = {}, onEnd: 
         }
 
         override fun onAnimationRepeat(p0: Animation?) {
-            //TODO("Not yet implemented")
+
         }
 
     })

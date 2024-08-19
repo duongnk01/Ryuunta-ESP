@@ -148,11 +148,4 @@ class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(Frag
         })
     }
 
-    override fun handlerResponse(tag: String, data: Any?) {
-//        TODO("Not yet implemented")
-    }
-
-    override fun handlerError(tag: String, message: String) {
-//        TODO("Not yet implemented")
-    }
 }

@@ -57,7 +57,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
-                    //TODO("Not yet implemented")
+
                 }
 
             }
