@@ -8,10 +8,12 @@
                 android:centerColor="@color/pink"
                 android:angle="315"
                 android:endColor="@color/accent_color_daylight"/>
-            <corners android:topRightRadius="@dimen/_space20dp"
-                android:topLeftRadius="@dimen/_space4dp"
-                android:bottomRightRadius="@dimen/_space4dp"
-                android:bottomLeftRadius="@dimen/_space20dp"/>
+<!--            <corners android:topRightRadius="@dimen/_space20dp"-->
+<!--                android:topLeftRadius="@dimen/_space4dp"-->
+<!--                android:bottomRightRadius="@dimen/_space4dp"-->
+<!--                android:bottomLeftRadius="@dimen/_space20dp"/>-->
+            <corners
+                android:radius="@dimen/_space24dp"/>
         </shape>
     </item>
 

@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/bg_gray_item_selector"
+                    android:background="@drawable/bg_gray_item_ripple_12"
                     android:padding="16dp"
                     android:text="Authorize"
                     android:textSize="24sp"

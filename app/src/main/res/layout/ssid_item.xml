@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:layout_margin="4dp"
-        android:background="@drawable/bg_gray_item_selector"
+        android:background="@drawable/bg_gray_item_ripple_12"
         android:orientation="vertical">
         
         <TextView

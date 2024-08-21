@@ -14,6 +14,8 @@ import ryuunta.iot.ryuuntaesp.adapter.CustomSpinnerAdapter
 import ryuunta.iot.ryuuntaesp.base.BaseActivity
 import ryuunta.iot.ryuuntaesp.databinding.ActivityMainBinding
 import ryuunta.iot.ryuuntaesp.devices.AddDeviceActivity
+import ryuunta.iot.ryuuntaesp.utils.gone
+import ryuunta.iot.ryuuntaesp.utils.show
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewModel::class.java) {
 
@@ -67,9 +69,19 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
     }
 
     override fun initEvents() {
+
         binding.fabAddDevice.setOnClickListener {
             startActivity(Intent(this, AddDeviceActivity::class.java))
         }
+    }
+
+    fun headerHome(isShow: Boolean) {
+        if (isShow) {
+            binding.spinHome.show()
+        } else {
+            binding.spinHome.gone()
+        }
+
     }
 
 }

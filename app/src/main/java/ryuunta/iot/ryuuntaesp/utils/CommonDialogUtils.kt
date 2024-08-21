@@ -1,10 +1,14 @@
 package ryuunta.iot.ryuuntaesp.utils
 
+import android.animation.Animator
+import android.animation.Animator.AnimatorListener
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Handler
+import android.os.Looper
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +18,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.databinding.DialogConfirmDeleteBinding
+import ryuunta.iot.ryuuntaesp.databinding.DialogLottieBinding
 import ryuunta.iot.ryuuntaesp.databinding.DialogNotificationBinding
 import ryuunta.iot.ryuuntaesp.databinding.DialogNotificationWithConfirmButtonBinding
 import ryuunta.iot.ryuuntaesp.databinding.DialogResultAnnounceBinding
@@ -47,7 +52,7 @@ fun Context.showDialogNotificationWithConfirmButton(
     val binding = DialogNotificationWithConfirmButtonBinding.bind(view)
     binding.txtTitle.setText(titleRes)
 
-    if (messRes!=null)
+    if (messRes != null)
         binding.txtMessage.setText(messRes)
     else
         binding.txtMessage.text = messStr
@@ -74,6 +79,7 @@ fun Context.showDialogNotificationWithConfirmButton(
                     dialog.show()
                 }
             }
+
             else -> {
 
             }
@@ -165,6 +171,7 @@ fun Context.showDialogNotification(
                     dialog.show()
                 }
             }
+
             else -> {
 
             }
@@ -176,6 +183,153 @@ fun Context.showDialogNotification(
         lifecycle.removeObserver(observer)
         dialog.dismiss()
     }
+    lifecycle.addObserver(observer)
+
+    if (!dialog.isShowing) {
+        dialog.show()
+        isShow = true
+    }
+}
+
+fun Context.showDialogLottie(
+    lifecycle: Lifecycle,
+    @RawRes lottieAnim: Int,
+    onComplete: () -> Unit = {},
+) {
+    var isShow = false
+    val dialog: Dialog
+    val view: View = LayoutInflater.from(this).inflate(R.layout.dialog_lottie, null)
+    val builder = AlertDialog.Builder(this)
+        .setView(view)
+        .setCancelable(false)
+
+    dialog = builder.create()
+    dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    dialog.getWindow()?.setGravity(Gravity.BOTTOM)
+
+    val binding = DialogLottieBinding.bind(view)
+    binding.animationView.setAnimation(lottieAnim)
+    binding.animationView.repeatCount = 0
+
+    val observer = LifecycleEventObserver { _, event ->
+        when (event) {
+            Lifecycle.Event.ON_PAUSE -> {
+                if (dialog.isShowing) {
+                    isShow = true
+                }
+                dialog.dismiss()
+            }
+
+            Lifecycle.Event.ON_RESUME -> {
+                if (isShow) {
+                    dialog.show()
+                }
+            }
+
+            else -> {
+
+            }
+        }
+    }
+
+    binding.animationView.addAnimatorListener(object : AnimatorListener {
+        override fun onAnimationStart(p0: Animator) {
+
+        }
+
+        override fun onAnimationEnd(p0: Animator) {
+            isShow = false
+            lifecycle.removeObserver(observer)
+            dialog.dismiss()
+            onComplete()
+        }
+
+        override fun onAnimationCancel(p0: Animator) {
+
+        }
+
+        override fun onAnimationRepeat(p0: Animator) {
+
+        }
+
+    })
+
+//    Handler(Looper.getMainLooper()).postDelayed({
+//        isShow = false
+//        lifecycle.removeObserver(observer)
+//        dialog.dismiss()
+//    }, timeDismiss)
+
+    lifecycle.addObserver(observer)
+
+    if (!dialog.isShowing) {
+        dialog.show()
+        isShow = true
+    }
+
+}
+
+fun Context.showDialogNotificationAutoDismiss(
+    @StringRes titleRes: Int,
+    @RawRes lottieAnim: Int,
+    lifecycle: Lifecycle,
+    messRes: Int? = null,
+    messStr: String = "",
+    timeDismiss: Long = 2000,    //2s
+    onConfirm: () -> Unit = {},
+) {
+    var isShow = false
+    val dialog: Dialog
+    val view: View =
+        LayoutInflater.from(this).inflate(R.layout.dialog_notification, null)
+    val builder = AlertDialog.Builder(this)
+        .setView(view)
+        .setCancelable(false)
+
+
+    dialog = builder.create()
+    dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    dialog.getWindow()?.setGravity(Gravity.BOTTOM)
+
+    val binding = DialogNotificationBinding.bind(view)
+    binding.txtTitle.setText(titleRes)
+    if (messRes == null) {
+        binding.txtMessage.text = messStr
+    } else {
+        binding.txtMessage.setText(messRes)
+    }
+    binding.txtConfirm.gone()
+    binding.animationView.setAnimation(lottieAnim)
+    binding.animationView.repeatCount = 0
+
+    val observer = LifecycleEventObserver { _, event ->
+        when (event) {
+            Lifecycle.Event.ON_PAUSE -> {
+                if (dialog.isShowing) {
+                    isShow = true
+                }
+                dialog.dismiss()
+            }
+
+            Lifecycle.Event.ON_RESUME -> {
+                if (isShow) {
+                    dialog.show()
+                }
+            }
+
+            else -> {
+
+            }
+        }
+    }
+
+    Handler(Looper.getMainLooper()).postDelayed({
+        isShow = false
+        lifecycle.removeObserver(observer)
+        dialog.dismiss()
+        onConfirm()
+    }, timeDismiss)
+
     lifecycle.addObserver(observer)
 
     if (!dialog.isShowing) {
@@ -236,6 +390,7 @@ fun Context.showDialogResultAnnounce(
                     dialog.show()
                 }
             }
+
             else -> {
 
             }
@@ -310,6 +465,7 @@ fun Context.showDialogNegative(
                     dialog.show()
                 }
             }
+
             else -> {
 
             }

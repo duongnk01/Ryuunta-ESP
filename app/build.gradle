@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
+//    id 'com.google.devtools.ksp'
 }
 
 android {
@@ -62,6 +63,12 @@ dependencies {
     implementation libs.androidx.databinding.runtime
     implementation libs.androidx.swiperefreshlayout
 
+    // Room
+    implementation libs.androidx.room.runtime
+    kapt libs.androidx.room.compiler
+    // Kotlin Extensions and Coroutines support for Room
+    implementation libs.room.ktx
+
     //live data
     implementation libs.androidx.lifecycle.livedata.ktx
     implementation libs.androidx.lifecycle.viewmodel.ktx
@@ -90,13 +97,16 @@ dependencies {
     implementation libs.kotlinx.coroutines.core
 
     //firebase
-    implementation platform(libs.firebase.bom)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth.v2120)
     implementation libs.firebase.analytics.ktx
-    implementation(libs.firebase.auth.ktx)
-    implementation libs.play.services.auth
+
     implementation libs.firebase.database
-    //google auth
-    implementation libs.play.services.auth
+
+//    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
+    implementation libs.firebase.messaging
+    implementation libs.firebase.iid
 
     //data store
     implementation libs.androidx.datastore.preferences

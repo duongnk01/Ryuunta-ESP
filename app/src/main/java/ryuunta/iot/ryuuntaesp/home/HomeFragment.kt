@@ -9,6 +9,7 @@ import android.widget.Toast
 import ryuunta.iot.ryuuntaesp.adapter.RoomSpinnerAdapter
 import ryuunta.iot.ryuuntaesp.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.databinding.FragmentHomeBinding
+import ryuunta.iot.ryuuntaesp.main.MainActivity
 import ryuunta.iot.ryuuntaesp.utils.RLog
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
@@ -20,6 +21,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 
     private val customRoomSpinnerAdapter: RoomSpinnerAdapter by lazy {
         RoomSpinnerAdapter(requireContext(), viewModel.roomList)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).headerHome(true)
     }
 
     override fun initViews(view: View) {

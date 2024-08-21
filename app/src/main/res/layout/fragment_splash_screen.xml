@@ -11,9 +11,9 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_splash_logo"
-            android:layout_width="@dimen/_space64dp"
-            android:layout_height="@dimen/_space64dp"
-            app:srcCompat="@drawable/ic_splash"
+            android:layout_width="@dimen/_space72dp"
+            android:layout_height="@dimen/_space72dp"
+            app:srcCompat="@drawable/ic_logo"
             android:layout_gravity="center"/>
     </LinearLayout>
 </layout>

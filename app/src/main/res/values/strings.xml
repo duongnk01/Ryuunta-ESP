@@ -76,4 +76,20 @@
     <string name="txt_manage">Quản lý phòng</string>
     <string name="cancel">Huỷ</string>
   <string name="ok">Ok</string>
+    <string name="txt_logout">Đăng xuất</string>
+    <string name="txt_login_success">Đăng nhập xong rồi!</string>
+  <string name="txt_start_using_app">Bắt đầu sử dụng ứng dụng</string>
+    <string name="txt_failure">Tạch rate</string>
+    <string name="txt_info_login_failure">Chúc mừng bạn đã đăng nhập thất bại, thử lại nhé 😉</string>
+    <string name="txt_email">Email</string>
+  <string name="hint_password">••••••••</string>
+    <string name="default_web_client_id">724916075490-35mea4n7ol5r4iavj13t82co2e6mj1sv.apps.googleusercontent.com</string>
+  <string name="password_must_be_at_least_6_characters">Mật khẩu gì ngắn thế?? Phải 6 kí tự trở lên.</string>
+  <string name="password_is_empty">Chưa nhập pass kìa!!</string>
+  <string name="mail_is_empty">Chưa nhập mail kìa!!</string>
+  <string name="mail_form_not_corrected">mail chưa đúng kìa!!</string>
+  <string name="txt_log_in">Đăng nhập</string>
+  <string name="txt_create_account">Tạo tài khoản</string>
+  <string name="txt_sign_up">Đăng ký</string>
+  <string name="swipe_to_sign_in">Swipe to sign in</string>
 </resources>

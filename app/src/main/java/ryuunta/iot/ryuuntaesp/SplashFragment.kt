@@ -18,14 +18,14 @@ class SplashFragment : BaseFragment<FragmentSplashScreenBinding, InitiationViewM
     override fun initViews(view: View) {
         // This is used to hide the status bar and make
         // the splash screen as a full screen activity.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            requireActivity().window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            requireActivity().window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//            requireActivity().window.insetsController?.hide(WindowInsets.Type.statusBars())
+//        } else {
+//            requireActivity().window.setFlags(
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN
+//            )
+//        }
 
         Handler(Looper.getMainLooper()).postDelayed({
             //remove splash screen from back stack

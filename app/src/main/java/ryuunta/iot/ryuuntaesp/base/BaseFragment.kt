@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import ryuunta.iot.ryuuntaesp.data.network.RetrofitHelper
 import ryuunta.iot.ryuuntaesp.utils.RLog
+import ryuunta.iot.ryuuntaesp.utils.hideKeyboard
 import javax.inject.Inject
 
 
@@ -104,7 +105,11 @@ abstract class BaseFragment<VB : ViewBinding, V : BaseViewModel>(
      * Khởi tạo view
      */
     abstract fun initViews(view: View)
-    protected open fun initEvents() {}
+    protected open fun initEvents() {
+        binding.root.setOnClickListener {
+            it.hideKeyboard()
+        }
+    }
 
     /**
      * Xử lí response

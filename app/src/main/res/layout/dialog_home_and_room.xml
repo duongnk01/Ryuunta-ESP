@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_space16dp"
                 android:layout_marginTop="@dimen/_space24dp"
-                android:background="@drawable/bg_item_border_12"
+                android:background="@drawable/bg_item_no_ripple_12"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingVertical="@dimen/_space8dp">

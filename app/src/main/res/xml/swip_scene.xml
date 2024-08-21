@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ConstraintSet android:id="@+id/start">
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end" >
+        <Constraint android:id="@+id/img_lock"
+            android:layout_width="@dimen/_space36dp"
+            android:layout_height="@dimen/_space36dp"
+            android:layout_marginTop="@dimen/_space8dp"
+            android:layout_marginBottom="@dimen/_space8dp"
+            android:layout_marginStart="@dimen/_space8dp"
+            android:layout_marginEnd="@dimen/_space8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <Constraint
+            android:id="@+id/tv_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_space16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </ConstraintSet>
+
+    <Transition
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@id/start"
+        app:motionInterpolator="anticipate">
+
+        <OnSwipe
+            app:touchAnchorId="@id/img_lock"
+            app:dragDirection="dragLeft"
+            app:touchAnchorSide="left"/>
+    </Transition>
+
+
+</MotionScene>

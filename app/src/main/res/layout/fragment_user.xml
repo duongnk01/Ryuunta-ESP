@@ -1,16 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="userInfo"
+            type="com.google.android.gms.auth.api.signin.GoogleSignInAccount" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="user_fragment" />
-    </LinearLayout>
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_user_gradient"
+                android:padding="@dimen/_space16dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/user_avt"
+                    android:layout_width="@dimen/_space72dp"
+                    android:layout_height="@dimen/_space72dp"
+                    android:layout_margin="@dimen/_space24dp"
+                    app:shapeAppearanceOverlay="@style/circle_shape"
+                    app:srcCompat="@drawable/klee" />
+
+                <TextView
+                    android:id="@+id/txt_username"
+                    style="@style/theme_header_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/user_avt"
+                    android:layout_marginTop="@dimen/_space4dp"
+                    android:layout_toEndOf="@id/user_avt"
+                    android:text="@{userInfo.displayName}"
+                    tools:text="@string/app_name" />
+
+                <TextView
+                    android:id="@+id/txt_email"
+                    style="@style/theme_hint_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_username"
+                    android:layout_alignStart="@id/txt_username"
+                    android:layout_alignEnd="@id/txt_username"
+                    android:layout_marginTop="@dimen/_space4dp"
+                    android:text="@{userInfo.displayName}"
+                    tools:text="email@gmail.com" />
+
+                <LinearLayout
+                    android:id="@+id/btn_manage_device"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_email"
+                    android:layout_alignStart="@id/txt_username"
+                    android:layout_marginTop="@dimen/_space12dp"
+                    android:background="@drawable/bg_white_item_selector_border_12dp"
+                    android:elevation="@dimen/_space2dp"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_space4dp">
+
+                    <TextView
+                        style="@style/theme_hint_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_space8dp"
+                        android:text="1 home"
+                        android:textStyle="normal" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="@dimen/_space12dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:id="@+id/txt_number_of_device"
+                        style="@style/theme_hint_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_space8dp"
+                        android:text="2 devices"
+                        android:textStyle="normal" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_space8dp"
+                android:background="@drawable/bg_item_no_ripple_12"
+                android:orientation="vertical"
+                android:padding="@dimen/_space8dp">
+
+                <TextView
+                    android:id="@+id/textView"
+                    style="@style/theme_content_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/content" />
+
+                <TextView
+                    android:id="@+id/btn_logout"
+                    style="@style/theme_button_cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_space16dp"
+                    android:layout_marginVertical="@dimen/_space24dp"
+                    android:background="@drawable/bg_button_gray_24"
+                    android:gravity="center"
+                    android:text="@string/txt_logout"
+                    android:textColor="@color/red_error" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_space100dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

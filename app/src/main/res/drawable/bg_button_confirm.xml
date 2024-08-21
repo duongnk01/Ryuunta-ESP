@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="?colorRipple">
+    android:color="?backgroundItemRipple">
 
     <item>
         <shape>
             <gradient android:startColor="@color/blue"
                 android:angle="315"
                 android:endColor="@color/accent_color_daylight"/>
-            <corners android:topRightRadius="@dimen/_space20dp"
-                android:topLeftRadius="@dimen/_space4dp"
-                android:bottomRightRadius="@dimen/_space4dp"
-                android:bottomLeftRadius="@dimen/_space20dp"/>
+<!--            <corners android:topRightRadius="@dimen/_space20dp"-->
+<!--                android:topLeftRadius="@dimen/_space4dp"-->
+<!--                android:bottomRightRadius="@dimen/_space4dp"-->
+<!--                android:bottomLeftRadius="@dimen/_space20dp"/>-->
+
+            <padding android:left="@dimen/_space24dp"
+                android:right="@dimen/_space24dp"
+                android:top="@dimen/_space16dp"
+                android:bottom="@dimen/_space8dp"/>
+            <corners android:radius="@dimen/_space24dp"/>
         </shape>
     </item>
 
