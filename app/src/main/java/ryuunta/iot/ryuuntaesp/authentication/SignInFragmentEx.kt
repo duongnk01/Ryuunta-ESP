@@ -14,9 +14,12 @@ fun SignInFragment.signInWithGoogle() {
         .requestEmail()
         .build()
     val googleSignInClient = GoogleSignIn.getClient(requireActivity(), googleSingInOptions)
+
+    //call this function to make sure logged out before signing in
+    googleSignInClient.signOut()
+
     val intent = googleSignInClient.signInIntent
     signInGoogleForResult.launch(intent)
-//    startActivityForResult(intent, RC_SIGN_IN)
 }
 
 fun SignInFragment.authValidation(email: String, pass: String) : Boolean {

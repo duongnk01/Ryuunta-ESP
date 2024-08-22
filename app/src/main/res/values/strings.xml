@@ -9,7 +9,7 @@
     <string name="title_bottom_nav_add_dev">Thêm t.bị</string>
     <string name="title_bottom_nav_noti">Thông báo</string>
     <string name="loading">Đang tải</string>
-    <string name="wait_a_few">Chờ tí...</string>
+    <string name="wait_a_few">Chờ tí…</string>
     <string name="content_desc_add">ADD</string>
     <string name="content">With the idea of imparting programming
       knowledge, Mr. Sandeep Jain, an IIT Roorkee alumnus started a
@@ -67,35 +67,40 @@
   </string>
     <string name="add_more_home">Thêm nhà</string>
     <string name="txxt_add_more">Thêm</string>
-  <string name="txt_bedroom">Phòng ngủ</string>
+    <string name="txt_bedroom">Phòng ngủ</string>
     <string name="txt_living_room">Phòng khách</string>
     <string name="txt_add_new_home">Thêm nhà mới</string>
     <string name="txt_input">Nhập</string>
-  <string name="txt_input_name_home">Nhập tên nhà</string>
+    <string name="txt_input_name_home">Nhập tên nhà</string>
     <string name="txt_select_avatar">Chọn ảnh đại diện</string>
     <string name="txt_manage">Quản lý phòng</string>
     <string name="cancel">Huỷ</string>
-  <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="txt_logout">Đăng xuất</string>
     <string name="txt_login_success">Đăng nhập xong rồi!</string>
-  <string name="txt_start_using_app">Bắt đầu sử dụng ứng dụng</string>
+    <string name="txt_start_using_app">Bắt đầu sử dụng ứng dụng</string>
     <string name="txt_failure">Tạch rate</string>
     <string name="txt_info_login_failure">Chúc mừng bạn đã thất bại, thử lại nhé 😉</string>
     <string name="txt_email">Email</string>
-  <string name="hint_password">••••••••</string>
+    <string name="hint_password">••••••••</string>
+
     <string name="default_web_client_id">724916075490-35mea4n7ol5r4iavj13t82co2e6mj1sv.apps.googleusercontent.com</string>
-  <string name="password_must_be_at_least_6_characters">Mật khẩu gì ngắn thế?? Phải 6 kí tự trở lên.</string>
-  <string name="password_is_empty">Chưa nhập pass kìa!!</string>
-  <string name="mail_is_empty">Chưa nhập mail kìa!!</string>
-  <string name="mail_form_not_corrected">mail chưa đúng kìa!!</string>
-  <string name="txt_log_in">Đăng nhập</string>
-  <string name="txt_create_account">Tạo tài khoản</string>
-  <string name="txt_sign_up">Đăng ký</string>
-  <string name="swipe_to_sign_in">Swipe to sign in</string>
-  <string name="txt_sign_in_with">Sign In with</string>
-  <string name="txt_done">Xong rồi</string>
-  <string name="txt_create_account_success">Tạo tài khoản thành công. Có muốn đăng nhập luôn không?</string>
-  <string name="txt_ok_now">Luôn</string>
-  <string name="txt_no">Không</string>
+    <string name="open_weather_map_api_key">4ac635f38bc87f9750bcaa2ba6b222ad</string>
+
+    <string name="password_must_be_at_least_6_characters">Mật khẩu gì ngắn thế?? Phải 6 kí tự trở lên.</string>
+    <string name="password_is_empty">Chưa nhập pass kìa!!</string>
+    <string name="mail_is_empty">Chưa nhập mail kìa!!</string>
+    <string name="mail_form_not_corrected">mail chưa đúng kìa!!</string>
+    <string name="txt_log_in">Đăng nhập</string>
+    <string name="txt_create_account">Tạo tài khoản</string>
+    <string name="txt_sign_up">Đăng ký</string>
+    <string name="swipe_to_sign_in">Swipe to sign in</string>
+    <string name="txt_sign_in_with">Sign In with</string>
+    <string name="txt_done">Xong rồi</string>
+    <string name="txt_create_account_success">Tạo tài khoản thành công. Có muốn đăng nhập luôn không?</string>
+    <string name="txt_ok_now">Luôn</string>
+    <string name="txt_no">Không</string>
     <string name="txt_nothing_here_for_now">Tạm thời chưa có gì ở đây</string>
+    <string name="label_humidity_outside">Độ ẩm ngoài trời</string>
+    <string name="label_fine_dust_outside">PM2.5 ngoài trời</string>
 </resources>

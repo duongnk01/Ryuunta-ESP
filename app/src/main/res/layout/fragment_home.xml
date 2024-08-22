@@ -11,8 +11,8 @@
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@drawable/bg_layout">
+            android:background="@drawable/bg_layout"
+            android:orientation="vertical">
 
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/app_bar"
@@ -33,27 +33,43 @@
                         android:orientation="vertical"
                         app:layout_collapseMode="pin">
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_space160dp"
-                            android:layout_margin="@dimen/_space16dp"
-                            app:cardBackgroundColor="@color/gray"
-                            app:cardCornerRadius="@dimen/_space8dp"
-                            app:cardElevation="@dimen/_space2dp">
+<!--                        <androidx.cardview.widget.CardView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            app:cardBackgroundColor="@android:color/transparent"-->
+<!--                            android:layout_margin="@dimen/_space16dp"-->
+<!--                            android:visibility="gone"-->
+<!--                            app:cardCornerRadius="@dimen/_space16dp">-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="weather" />
-                        </androidx.cardview.widget.CardView>
+<!--                            -->
+<!--                        </androidx.cardview.widget.CardView>-->
+
+                        <ryuunta.iot.ryuuntaesp.widget.WeatherCardView
+                            android:layout_margin="@dimen/_space16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_space160dp"/>
+
+<!--                        <androidx.cardview.widget.CardView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_space160dp"-->
+<!--                            android:layout_margin="@dimen/_space16dp"-->
+<!--                            app:cardBackgroundColor="@color/gray"-->
+<!--                            app:cardCornerRadius="@dimen/_space8dp"-->
+<!--                            app:cardElevation="@dimen/_space2dp">-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:text="weather" />-->
+<!--                        </androidx.cardview.widget.CardView>-->
 
                         <TextView
                             style="@style/theme_content_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="?backgroundItem"
                             android:layout_marginHorizontal="@dimen/_space16dp"
+                            android:background="?backgroundItem"
                             android:paddingVertical="@dimen/_space8dp"
                             android:text="quick scenarios content"
                             android:textAlignment="center" />
@@ -61,7 +77,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_space16dp"
-                            android:background="@drawable/color_header_gradient_faded"/>
+                            android:background="@drawable/color_header_gradient_faded" />
                     </LinearLayout>
 
 
@@ -72,8 +88,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginHorizontal="@dimen/_space8dp"
+                android:orientation="vertical"
                 app:layout_anchorGravity="bottom"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -88,9 +104,9 @@
 
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/spin_room"
+                        style="@style/MySpinnerStyle"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/MySpinnerStyle"/>
+                        android:layout_height="wrap_content" />
 
                     <View
                         android:layout_width="0dp"
@@ -101,8 +117,8 @@
                         android:layout_width="@dimen/_space24dp"
                         android:layout_height="@dimen/_space24dp"
                         android:layout_marginHorizontal="@dimen/_space8dp"
-                        android:src="@drawable/ic_scenarios"
                         android:background="?colorRipple"
+                        android:src="@drawable/ic_scenarios"
                         app:tint="?tintIcon" />
                 </LinearLayout>
 
@@ -117,17 +133,26 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
+                        <ImageView
+                            android:layout_width="@dimen/_space128dp"
+                            android:layout_height="@dimen/_space128dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_space128dp"
+                            android:alpha="0.3"
+                            app:srcCompat="@drawable/paimon_sleep" />
+
                         <TextView
-                            style="@style/theme_content_text"
+                            android:id="@+id/textView"
+                            style="@style/theme_hint_text"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginHorizontal="@dimen/_space8dp"
-                            android:layout_marginTop="@dimen/_space8dp"
-                            android:text="@string/content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_space24dp"
+                            android:gravity="center"
+                            android:text="@string/txt_nothing_here_for_now" />
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_space100dp"/>
+                            android:layout_height="@dimen/_space100dp" />
                     </LinearLayout>
                 </androidx.core.widget.NestedScrollView>
             </LinearLayout>

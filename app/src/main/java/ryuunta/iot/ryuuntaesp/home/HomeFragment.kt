@@ -6,16 +6,22 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
+import com.google.gson.Gson
 import ryuunta.iot.ryuuntaesp.adapter.RoomSpinnerAdapter
 import ryuunta.iot.ryuuntaesp.base.BaseFragment
+import ryuunta.iot.ryuuntaesp.data.model.WeatherDataObj
+import ryuunta.iot.ryuuntaesp.data.network.ResponseCode
 import ryuunta.iot.ryuuntaesp.databinding.FragmentHomeBinding
 import ryuunta.iot.ryuuntaesp.main.MainActivity
+import ryuunta.iot.ryuuntaesp.main.MainViewModel
 import ryuunta.iot.ryuuntaesp.utils.RLog
 
-class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
+class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
     FragmentHomeBinding::inflate,
-    HomeViewModel::class.java
+    MainViewModel::class.java
 ) {
+
+    private val TAG = this.javaClass.simpleName
 
     private var posRoomSelected: Int = 0
 
@@ -29,7 +35,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     override fun initViews(view: View) {
+        binding.apply {
 
+        }
+
+        viewModel.fetchCurrWeather(requireContext())
     }
 
     override fun initEvents() {
@@ -67,6 +77,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
                 }
 
             }
+        }
+    }
+
+    override fun handlerResponse(tag: String, data: Any?) {
+        super.handlerResponse(tag, data)
+        if (tag == ResponseCode.weatherData) {
+            val weatherData = data as? WeatherDataObj
+            RLog.d(TAG, "weatherData: ${Gson().toJson(weatherData)}")
         }
     }
 }

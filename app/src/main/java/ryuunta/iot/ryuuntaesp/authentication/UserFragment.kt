@@ -27,9 +27,6 @@ class UserFragment : BaseFragment<FragmentUserBinding, MainViewModel>(
 
     override fun initViews(view: View) {
         AuthenticationHelper.getInfoUser()?.let {
-//            RLog.d(TAG, "User name: ${it.displayName}")
-//            RLog.d(TAG, "mail: ${it.email}")
-//            RLog.d(TAG, "avatar url: ${it.photoUrl}")
             if (!it.displayName.isNullOrEmpty())
                 binding.txtUsername.text = it.displayName
             binding.txtEmail.text = it.email

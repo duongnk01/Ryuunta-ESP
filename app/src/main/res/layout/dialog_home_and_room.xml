@@ -13,7 +13,7 @@
             android:layout_gravity="bottom"
             android:layout_marginHorizontal="@dimen/_space8dp"
             android:layout_marginBottom="@dimen/_space4dp"
-            android:background="@drawable/bg_radius_20"
+            android:background="@drawable/bg_corner_20"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/_space8dp"
             android:paddingVertical="@dimen/_space16dp">

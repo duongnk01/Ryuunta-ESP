@@ -59,7 +59,7 @@
                     android:layout_below="@id/txt_email"
                     android:layout_alignStart="@id/txt_username"
                     android:layout_marginTop="@dimen/_space12dp"
-                    android:background="@drawable/bg_white_item_selector_border_12dp"
+                    android:background="@drawable/bg_white_item_selector_corner_12"
                     android:elevation="@dimen/_space2dp"
                     android:orientation="horizontal"
                     android:padding="@dimen/_space4dp">
@@ -100,10 +100,10 @@
                 <ImageView
                     android:layout_width="@dimen/_space128dp"
                     android:layout_height="@dimen/_space128dp"
-                    android:layout_marginTop="@dimen/_space128dp"
                     android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_space128dp"
                     android:alpha="0.3"
-                    app:srcCompat="@drawable/paimon_sleep"/>
+                    app:srcCompat="@drawable/paimon_sleep" />
 
                 <TextView
                     android:id="@+id/textView"
@@ -117,7 +117,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/btn_logout"
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_space16dp"
                     android:layout_marginVertical="@dimen/_space24dp"
-                    android:background="@drawable/bg_button_gray_24"
+                    android:background="@drawable/bg_button_corner_gray_24"
                     android:gravity="center"
                     android:text="@string/txt_logout"
                     android:textColor="@color/red_error" />

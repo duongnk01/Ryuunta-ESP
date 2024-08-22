@@ -1,25 +1,36 @@
 package ryuunta.iot.ryuuntaesp.authentication
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.messaging.FirebaseMessaging
+import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.base.wrapper.AuthRequestCallbackWrapper
 import ryuunta.iot.ryuuntaesp.utils.RLog
 
 object AuthenticationHelper {
     private val TAG = "AuthenticationHelper"
 
-    private val firebaseAuth : FirebaseAuth by lazy {
+    private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
 
-    fun getInfoUser() : FirebaseUser? = firebaseAuth.currentUser
+    fun getInfoUser(): FirebaseUser? {
+        val user = firebaseAuth.currentUser
+        RLog.d(TAG, "User name: ${user?.displayName}")
+        RLog.d(TAG, "mail: ${user?.email}")
+        RLog.d(TAG, "avatar url: ${user?.photoUrl}")
+        RLog.d(TAG, "providerID: ${user?.providerId}")
+        return user
+    }
 
     fun signUp(
         email: String,
         password: String,
         onSuccess: () -> Unit = {},
-        onFailure: (code: Int, message: String?) -> Unit = {_, _ -> }
+        onFailure: (code: Int, message: String?) -> Unit = { _, _ -> }
     ) {
         RLog.d(TAG, "start sign up")
         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -37,15 +48,15 @@ object AuthenticationHelper {
 
     fun signIn(
         method: SignInMethod,
-        onSuccess:() -> Unit = {},
-        onFailure: (code: Int, message: String?) -> Unit = {_, _ -> }
+        onSuccess: () -> Unit = {},
+        onFailure: (code: Int, message: String?) -> Unit = { _, _ -> }
     ) {
         RLog.d(TAG, "start sign in")
-        when(method) {
+        when (method) {
             is SignInMethod.SignInGoogle -> {
                 firebaseAuth.signInWithCredential(method.credential)
                     .addOnSuccessListener {
-                       onSuccess()
+                        onSuccess()
                     }
                     .addOnFailureListener { task ->
                         onFailure(-1, task.localizedMessage)
@@ -54,6 +65,7 @@ object AuthenticationHelper {
                         onFailure(-2, "Sign In Google canceled")
                     }
             }
+
             is SignInMethod.SignInEmail -> {
                 firebaseAuth.signInWithEmailAndPassword(method.email, method.password)
                     .addOnSuccessListener {

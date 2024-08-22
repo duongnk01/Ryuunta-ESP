@@ -110,13 +110,13 @@
         <!--        <item name="android:background">@drawable/bg_spinner</item>-->
         <item name="android:background">@drawable/bg_item_selector_no_border</item>
         <item name="android:spinnerMode">dropdown</item>
-        <item name="android:popupBackground">@drawable/bg_white_item_selector_border_12dp</item>
+        <item name="android:popupBackground">@drawable/bg_white_item_selector_corner_12</item>
         <item name="android:spinnerDropDownItemStyle">@style/MyHeaderSpinnerDropDownItem</item>
     </style>
 
     <style name="MySpinnerDropDownItem">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:background">@drawable/bg_white_item_selector_border_12dp</item>
+        <item name="android:background">@drawable/bg_white_item_selector_corner_12</item>
         <item name="android:textColor">?textNormalColor</item>
     </style>
 

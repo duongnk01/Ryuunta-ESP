@@ -1,18 +1,18 @@
 package ryuunta.iot.ryuuntaesp.base
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import ryuunta.iot.ryuuntaesp.InitiationViewModel
 import ryuunta.iot.ryuuntaesp.SplashViewModel
 import ryuunta.iot.ryuuntaesp.authentication.AuthViewModel
-import ryuunta.iot.ryuuntaesp.data.network.RetrofitService
 import ryuunta.iot.ryuuntaesp.devices.AddDeviceViewModel
 import ryuunta.iot.ryuuntaesp.home.HomeViewModel
 import ryuunta.iot.ryuuntaesp.notification.NotiViewModel
 import ryuunta.iot.ryuuntaesp.manage.ManageViewModel
 import ryuunta.iot.ryuuntaesp.main.MainViewModel
 
-open class ViewModelFactory : ViewModelProvider.Factory {
+open class ViewModelFactory() : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when {
