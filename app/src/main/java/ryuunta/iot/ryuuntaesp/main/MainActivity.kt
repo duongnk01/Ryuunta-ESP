@@ -9,8 +9,10 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import ryuunta.iot.ryuuntaesp.InitiationActivity
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.adapter.CustomSpinnerAdapter
+import ryuunta.iot.ryuuntaesp.authentication.AuthenticationHelper
 import ryuunta.iot.ryuuntaesp.base.BaseActivity
 import ryuunta.iot.ryuuntaesp.databinding.ActivityMainBinding
 import ryuunta.iot.ryuuntaesp.devices.AddDeviceActivity
@@ -61,10 +63,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
 
             }
         }
-        showLoadingScreen()
-        Handler(Looper.getMainLooper()).postDelayed({
-            hideLoadingScreen()
-        }, 5000)
 
     }
 
@@ -82,6 +80,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
             binding.spinHome.gone()
         }
 
+    }
+
+    fun logout() {
+        AuthenticationHelper.signOut {
+            val intent = Intent(this, InitiationActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
     }
 
 }

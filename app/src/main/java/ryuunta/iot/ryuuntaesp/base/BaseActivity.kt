@@ -1,5 +1,6 @@
 package ryuunta.iot.ryuuntaesp.base
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -48,6 +49,16 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel>(
     private val dialogLoading: DialogLoading by lazy {
         DialogLoading(this)
     }
+
+//    override fun onConfigurationChanged(newConfig: Configuration) {
+//        super.onConfigurationChanged(newConfig)
+//        val darkModeFlag = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+//        if (darkModeFlag == Configuration.UI_MODE_NIGHT_NO) {
+//            setTheme(R.style.Theme_RyuuntaESP)
+//        } else {
+//            setTheme(R.style.Theme_RyuuntaESP_Dark)
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initViewModel(this)

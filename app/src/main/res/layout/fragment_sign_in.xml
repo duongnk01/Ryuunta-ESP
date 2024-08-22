@@ -113,7 +113,7 @@
                             android:background="@drawable/bg_button_gray_24"
                             android:hint="@string/hint_password"
                             android:importantForAutofill="no"
-                            android:inputType="text"
+                            android:inputType="textPassword"
                             android:paddingTop="@dimen/space_screen_super_small"
                             android:textColorHint="@color/accent_color_faded"
                             tools:ignore="LabelFor" />
@@ -150,7 +150,7 @@
                         android:layout_width="@dimen/_space36dp"
                         android:layout_height="@dimen/_space36dp"
                         android:layout_margin="@dimen/_space8dp"
-                        android:src="@drawable/ic_intertwined_fate"
+                        android:src="@drawable/intertwined_fate"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -167,7 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Sign In with"
+                    android:text="@string/txt_sign_in_with"
                     android:textAlignment="center"
                     android:textStyle="normal" />
 
@@ -262,7 +262,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/btn_create_account"
+                    android:id="@+id/btn_sign_up"
                     style="@style/theme_button_confirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

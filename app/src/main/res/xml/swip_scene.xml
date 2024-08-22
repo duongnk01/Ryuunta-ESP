@@ -31,13 +31,32 @@
     <Transition
         app:constraintSetEnd="@id/end"
         app:constraintSetStart="@id/start"
-        app:motionInterpolator="anticipate">
+        app:duration="500"
+        app:motionInterpolator="linear">
 
         <OnSwipe
+            app:onTouchUp="autoCompleteToStart"
             app:touchAnchorId="@id/img_lock"
             app:dragDirection="dragLeft"
             app:touchAnchorSide="left"/>
     </Transition>
+
+<!--    <Transition-->
+<!--        app:constraintSetEnd="@id/end"-->
+<!--        app:constraintSetStart="@id/start"-->
+<!--        app:duration="500"-->
+<!--        app:motionInterpolator="cubic(0.2,0,0,1)">-->
+<!--    <OnSwipe-->
+<!--        app:springDamping="63.973"-->
+<!--        app:autoCompleteMode="spring"-->
+<!--        app:onTouchUp="autoComplete"-->
+<!--        app:dragDirection="dragUp"-->
+<!--        app:touchAnchorId="@id/img_lock"-->
+<!--        app:touchAnchorSide="top"-->
+<!--        app:springStopThreshold="1.0E-4"-->
+<!--        app:springMass="2.6"-->
+<!--        app:springStiffness="389.76" />-->
+<!--    </Transition>-->
 
 
 </MotionScene>

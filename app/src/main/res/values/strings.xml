@@ -80,7 +80,7 @@
     <string name="txt_login_success">Đăng nhập xong rồi!</string>
   <string name="txt_start_using_app">Bắt đầu sử dụng ứng dụng</string>
     <string name="txt_failure">Tạch rate</string>
-    <string name="txt_info_login_failure">Chúc mừng bạn đã đăng nhập thất bại, thử lại nhé 😉</string>
+    <string name="txt_info_login_failure">Chúc mừng bạn đã thất bại, thử lại nhé 😉</string>
     <string name="txt_email">Email</string>
   <string name="hint_password">••••••••</string>
     <string name="default_web_client_id">724916075490-35mea4n7ol5r4iavj13t82co2e6mj1sv.apps.googleusercontent.com</string>
@@ -92,4 +92,10 @@
   <string name="txt_create_account">Tạo tài khoản</string>
   <string name="txt_sign_up">Đăng ký</string>
   <string name="swipe_to_sign_in">Swipe to sign in</string>
+  <string name="txt_sign_in_with">Sign In with</string>
+  <string name="txt_done">Xong rồi</string>
+  <string name="txt_create_account_success">Tạo tài khoản thành công. Có muốn đăng nhập luôn không?</string>
+  <string name="txt_ok_now">Luôn</string>
+  <string name="txt_no">Không</string>
+    <string name="txt_nothing_here_for_now">Tạm thời chưa có gì ở đây</string>
 </resources>

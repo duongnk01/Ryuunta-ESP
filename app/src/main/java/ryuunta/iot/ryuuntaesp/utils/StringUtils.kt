@@ -19,4 +19,4 @@ fun isEmailAccountValid(email: String): Boolean =
     isEmailPatternValid(email) && email.isNotEmpty()
 
 fun isPasswordValid(password: String): Boolean =
-    password.length > 6
+    password.length >= 6

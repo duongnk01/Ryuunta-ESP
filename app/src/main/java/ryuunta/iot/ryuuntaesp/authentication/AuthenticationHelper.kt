@@ -1,6 +1,7 @@
 package ryuunta.iot.ryuuntaesp.authentication
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.messaging.FirebaseMessaging
 import ryuunta.iot.ryuuntaesp.base.wrapper.AuthRequestCallbackWrapper
 import ryuunta.iot.ryuuntaesp.utils.RLog
@@ -12,10 +13,32 @@ object AuthenticationHelper {
         FirebaseAuth.getInstance()
     }
 
+    fun getInfoUser() : FirebaseUser? = firebaseAuth.currentUser
+
+    fun signUp(
+        email: String,
+        password: String,
+        onSuccess: () -> Unit = {},
+        onFailure: (code: Int, message: String?) -> Unit = {_, _ -> }
+    ) {
+        RLog.d(TAG, "start sign up")
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                onSuccess()
+            }
+            .addOnFailureListener { task ->
+                onFailure(-1, task.localizedMessage)
+                task.printStackTrace()
+            }
+            .addOnCanceledListener {
+                onFailure(-2, "Sign Up canceled")
+            }
+    }
+
     fun signIn(
         method: SignInMethod,
         onSuccess:() -> Unit = {},
-        onFailure: (code: Int, message: String) -> Unit = {_, _ -> }
+        onFailure: (code: Int, message: String?) -> Unit = {_, _ -> }
     ) {
         RLog.d(TAG, "start sign in")
         when(method) {
@@ -24,8 +47,8 @@ object AuthenticationHelper {
                     .addOnSuccessListener {
                        onSuccess()
                     }
-                    .addOnFailureListener {
-                        onFailure(-1, "Sign In Google failure")
+                    .addOnFailureListener { task ->
+                        onFailure(-1, task.localizedMessage)
                     }
                     .addOnCanceledListener {
                         onFailure(-2, "Sign In Google canceled")
@@ -37,7 +60,7 @@ object AuthenticationHelper {
                         onSuccess()
                     }
                     .addOnFailureListener { task ->
-                        onFailure(-1, "Sign In email failure")
+                        onFailure(-1, task.localizedMessage)
                         task.printStackTrace()
                     }
                     .addOnCanceledListener {

@@ -19,13 +19,11 @@ class AuthViewModel : BaseViewModel() {
 
 
     fun onSuccess(isSuccess: Boolean) {
-        loading.postValue(false)
         _authStateLiveData.value = AuthenticationState.Success(isSuccess)
 
     }
 
     fun onFailure(code: Int, message: String?) {
-        loading.postValue(false)
         viewModelScope.launch(Dispatchers.Main) {
             _authStateLiveData.value = AuthenticationState.Failure(code, message)
         }
@@ -37,7 +35,6 @@ class AuthViewModel : BaseViewModel() {
 
 
     fun startGoogleSignIn(data: Intent?) {
-        loading.postValue(true)
         val task = GoogleSignIn.getSignedInAccountFromIntent(data)
         try {
             val account = task.getResult(ApiException::class.java)
@@ -56,13 +53,26 @@ class AuthViewModel : BaseViewModel() {
     }
 
     fun startEmailSignIn(email: String, password: String) {
-        loading.postValue(true)
         AuthenticationHelper.signIn(
             SignInMethod.SignInEmail(email, password),
             onSuccess = {
                 onSuccess(true)
             },
             onFailure = { code, message ->
+                onFailure(code, message)
+            })
+    }
+
+    fun startEmailSignUp(email: String, password: String) {
+        loading.postValue(true)
+        AuthenticationHelper.signUp(
+            email, password,
+            onSuccess = {
+                loading.postValue(false)
+                _authStateLiveData.value = AuthenticationState.SignUpSuccess(email, password)
+            },
+            onFailure = { code, message ->
+                loading.postValue(false)
                 onFailure(code, message)
             })
     }

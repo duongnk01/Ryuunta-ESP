@@ -113,17 +113,13 @@ fun Context.showDialogNotificationWithConfirmButton(
     }
 }
 
-/**
- * Dialog thông báo và trả kết quả (success or failure)
- * success: lottie = paimon_like
- * fail: lottie = nana_crying
- */
 fun Context.showDialogNotification(
     @StringRes titleRes: Int,
     @RawRes lottieAnim: Int,
     lifecycle: Lifecycle,
     messRes: Int? = null,
     messStr: String = "",
+    errorMess: String? = "",
     confirmRes: Int = R.string.ok,
     isAnimLoop: Boolean = false,
     onConfirm: () -> Unit = {},
@@ -147,6 +143,11 @@ fun Context.showDialogNotification(
         binding.txtMessage.text = messStr
     } else {
         binding.txtMessage.setText(messRes)
+    }
+    if (!errorMess.isNullOrEmpty()) {
+        binding.txtErrorMessage.text = errorMess
+    } else {
+        binding.txtErrorMessage.gone()
     }
 
     binding.txtConfirm.setText(confirmRes)

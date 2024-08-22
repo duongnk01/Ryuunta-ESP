@@ -52,6 +52,15 @@
                 android:layout_marginHorizontal="@dimen/_space32dp"/>
 
             <TextView
+                android:id="@+id/txt_error_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/theme_hint_text"
+                tools:text="error mess"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/_space12dp"/>
+
+            <TextView
                 android:id="@+id/txt_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

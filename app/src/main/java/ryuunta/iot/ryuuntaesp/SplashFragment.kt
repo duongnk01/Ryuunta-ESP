@@ -7,6 +7,7 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.navigation.fragment.findNavController
+import ryuunta.iot.ryuuntaesp.authentication.AuthenticationHelper
 import ryuunta.iot.ryuuntaesp.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.databinding.FragmentSplashScreenBinding
 import ryuunta.iot.ryuuntaesp.utils.fadeIn
@@ -26,13 +27,23 @@ class SplashFragment : BaseFragment<FragmentSplashScreenBinding, InitiationViewM
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN
 //            )
 //        }
-
         Handler(Looper.getMainLooper()).postDelayed({
+            checkUser()
+        }, 2000)
+
+
+
+    }
+
+    private fun checkUser() {
+        val currentUser = AuthenticationHelper.getInfoUser()
+        if (currentUser != null) {
+            (activity as InitiationActivity).nextToHomePage()
+        } else {
             //remove splash screen from back stack
             navController.popBackStack(navController.graph.startDestinationId, true)
             //navigate to sign in fragment
             navController.navigate(R.id.signInFragment)
-        }, 2000)
-
+        }
     }
 }
