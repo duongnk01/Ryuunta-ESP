@@ -28,11 +28,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
         RoomSpinnerAdapter(requireContext(), viewModel.roomList)
     }
 
-    override fun onResume() {
-        super.onResume()
-        (activity as MainActivity).headerHome(true)
-    }
-
     override fun initViews(savedInstanceState: Bundle?) {
         binding.apply {
 

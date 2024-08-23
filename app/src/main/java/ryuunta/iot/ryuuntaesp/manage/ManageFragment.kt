@@ -10,7 +10,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import ryuunta.iot.ryuuntaesp.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.databinding.FragmentManageBinding
-import ryuunta.iot.ryuuntaesp.MainActivity
 
 class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(FragmentManageBinding::inflate, ManageViewModel::class.java) {
 
@@ -21,12 +20,7 @@ class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(Frag
     private lateinit var relayEsp01: DatabaseReference
     private lateinit var doorLock: DatabaseReference
 
-    override fun onResume() {
-        super.onResume()
-        (activity as MainActivity).headerHome(false)
-    }
-
-    override fun initViews(view: Bundle?) {
+    override fun initViews(savedInstanceState: Bundle?) {
         initFirebase()
     }
 

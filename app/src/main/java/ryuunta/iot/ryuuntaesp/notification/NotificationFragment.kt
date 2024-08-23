@@ -7,12 +7,8 @@ import ryuunta.iot.ryuuntaesp.MainActivity
 
 class NotificationFragment: BaseFragment<FragmentNotificationBinding, NotiViewModel>(FragmentNotificationBinding::inflate, NotiViewModel::class.java) {
 
-    override fun onResume() {
-        super.onResume()
-        (activity as MainActivity).headerHome(true)
-    }
-    override fun initViews(view: Bundle?) {
-//        TODO("Not yet implemented")
+    override fun initViews(savedInstanceState: Bundle?) {
+
     }
 
     companion object {

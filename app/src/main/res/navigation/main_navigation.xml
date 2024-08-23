@@ -5,36 +5,39 @@
     android:id="@+id/main_navigation"
     app:startDestination="@id/ryuuntaMainFragment">
 
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="ryuunta.iot.ryuuntaesp.home.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_scenariosFragment"
-            app:destination="@id/manageFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_notificationFragment"
-            app:destination="@id/notificationFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_userFragment"
-            app:destination="@id/userFragment" />
-    </fragment>
+<!--    <fragment-->
+<!--        android:id="@+id/homeFragment"-->
+<!--        android:name="ryuunta.iot.ryuuntaesp.home.HomeFragment"-->
+<!--        android:label="HomeFragment"-->
+<!--        tools:layout="@layout/fragment_home" >-->
+<!--    </fragment>-->
+<!--    -->
     <fragment
         android:id="@+id/manageFragment"
         android:name="ryuunta.iot.ryuuntaesp.manage.ManageFragment"
         android:label="ScenariosFragment"
-        tools:layout="@layout/fragment_manage" />
-    <fragment
-        android:id="@+id/notificationFragment"
-        android:name="ryuunta.iot.ryuuntaesp.notification.NotificationFragment"
-        android:label="NotificationFragment"
-        tools:layout="@layout/fragment_notification" />
-    <fragment
-        android:id="@+id/userFragment"
-        android:name="ryuunta.iot.ryuuntaesp.authentication.UserFragment"
-        android:label="UserFragment"
-        tools:layout="@layout/fragment_user" />
+        tools:layout="@layout/fragment_manage" >
+        <action
+            android:id="@+id/action_manageFragment_to_ryuuntaMainFragment"
+            app:destination="@id/ryuuntaMainFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/nav_graph_main"
+            app:popUpToInclusive="true"/>
+    </fragment>
+<!--    <fragment-->
+<!--        android:id="@+id/notificationFragment"-->
+<!--        android:name="ryuunta.iot.ryuuntaesp.notification.NotificationFragment"-->
+<!--        android:label="NotificationFragment"-->
+<!--        tools:layout="@layout/fragment_notification" />-->
+<!--    <fragment-->
+<!--        android:id="@+id/userFragment"-->
+<!--        android:name="ryuunta.iot.ryuuntaesp.authentication.UserFragment"-->
+<!--        android:label="UserFragment"-->
+<!--        tools:layout="@layout/fragment_user" />-->
     <fragment
         android:id="@+id/addDeviceFragment"
         android:name="ryuunta.iot.ryuuntaesp.devices.AddDeviceFragment"
@@ -47,6 +50,10 @@
         tools:layout="@layout/fragment_ryuunta_main">
         <action
             android:id="@+id/action_ryuuntaMainFragment_to_addDeviceFragment"
-            app:destination="@id/addDeviceFragment" />
+            app:destination="@id/addDeviceFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 </navigation>

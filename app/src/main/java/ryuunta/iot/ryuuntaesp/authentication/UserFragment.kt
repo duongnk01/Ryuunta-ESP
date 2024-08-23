@@ -17,14 +17,6 @@ class UserFragment : BaseFragment<FragmentUserBinding, MainViewModel>(
 
     private val TAG = "UserFragment"
 
-    private var isDarkmode = false
-
-    override fun onResume() {
-        super.onResume()
-        (activity as MainActivity).headerHome(false)
-
-    }
-
     override fun initViews(savedInstanceState: Bundle?) {
         AuthenticationHelper.getInfoUser()?.let {
             if (!it.displayName.isNullOrEmpty())
@@ -40,11 +32,6 @@ class UserFragment : BaseFragment<FragmentUserBinding, MainViewModel>(
     override fun initEvents() {
         super.initEvents()
         binding.apply {
-            btnSwitchDarkmode.setPreventDoubleClick {
-                isDarkmode = !isDarkmode
-                setDarkModeTheme(isDarkmode)
-                RLog.d(TAG, "darkmode: $isDarkmode")
-            }
             btnLogout.setPreventDoubleClick {
                 (activity as MainActivity).logout()
             }

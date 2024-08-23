@@ -19,57 +19,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
 
     override fun getLayoutRes(): Int = R.layout.activity_main
 
-    private var currentHomePos: Int = 0
-
-    private val userHomeAdapter: CustomSpinnerAdapter by lazy {
-        CustomSpinnerAdapter(this, viewModel.listHomeUser)
-    }
-
     override fun initViews() {
-
-        binding.apply {
-//            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_main_fragment) as NavHostFragment
-//            setupActionBarWithNavController(navHostFragment.navController)
-//            bottomNavigationView.setupWithNavController(navHostFragment.navController)
-//            bottomNavigationView.menu.getItem(2).isEnabled = false  //disable placeholder item
-
-//            spinHome.adapter = userHomeAdapter
-//            spinHome.onItemSelectedListener = object : OnItemSelectedListener {
-//                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                    if (position == userHomeAdapter.count - 1) {
-//                        Toast.makeText(this@MainActivity, "add more", Toast.LENGTH_SHORT).show()
-//
-//                    } else {
-////                        Toast.makeText(this@MainActivity, userHomeAdapter.getItem(position).text, Toast.LENGTH_SHORT).show()
-//                        currentHomePos = position
-//                        userHomeAdapter.currentPosSelected = currentHomePos
-//                        userHomeAdapter.notifyDataSetChanged()
-//                    }
-//                    spinHome.setSelection(currentHomePos)
-//                }
-//
-//                override fun onNothingSelected(p0: AdapterView<*>?) {
-//
-//                }
-//
-//            }
-        }
 
     }
 
     override fun initEvents() {
-
-//        binding.fabAddDevice.setOnClickListener {
-//            startActivity(Intent(this, AddDeviceActivity::class.java))
-//        }
-    }
-
-    fun headerHome(isShow: Boolean) {
-//        if (isShow) {
-//            binding.spinHome.show()
-//        } else {
-//            binding.spinHome.gone()
-//        }
 
     }
 
