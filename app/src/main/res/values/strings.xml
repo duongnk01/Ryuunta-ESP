@@ -103,4 +103,5 @@
     <string name="txt_nothing_here_for_now">Tạm thời chưa có gì ở đây</string>
     <string name="label_humidity_outside">Độ ẩm ngoài trời</string>
     <string name="label_fine_dust_outside">PM2.5 ngoài trời</string>
+    <string name="error_load_background">Lỗi tải hình nền</string>
 </resources>

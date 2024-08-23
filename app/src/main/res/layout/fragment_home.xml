@@ -45,6 +45,7 @@
 <!--                        </androidx.cardview.widget.CardView>-->
 
                         <ryuunta.iot.ryuuntaesp.widget.WeatherCardView
+                            android:id="@+id/cv_weather"
                             android:layout_margin="@dimen/_space16dp"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_space160dp"/>

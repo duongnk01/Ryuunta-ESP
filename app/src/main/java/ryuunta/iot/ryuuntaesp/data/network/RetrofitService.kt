@@ -6,10 +6,8 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
-import retrofit2.http.QueryMap
 import ryuunta.iot.ryuuntaesp.data.entity.User
-import ryuunta.iot.ryuuntaesp.data.model.RootResult
-import ryuunta.iot.ryuuntaesp.data.model.WeatherDataObj
+import ryuunta.iot.ryuuntaesp.data.model.WeatherDataCompilation
 
 interface RetrofitService {
     @POST("login")
@@ -21,5 +19,13 @@ interface RetrofitService {
         @Query("lon") lon: Double,
         @Query("appid") appid: String,
         @Query("lang") lang: String = "vi"
-    ) : Response<WeatherDataObj>
+    ) : Response<WeatherDataCompilation.WeatherData>
+
+    @GET(UrlManage.getCurrAirPollution)
+    suspend fun getCurrAirPollution(
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
+        @Query("appid") appid: String,
+    ) : Response<WeatherDataCompilation.AirPollution>
+
 }

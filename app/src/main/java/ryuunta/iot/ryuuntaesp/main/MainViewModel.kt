@@ -1,13 +1,17 @@
 package ryuunta.iot.ryuuntaesp.main
 
 import android.content.Context
+import io.reactivex.Observable
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.base.BaseViewModel
 import ryuunta.iot.ryuuntaesp.data.model.IconWithTextObj
 import ryuunta.iot.ryuuntaesp.data.model.RoomObj
+import ryuunta.iot.ryuuntaesp.data.model.WeatherDataCompilation
 import ryuunta.iot.ryuuntaesp.data.network.ResponseCode
 
 class MainViewModel() : BaseViewModel() {
@@ -30,14 +34,32 @@ class MainViewModel() : BaseViewModel() {
         val lat = 21.0294498
         val lon = 105.8544441
         val apiKey = context.getString(R.string.open_weather_map_api_key)
+        loading.postValue(true)
+
         job.launch {
-            val response = retrofitService.getCurrentWeather(lat, lon, apiKey)
+            val fetchWeather = retrofitService.getCurrentWeather(lat, lon, apiKey)
+            val fetchAirPollution = retrofitService.getCurrAirPollution(lat, lon, apiKey)
+            val data = listOf(
+                async { fetchWeather },
+                async { fetchAirPollution }
+            )
+
             withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    val data = mapOf(ResponseCode.weatherData to response.body())
-                    baseResult.postValue(data)
+                loading.postValue(false)
+                val result = data.awaitAll()
+
+                if (result.all { it.isSuccessful }) {
+                    val weatherData = WeatherDataCompilation(
+                        result[0].body() as? WeatherDataCompilation.WeatherData,
+                        result[1].body() as? WeatherDataCompilation.AirPollution
+                    )
+                    _baseResult.postValue(mapOf(ResponseCode.weatherData to weatherData))
                 } else {
-                    onError(mapOf(ResponseCode.weatherData to response.message()))
+                    result.forEach {
+                        if (!it.isSuccessful) {
+                            onError(mapOf(ResponseCode.weatherData to it.message()))
+                        }
+                    }
                 }
             }
         }

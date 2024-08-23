@@ -9,7 +9,7 @@ import android.widget.Toast
 import com.google.gson.Gson
 import ryuunta.iot.ryuuntaesp.adapter.RoomSpinnerAdapter
 import ryuunta.iot.ryuuntaesp.base.BaseFragment
-import ryuunta.iot.ryuuntaesp.data.model.WeatherDataObj
+import ryuunta.iot.ryuuntaesp.data.model.WeatherDataCompilation
 import ryuunta.iot.ryuuntaesp.data.network.ResponseCode
 import ryuunta.iot.ryuuntaesp.databinding.FragmentHomeBinding
 import ryuunta.iot.ryuuntaesp.main.MainActivity
@@ -50,11 +50,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
 
             swiperRefresh.setOnRefreshListener {
                 swiperRefresh.setRefreshing(true)
-                showLoading()
+//                isScreenLoading(true)
                 Handler(Looper.getMainLooper()).postDelayed({
                     swiperRefresh.setRefreshing(false)
-                    hideLoading()
-                }, 3000)
+//                    isScreenLoading(false)
+                    onRefreshHomePage()
+                }, 500)
 
             }
 
@@ -80,11 +81,33 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
         }
     }
 
+    private fun onRefreshHomePage() {
+        viewModel.fetchCurrWeather(requireContext())
+    }
+
     override fun handlerResponse(tag: String, data: Any?) {
         super.handlerResponse(tag, data)
         if (tag == ResponseCode.weatherData) {
-            val weatherData = data as? WeatherDataObj
-            RLog.d(TAG, "weatherData: ${Gson().toJson(weatherData)}")
+            val weatherData = data as? WeatherDataCompilation
+//            RLog.d(TAG, "weatherData: ${Gson().toJson(weatherData)}")
+            binding.apply {
+                weatherData?.let {
+                    cvWeather.fetchDataWeather(it)
+                }
+            }
         }
+    }
+
+    override fun handlerError(tag: String, message: String) {
+        super.handlerError(tag, message)
+        if (tag == ResponseCode.weatherData) {
+            binding.cvWeather.onLoadError {
+                viewModel.fetchCurrWeather(requireContext())
+            }
+        }
+    }
+
+    override fun isScreenLoading(isLoading: Boolean) {
+        binding.cvWeather.isLoading = isLoading
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_space160dp">
 
@@ -8,26 +9,30 @@
         android:id="@+id/img_weather_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
         android:layout_gravity="bottom"
-        android:src="@drawable/img_wearther_cloudy"
-        android:alpha="0.7" />
+        android:alpha="0.7"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_wearther_cloudy" />
 
     <RelativeLayout
+        android:id="@+id/layout_weather"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="top"
+        tools:visibility="visible"
         android:background="@drawable/bg_faded_transparent"
         android:padding="@dimen/_space8dp">
 
         <ImageView
             android:id="@+id/img_weather_state"
-            android:layout_width="@dimen/_space48dp"
-            android:layout_height="@dimen/_space48dp"
+            android:layout_width="@dimen/_space64dp"
+            android:layout_height="@dimen/_space64dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="@dimen/_space16dp"
-            android:layout_marginTop="@dimen/_space16dp"
+            android:layout_marginTop="@dimen/_space12dp"
+            android:scaleType="fitXY"
+            android:elevation="@dimen/_space4dp"
             app:srcCompat="@drawable/ic_weather_sun" />
 
         <TextView
@@ -36,12 +41,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/img_weather_state"
-            android:layout_alignBottom="@id/img_weather_state"
-            android:layout_marginStart="@dimen/_space24dp"
+            android:layout_marginStart="@dimen/_space16dp"
             android:layout_toEndOf="@id/img_weather_state"
             android:gravity="center"
             android:text="28°C"
-            android:textSize="@dimen/text_size_24" />
+            android:textSize="@dimen/text_size_32" />
+
+        <TextView
+            android:id="@+id/txt_weather_desc"
+            style="@style/theme_content_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/img_weather_state"
+            android:layout_below="@id/txt_temperature"
+            android:layout_gravity="bottom"
+            android:layout_alignStart="@id/txt_temperature"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:maxLines="1"
+            android:textSize="@dimen/text_size_12" />
 
 
         <TextView
@@ -70,7 +88,7 @@
 
         <TextView
             android:id="@+id/txt_humidity_label"
-            style="@style/theme_content_text"
+            style="@style/theme_hint_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@id/img_weather_state"
@@ -84,7 +102,7 @@
 
         <TextView
             android:id="@+id/txt_fine_dust_label"
-            style="@style/theme_content_text"
+            style="@style/theme_hint_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/txt_humidity_label"
@@ -97,5 +115,44 @@
             android:text="@string/label_fine_dust_outside"
             android:textSize="@dimen/text_size_10" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_error"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_space160dp"
+        android:background="?backgroundItem"
+        android:gravity="center"
+        android:alpha="0.7"
+        tools:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/_space64dp"
+            android:layout_height="@dimen/_space64dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/paimon_sleep" />
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/theme_hint_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_10"
+            android:layout_marginTop="@dimen/_space8dp"
+            android:gravity="center"
+            android:text="Không thể tải thông tin thời tiết" />
+    </LinearLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/anim_load_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="?backgroundItem"
+        android:padding="@dimen/_space48dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/anim_arona_kururu"
+        tools:visibility="gone" />
 
 </FrameLayout>

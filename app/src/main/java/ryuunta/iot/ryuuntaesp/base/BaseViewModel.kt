@@ -1,5 +1,6 @@
 package ryuunta.iot.ryuuntaesp.base
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -12,6 +13,9 @@ import ryuunta.iot.ryuuntaesp.data.network.RetrofitService
 open class BaseViewModel : ViewModel() {
 
     val retrofitService: RetrofitService = RetrofitHelper.apiService
+
+    protected val _baseResult = MutableLiveData<Map<String, Any?>>()
+    val baseResult: LiveData<Map<String, Any?>> = _baseResult
 
     val errorMessage = MutableLiveData<Map<String, String>>()
     val loading = MutableLiveData<Boolean>()
@@ -26,7 +30,6 @@ open class BaseViewModel : ViewModel() {
         loading.postValue(false)
     }
 
-    val baseResult = MutableLiveData<Map<String, Any?>>()
 
     override fun onCleared() {
         super.onCleared()

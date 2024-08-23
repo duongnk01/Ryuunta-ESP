@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
-import ryuunta.iot.ryuuntaesp.data.network.RetrofitHelper
 import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.hideKeyboard
 import javax.inject.Inject
@@ -93,11 +92,7 @@ abstract class BaseFragment<VB : ViewBinding, V : BaseViewModel>(
         }
 
         viewModel.loading.observe(fragment) {
-            if (it) {
-                showLoading()
-            } else {
-                hideLoading()
-            }
+            isScreenLoading(it)
         }
     }
 
@@ -125,12 +120,11 @@ abstract class BaseFragment<VB : ViewBinding, V : BaseViewModel>(
      */
     protected open fun handlerError(tag: String, message: String) {}
 
-    open fun showLoading() {
-        (activity as BaseActivity<*, *>).showLoadingScreen()
-    }
-
-    open fun hideLoading() {
-        (activity as BaseActivity<*, *>).hideLoadingScreen()
+    open fun isScreenLoading(isLoading: Boolean) {
+        if (isLoading)
+            (activity as BaseActivity<*, *>).showLoadingScreen()
+        else
+            (activity as BaseActivity<*, *>).hideLoadingScreen()
     }
 
     open fun showAlertDialog(title: String?, message: String?) {
