@@ -45,6 +45,9 @@ abstract class BaseFragment<VB : ViewBinding, V : BaseViewModel>(
         } catch (e: Exception) {
             e.printStackTrace()
         }
+        initViewModel(this)
+        initViews(savedInstanceState)
+        initEvents()
         if (isCustomBackPress()) {
             activity?.onBackPressedDispatcher?.addCallback(
                 viewLifecycleOwner,
@@ -60,9 +63,7 @@ abstract class BaseFragment<VB : ViewBinding, V : BaseViewModel>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewModel(this)
-        initViews(view)
-        initEvents()
+        onSetViewInfo()
     }
 
     open fun initViewModel(fragment: LifecycleOwner) {
@@ -99,12 +100,14 @@ abstract class BaseFragment<VB : ViewBinding, V : BaseViewModel>(
     /**
      * Khởi tạo view
      */
-    abstract fun initViews(view: View)
+    abstract fun initViews(savedInstanceState: Bundle?)
     protected open fun initEvents() {
         binding.root.setOnClickListener {
             it.hideKeyboard()
         }
     }
+
+    protected open fun onSetViewInfo() {}
 
     /**
      * Xử lí response

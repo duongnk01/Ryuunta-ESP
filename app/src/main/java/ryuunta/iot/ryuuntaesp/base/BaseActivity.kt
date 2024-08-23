@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.Window
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
@@ -20,8 +19,6 @@ import androidx.navigation.NavController
 import androidx.viewbinding.ViewBinding
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.common.DialogLoading
-import ryuunta.iot.ryuuntaesp.data.network.RetrofitHelper
-import ryuunta.iot.ryuuntaesp.main.MainActivity
 import ryuunta.iot.ryuuntaesp.utils.RLog
 import javax.inject.Inject
 import kotlin.system.exitProcess
@@ -50,15 +47,15 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel>(
         DialogLoading(this)
     }
 
-//    override fun onConfigurationChanged(newConfig: Configuration) {
-//        super.onConfigurationChanged(newConfig)
-//        val darkModeFlag = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-//        if (darkModeFlag == Configuration.UI_MODE_NIGHT_NO) {
-//            setTheme(R.style.Theme_RyuuntaESP)
-//        } else {
-//            setTheme(R.style.Theme_RyuuntaESP_Dark)
-//        }
-//    }
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val darkModeFlag = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        if (darkModeFlag == Configuration.UI_MODE_NIGHT_NO) {
+            setTheme(R.style.Theme_RyuuntaESP)
+        } else {
+            setTheme(R.style.Theme_RyuuntaESP_Dark)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initViewModel(this)

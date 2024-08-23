@@ -97,6 +97,14 @@
                 android:orientation="vertical"
                 android:padding="@dimen/_space8dp">
 
+                <TextView
+                    android:id="@+id/btn_switch_darkmode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="dark mode"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_space24dp"/>
+
                 <ImageView
                     android:layout_width="@dimen/_space128dp"
                     android:layout_height="@dimen/_space128dp"

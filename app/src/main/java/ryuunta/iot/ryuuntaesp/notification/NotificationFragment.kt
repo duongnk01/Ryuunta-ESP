@@ -1,9 +1,9 @@
 package ryuunta.iot.ryuuntaesp.notification
 
-import android.view.View
+import android.os.Bundle
 import ryuunta.iot.ryuuntaesp.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.databinding.FragmentNotificationBinding
-import ryuunta.iot.ryuuntaesp.main.MainActivity
+import ryuunta.iot.ryuuntaesp.MainActivity
 
 class NotificationFragment: BaseFragment<FragmentNotificationBinding, NotiViewModel>(FragmentNotificationBinding::inflate, NotiViewModel::class.java) {
 
@@ -11,7 +11,11 @@ class NotificationFragment: BaseFragment<FragmentNotificationBinding, NotiViewMo
         super.onResume()
         (activity as MainActivity).headerHome(true)
     }
-    override fun initViews(view: View) {
+    override fun initViews(view: Bundle?) {
 //        TODO("Not yet implemented")
+    }
+
+    companion object {
+        fun newInstance() = NotificationFragment()
     }
 }

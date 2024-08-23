@@ -2,6 +2,7 @@ package ryuunta.iot.ryuuntaesp.devices
 
 import android.Manifest
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.espressif.iot.esptouch.EsptouchTask
@@ -63,7 +64,7 @@ class AddDeviceFragment: BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMod
             binding.currentSSIDPickup = it
         }
     }
-    override fun initViews(view: View) {
+    override fun initViews(view: Bundle?) {
         checkPermissions(
             requireContext(),
             listPermission
@@ -172,5 +173,7 @@ class AddDeviceFragment: BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMod
     override fun customBackPress() {
         super.customBackPress()
         cancelEsptouch()
+        navController.popBackStack()
+
     }
 }

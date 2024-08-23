@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.navigation.fragment.NavHostFragment
 import ryuunta.iot.ryuuntaesp.base.BaseActivity
 import ryuunta.iot.ryuuntaesp.databinding.ActivityInitiationBinding
-import ryuunta.iot.ryuuntaesp.main.MainActivity
 
 class InitiationActivity : BaseActivity<ActivityInitiationBinding, InitiationViewModel>(InitiationViewModel::class.java) {
     override fun getLayoutRes(): Int {

@@ -2,7 +2,7 @@ package ryuunta.iot.ryuuntaesp.authentication
 
 import android.app.Activity
 import android.content.Intent
-import android.view.View
+import android.os.Bundle
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.motion.widget.MotionLayout
@@ -11,7 +11,7 @@ import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.common.DialogLottie
 import ryuunta.iot.ryuuntaesp.databinding.FragmentSignInBinding
-import ryuunta.iot.ryuuntaesp.main.MainActivity
+import ryuunta.iot.ryuuntaesp.MainActivity
 import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.fadeIn
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
@@ -33,7 +33,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, AuthViewModel>(
         DialogLottie(requireContext())
     }
 
-    override fun initViews(view: View) {
+    override fun initViews(view: Bundle?) {
         binding.apply {
             fadeIn(container, 280)
             fadeIn(txtAppName, 280)

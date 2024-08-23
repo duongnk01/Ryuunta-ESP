@@ -1,15 +1,13 @@
 package ryuunta.iot.ryuuntaesp.authentication
 
-import android.content.Intent
-import android.view.View
+import android.os.Bundle
 import com.bumptech.glide.Glide
-import ryuunta.iot.ryuuntaesp.InitiationActivity
-import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.databinding.FragmentUserBinding
-import ryuunta.iot.ryuuntaesp.main.MainActivity
-import ryuunta.iot.ryuuntaesp.main.MainViewModel
+import ryuunta.iot.ryuuntaesp.MainActivity
+import ryuunta.iot.ryuuntaesp.MainViewModel
 import ryuunta.iot.ryuuntaesp.utils.RLog
+import ryuunta.iot.ryuuntaesp.utils.setDarkModeTheme
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
 
 class UserFragment : BaseFragment<FragmentUserBinding, MainViewModel>(
@@ -19,13 +17,15 @@ class UserFragment : BaseFragment<FragmentUserBinding, MainViewModel>(
 
     private val TAG = "UserFragment"
 
+    private var isDarkmode = false
+
     override fun onResume() {
         super.onResume()
         (activity as MainActivity).headerHome(false)
 
     }
 
-    override fun initViews(view: View) {
+    override fun initViews(savedInstanceState: Bundle?) {
         AuthenticationHelper.getInfoUser()?.let {
             if (!it.displayName.isNullOrEmpty())
                 binding.txtUsername.text = it.displayName
@@ -40,10 +40,19 @@ class UserFragment : BaseFragment<FragmentUserBinding, MainViewModel>(
     override fun initEvents() {
         super.initEvents()
         binding.apply {
+            btnSwitchDarkmode.setPreventDoubleClick {
+                isDarkmode = !isDarkmode
+                setDarkModeTheme(isDarkmode)
+                RLog.d(TAG, "darkmode: $isDarkmode")
+            }
             btnLogout.setPreventDoubleClick {
                 (activity as MainActivity).logout()
             }
         }
+    }
+
+    companion object {
+        fun newInstance() = UserFragment()
     }
 
 }

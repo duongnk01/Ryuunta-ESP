@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".main.MainActivity"
+            android:name=".MainActivity"
             android:configChanges="uiMode"
             android:exported="false" />
         <activity

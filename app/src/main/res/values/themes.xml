@@ -19,6 +19,21 @@
 
     </style>
 
+    <style name="Theme.RyuuntaESP.Dark" parent="Base.Theme.RyuuntaESP">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="backgroundHeaderColor">@color/bg_header_darkmode</item>
+        <item name="backgroundColor">@color/bg_color_darkmode</item>
+        <item name="backgroundItem">@color/bg_item_darkmode</item>
+        <item name="backgroundItemRipple">@color/bg_item_ripple_darkmode</item>
+        <item name="textHeaderColor">@color/text_header_color_darkmode</item>
+        <item name="textNormalColor">@color/text_normal_color_darkmode</item>
+        <item name="textHintColor">@color/text_hint_color_darkmode</item>
+        <item name="tintIcon">@color/tint_icon_darkmode</item>
+        <item name="colorRipple">?android:selectableItemBackgroundBorderless</item>
+        <item name="accentColor">@color/accent_color_darkmode</item>
+    </style>
+
     <style name="DialogTheme2" parent="@style/Base.Theme.AppCompat.Light.Dialog">
         <item name="android:windowIsFloating">false</item>
     </style>

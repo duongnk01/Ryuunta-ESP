@@ -1,20 +1,19 @@
 package ryuunta.iot.ryuuntaesp.home
 
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
-import com.google.gson.Gson
 import ryuunta.iot.ryuuntaesp.adapter.RoomSpinnerAdapter
 import ryuunta.iot.ryuuntaesp.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.data.model.WeatherDataCompilation
 import ryuunta.iot.ryuuntaesp.data.network.ResponseCode
 import ryuunta.iot.ryuuntaesp.databinding.FragmentHomeBinding
-import ryuunta.iot.ryuuntaesp.main.MainActivity
-import ryuunta.iot.ryuuntaesp.main.MainViewModel
-import ryuunta.iot.ryuuntaesp.utils.RLog
+import ryuunta.iot.ryuuntaesp.MainActivity
+import ryuunta.iot.ryuuntaesp.MainViewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
     FragmentHomeBinding::inflate,
@@ -34,7 +33,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
         (activity as MainActivity).headerHome(true)
     }
 
-    override fun initViews(view: View) {
+    override fun initViews(savedInstanceState: Bundle?) {
         binding.apply {
 
         }
@@ -109,5 +108,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
 
     override fun isScreenLoading(isLoading: Boolean) {
         binding.cvWeather.isLoading = isLoading
+    }
+
+    companion object {
+        fun newInstance() = HomeFragment()
     }
 }

@@ -1,13 +1,11 @@
-package ryuunta.iot.ryuuntaesp.main
+package ryuunta.iot.ryuuntaesp
 
 import android.content.Context
-import io.reactivex.Observable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.base.BaseViewModel
 import ryuunta.iot.ryuuntaesp.data.model.IconWithTextObj
 import ryuunta.iot.ryuuntaesp.data.model.RoomObj

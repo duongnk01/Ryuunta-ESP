@@ -1,22 +1,17 @@
 package ryuunta.iot.ryuuntaesp
 
-import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
-import androidx.navigation.fragment.findNavController
 import ryuunta.iot.ryuuntaesp.authentication.AuthenticationHelper
 import ryuunta.iot.ryuuntaesp.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.databinding.FragmentSplashScreenBinding
-import ryuunta.iot.ryuuntaesp.utils.fadeIn
 
 class SplashFragment : BaseFragment<FragmentSplashScreenBinding, InitiationViewModel>(
     FragmentSplashScreenBinding::inflate,
     InitiationViewModel::class.java
 ) {
-    override fun initViews(view: View) {
+    override fun initViews(savedInstanceState: Bundle?) {
         // This is used to hide the status bar and make
         // the splash screen as a full screen activity.
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

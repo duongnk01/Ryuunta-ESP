@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/ryuuntaMainFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -40,4 +40,13 @@
         android:name="ryuunta.iot.ryuuntaesp.devices.AddDeviceFragment"
         android:label="AddDeviceFragment"
         tools:layout="@layout/fragment_add_device"/>
+    <fragment
+        android:id="@+id/ryuuntaMainFragment"
+        android:name="ryuunta.iot.ryuuntaesp.main.RyuuntaMainFragment"
+        android:label="RyuuntaMainFragment"
+        tools:layout="@layout/fragment_ryuunta_main">
+        <action
+            android:id="@+id/action_ryuuntaMainFragment_to_addDeviceFragment"
+            app:destination="@id/addDeviceFragment" />
+    </fragment>
 </navigation>

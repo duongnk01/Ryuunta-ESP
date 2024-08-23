@@ -1,8 +1,8 @@
 package ryuunta.iot.ryuuntaesp.manage
 
 import android.graphics.Color
+import android.os.Bundle
 import android.util.Log
-import android.view.View
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -10,7 +10,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import ryuunta.iot.ryuuntaesp.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.databinding.FragmentManageBinding
-import ryuunta.iot.ryuuntaesp.main.MainActivity
+import ryuunta.iot.ryuuntaesp.MainActivity
 
 class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(FragmentManageBinding::inflate, ManageViewModel::class.java) {
 
@@ -26,7 +26,7 @@ class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(Frag
         (activity as MainActivity).headerHome(false)
     }
 
-    override fun initViews(view: View) {
+    override fun initViews(view: Bundle?) {
         initFirebase()
     }
 
@@ -152,6 +152,10 @@ class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(Frag
             }
 
         })
+    }
+
+    companion object {
+        fun newInstance() = ManageFragment()
     }
 
 }

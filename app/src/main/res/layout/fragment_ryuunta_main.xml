@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:gravity="center"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            android:paddingVertical="@dimen/_space8dp"-->
+        <!--            tools:ignore="UseCompoundDrawables">-->
+
+        <!--            <ImageView-->
+        <!--                android:layout_width="@dimen/_space36dp"-->
+        <!--                android:layout_height="@dimen/_space36dp"-->
+        <!--                android:background="@drawable/circle_shape"-->
+        <!--                android:importantForAccessibility="no"-->
+        <!--                android:src="@drawable/ic_no_face" />-->
+
+        <!--            <TextView-->
+        <!--                style="@style/theme_header_text"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_gravity="center"-->
+        <!--                android:text="Ryuunta"-->
+        <!--                app:drawableEndCompat="@drawable/ic_polygon_arrow"-->
+        <!--                android:drawablePadding="@dimen/_space12dp"/>-->
+        <!--        </LinearLayout>-->
+
+        <Spinner
+            android:id="@+id/spin_home"
+            style="@style/MyHeaderSpinnerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_space64dp"
+                android:layout_marginBottom="@dimen/_space16dp"
+                app:layout_anchor="@id/vp_main"
+                android:background="@drawable/bg_shadow_faded"
+                app:layout_anchorGravity="bottom"/>
+
+            <com.google.android.material.bottomappbar.BottomAppBar
+                android:id="@+id/bottomAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:backgroundTint="?backgroundHeaderColor"
+                android:layout_gravity="bottom"
+                app:fabCradleMargin="@dimen/_space8dp"
+                app:fabCradleRoundedCornerRadius="@dimen/_space24dp"
+                app:fabCradleVerticalOffset="0dp">
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/bottomNavigationView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/_space16dp"
+                    android:background="@android:color/transparent"
+                    app:elevation="0dp"
+                    app:itemBackground="@android:color/transparent"
+                    app:labelVisibilityMode="unlabeled"
+                    app:menu="@menu/menu_bottom_nav" />
+
+            </com.google.android.material.bottomappbar.BottomAppBar>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_add_device"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/nav_fab_color"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/baseline_add_24"
+                app:layout_anchor="@id/bottomAppBar"
+                app:tint="@color/white" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
+</layout>
