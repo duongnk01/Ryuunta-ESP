@@ -11,11 +11,6 @@
 <!--                android:topLeftRadius="@dimen/_space4dp"-->
 <!--                android:bottomRightRadius="@dimen/_space4dp"-->
 <!--                android:bottomLeftRadius="@dimen/_space20dp"/>-->
-
-            <padding android:left="@dimen/_space24dp"
-                android:right="@dimen/_space24dp"
-                android:top="@dimen/_space16dp"
-                android:bottom="@dimen/_space8dp"/>
             <corners android:radius="@dimen/_space24dp"/>
         </shape>
     </item>

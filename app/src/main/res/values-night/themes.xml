@@ -1,8 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.RyuuntaESP" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.RyuuntaESP" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:statusBarColor">?backgroundHeaderColor</item>
+        <item name="android:textColorPrimary">?textNormalColor</item>
+
+    </style>
+
+    <style name="Theme.RyuuntaESP.Dark" parent="Base.Theme.RyuuntaESP">
         <item name="backgroundHeaderColor">@color/bg_header_darkmode</item>
         <item name="backgroundColor">@color/bg_color_darkmode</item>
         <item name="backgroundItem">@color/bg_item_darkmode</item>
@@ -13,5 +19,8 @@
         <item name="tintIcon">@color/tint_icon_darkmode</item>
         <item name="colorRipple">?android:selectableItemBackgroundBorderless</item>
         <item name="accentColor">@color/accent_color_darkmode</item>
+        <item name="backgroundItemLv2">@color/bg_item_darkmode_lv2</item>
+        <item name="tintColorMainIconInactive">@color/tint_icon_darkmode_inactive</item>
+        <item name="backgroundNavColor">@color/bg_nav_darkmode</item>
     </style>
 </resources>

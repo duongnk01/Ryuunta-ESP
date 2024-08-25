@@ -10,7 +10,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ryuunta.iot.ryuuntaesp.core.base.BaseViewModel
-import ryuunta.iot.ryuuntaesp.core.helper.AuthenticationHelper
+import ryuunta.iot.ryuuntaesp.helper.AuthenticationHelper
 import ryuunta.iot.ryuuntaesp.core.state.AuthenticationState
 
 class AuthViewModel : BaseViewModel() {

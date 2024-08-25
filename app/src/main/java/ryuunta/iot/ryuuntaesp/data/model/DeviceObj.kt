@@ -1,6 +1,6 @@
 package ryuunta.iot.ryuuntaesp.data.model
 
-import ryuunta.iot.ryuuntaesp.home.devices.DeviceViewType
+import ryuunta.iot.ryuuntaesp.main.home.devices.DeviceViewType
 
 data class DeviceObj(
     val id: Int = 0,

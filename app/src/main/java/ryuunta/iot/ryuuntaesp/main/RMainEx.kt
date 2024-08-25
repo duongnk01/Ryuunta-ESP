@@ -3,9 +3,9 @@ package ryuunta.iot.ryuuntaesp.main
 import androidx.viewpager2.widget.ViewPager2
 import ryuunta.iot.ryuuntaesp.adapter.MainPagerAdapter
 import ryuunta.iot.ryuuntaesp.authentication.UserFragment
-import ryuunta.iot.ryuuntaesp.home.HomeFragment
-import ryuunta.iot.ryuuntaesp.manage.ManageFragment
-import ryuunta.iot.ryuuntaesp.notification.NotificationFragment
+import ryuunta.iot.ryuuntaesp.main.home.HomeFragment
+import ryuunta.iot.ryuuntaesp.main.manage.ManageFragment
+import ryuunta.iot.ryuuntaesp.main.notification.NotificationFragment
 
 fun RMainFragment.initViewPager() {
     val fragmentList = listOf(

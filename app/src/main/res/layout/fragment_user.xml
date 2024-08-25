@@ -15,6 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?backgroundColor"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -114,6 +115,20 @@
                     android:gravity="center"
                     android:text="@string/txt_nothing_here_for_now" />
 
+                <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:progressDrawable="@drawable/seek_bar_fan_level"
+                    android:max="2"/>
+
+                <TextView
+                    android:id="@+id/btn_switch_darkmode"
+                    android:layout_marginTop="@dimen/_space24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="darkmode"
+                    android:gravity="center"/>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -126,6 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_space16dp"
                     android:layout_marginVertical="@dimen/_space24dp"
+                    android:paddingVertical="@dimen/_space12dp"
                     android:background="@drawable/bg_button_corner_gray_24"
                     android:gravity="center"
                     android:text="@string/txt_logout"

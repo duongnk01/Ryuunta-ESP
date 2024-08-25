@@ -15,6 +15,7 @@ import ryuunta.iot.ryuuntaesp.RMainActivity
 import ryuunta.iot.ryuuntaesp.core.state.AuthenticationState
 import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.fadeIn
+import ryuunta.iot.ryuuntaesp.utils.hideKeyboard
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
 import ryuunta.iot.ryuuntaesp.utils.showDialogNegative
 import ryuunta.iot.ryuuntaesp.utils.showDialogNotification
@@ -34,7 +35,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, AuthViewModel>(
         DialogLottie(requireContext())
     }
 
-    override fun initViews(view: Bundle?) {
+    override fun initViews(savedInstanceState: Bundle?) {
         binding.apply {
             fadeIn(container, 280)
             fadeIn(txtAppName, 280)
@@ -44,6 +45,9 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, AuthViewModel>(
                 StepView.Step(layoutSignIn),
                 StepView.Step(layoutSignUp)
             )
+
+            setBackground()
+
         }
 
     }
@@ -52,6 +56,9 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, AuthViewModel>(
         super.initEvents()
 
         binding.apply {
+            container.setPreventDoubleClick {
+                it?.hideKeyboard()
+            }
             motionSwip.setTransitionListener(object : TransitionListener {
                 override fun onTransitionStarted(
                     motionLayout: MotionLayout?,

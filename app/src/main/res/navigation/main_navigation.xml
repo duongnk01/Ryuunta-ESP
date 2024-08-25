@@ -14,7 +14,7 @@
     <!--    -->
     <fragment
         android:id="@+id/manageFragment"
-        android:name="ryuunta.iot.ryuuntaesp.manage.ManageFragment"
+        android:name="ryuunta.iot.ryuuntaesp.main.manage.ManageFragment"
         android:label="ScenariosFragment"
         tools:layout="@layout/fragment_manage">
         <action
@@ -40,7 +40,7 @@
     <!--        tools:layout="@layout/fragment_user" />-->
     <fragment
         android:id="@+id/addDeviceFragment"
-        android:name="ryuunta.iot.ryuuntaesp.devices.AddDeviceFragment"
+        android:name="ryuunta.iot.ryuuntaesp.main.devices.AddDeviceFragment"
         android:label="AddDeviceFragment"
         tools:layout="@layout/fragment_add_device" />
     <fragment
@@ -65,7 +65,7 @@
     </fragment>
     <fragment
         android:id="@+id/devicesFragment"
-        android:name="ryuunta.iot.ryuuntaesp.home.content.DevicesFragment"
+        android:name="ryuunta.iot.ryuuntaesp.main.home.content.DevicesFragment"
         android:label="DevicesFragment"
         tools:layout="@layout/fragment_devices">
 

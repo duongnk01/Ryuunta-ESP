@@ -5,6 +5,8 @@ import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import ryuunta.iot.ryuuntaesp.R
+import ryuunta.iot.ryuuntaesp.core.base.Config
+import ryuunta.iot.ryuuntaesp.utils.getAssetBackground
 import ryuunta.iot.ryuuntaesp.utils.isEmailAccountValid
 import ryuunta.iot.ryuuntaesp.utils.isPasswordValid
 
@@ -48,4 +50,13 @@ fun SignInFragment.authValidation(email: String, pass: String) : Boolean {
         return false
     }
     return true
+}
+
+fun SignInFragment.setBackground() {
+    if (Config.isDarkMode) {
+        getAssetBackground(requireContext(), "bg_wangshu_inn_night.jpg", binding.imgBgSignIn)
+    } else {
+        getAssetBackground(requireContext(), "bg_wangshu_inn_day.jpg", binding.imgBgSignIn)
+    }
+
 }

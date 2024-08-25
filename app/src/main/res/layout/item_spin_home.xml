@@ -7,6 +7,7 @@
         android:id="@+id/item_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?backgroundColor"
         android:orientation="vertical">
 
         <LinearLayout
@@ -17,10 +18,11 @@
             android:paddingVertical="@dimen/_space8dp"
             tools:ignore="UseCompoundDrawables">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/img_home_avatar"
                 android:layout_width="@dimen/_space36dp"
                 android:layout_height="@dimen/_space36dp"
+                app:shapeAppearanceOverlay="@style/circle_shape"
                 android:background="@drawable/circle_shape"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_no_face" />
@@ -45,6 +47,7 @@
         </LinearLayout>
 
         <View
+            android:id="@+id/base_line"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="?backgroundItemRipple" />

@@ -3,14 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@android:color/transparent"
     android:layout_height="@dimen/_space160dp">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img_weather_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="bottom"
         android:alpha="0.7"
+        app:shapeAppearanceOverlay="@style/rounded_shape_12"
         android:scaleType="centerCrop"
         android:src="@drawable/img_wearther_cloudy" />
 
@@ -20,7 +21,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="top"
         tools:visibility="visible"
-        android:background="@drawable/bg_faded_transparent"
+        android:background="@drawable/bg_faded_transparent_12"
         android:padding="@dimen/_space8dp">
 
         <ImageView
@@ -123,7 +124,7 @@
         android:background="?backgroundItem"
         android:gravity="center"
         android:alpha="0.7"
-        tools:visibility="gone"
+        tools:visibility="visible"
         android:orientation="vertical">
 
         <ImageView

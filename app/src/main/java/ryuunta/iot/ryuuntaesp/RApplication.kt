@@ -7,9 +7,11 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.location.LocationManager
 import android.net.wifi.WifiManager
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import ryuunta.iot.ryuuntaesp.core.base.Config
 import ryuunta.iot.ryuuntaesp.preference.ThemePreference
 import ryuunta.iot.ryuuntaesp.utils.setDarkModeTheme
 
@@ -49,7 +51,9 @@ class RApplication : Application() {
         },
             onComplete = { themePreference ->
                 isDarkMode = themePreference.isDarkMode
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 setDarkModeTheme(isDarkMode)
+                Config.isDarkMode = isDarkMode
             }
         )
     }

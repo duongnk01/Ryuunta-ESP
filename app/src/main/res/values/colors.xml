@@ -16,34 +16,39 @@
     <color name="nav_icon_tint">#ffffff</color>
     <color name="nav_text_color">#ffffff</color>
     <color name="nav_fab_color">#6B79CC</color>
-<!--    <color name="nav_fab_color">#B985FB</color>-->
 
     //daylight theme color
     <color name="bg_item_daylight">#F8F8F8</color>
     <color name="bg_item_ripple_daylight">#CDCDCD</color>
     <color name="bg_color_daylight">#FFFFFF</color>
-    <color name="bg_header_daylight">#EFFDFF</color>
+    <color name="bg_header_daylight">#E7F5FF</color>
+    <color name="bg_nav_daylight">#7DCBFF</color>
     <color name="text_header_color_daylight">#404849</color>
     <color name="text_normal_color_daylight">#292929</color>
     <color name="text_hint_color_daylight">#606060</color>
     <color name="tint_icon_daylight">#222222</color>
     <color name="color_ripple_daylight">#C5C5C5</color>
-    <color name="accent_color_daylight">#6B79CC</color>
-    <color name="accent_color_faded">#326B79CC</color>
+    <color name="accent_color_daylight">#7C8DF1</color>
+    <color name="accent_color_faded">#666B79CC</color>
+    <color name="bg_item_daylight_lv2">#E8E8E8</color>
+    <color name="tint_icon_daylight_inactive">#CFCFCF</color>
+
 
     //darkmode theme color
-    <color name="bg_item_darkmode">#191919</color>
+    <color name="bg_item_darkmode">#171717</color>
     <color name="bg_item_ripple_darkmode">#4C4C4C</color>
     <color name="bg_color_darkmode">#000000</color>
-    <color name="bg_header_darkmode">#565C5C</color>
+    <color name="bg_header_darkmode">#222425</color>
+    <color name="bg_nav_darkmode">#101920</color>
     <color name="text_header_color_darkmode">#D3EAED</color>
-    <color name="text_normal_color_darkmode">#AFAFAF</color>
-    <color name="text_hint_color_darkmode">#DADADA</color>
+    <color name="text_normal_color_darkmode">#D5D5D5</color>
+    <color name="text_hint_color_darkmode">#ACACAC</color>
     <color name="tint_icon_darkmode">#E6E6E6</color>
     <color name="color_ripple_darkmode">#555555</color>
-    <color name="accent_color_darkmode">#6B79CC</color>
-
-
+    <color name="accent_color_darkmode">#3C4371</color>
+    <color name="bg_item_darkmode_lv2">#282828</color>
+    <color name="tint_icon_active">#6B79CC</color>
+    <color name="tint_icon_darkmode_inactive">#EEEEEE</color>
 
 
 </resources>

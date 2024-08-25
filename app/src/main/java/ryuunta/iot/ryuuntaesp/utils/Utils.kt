@@ -3,12 +3,9 @@ package ryuunta.iot.ryuuntaesp.utils
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.wifi.WifiManager
-import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import com.google.gson.Gson
 import ryuunta.iot.ryuuntaesp.data.model.WifiSSID
-import ryuunta.iot.ryuuntaesp.widget.DeviceButtonView
 import java.util.Random
 
 fun scanWifi(context: Context): List<WifiSSID> {
@@ -66,8 +63,8 @@ fun <K, V> splitHashMap(map: Map<K, V>, chunkSize: Int): List<Map<K, V>> {
     return subLists.map { it.toMap() }
 }
 
-fun randomBackground(context: Context, assetPath : String, iv: ImageView) {
-    RLog.d("randomBackground", "load random background")
+fun getRandomSticker(context: Context, assetPath : String, iv: ImageView) {
+    RLog.d("getRandomSticker", "load random sticker")
     val assetManager = context.assets
     try {
         val files = assetManager.list(assetPath)
@@ -82,5 +79,18 @@ fun randomBackground(context: Context, assetPath : String, iv: ImageView) {
         }
     } catch (e: Exception) {
         e.printStackTrace()
+    }
+}
+
+fun getAssetBackground(context: Context, assetName : String, iv: ImageView) {
+    RLog.d("getAssetBackground", "load specific background")
+    try {
+        val inputStream = context.assets.open("background/$assetName")
+        val drawable = Drawable.createFromStream(inputStream, null)
+        iv.setImageDrawable(drawable)
+        inputStream.close()
+    } catch (e: Exception) {
+        e.printStackTrace()
+
     }
 }

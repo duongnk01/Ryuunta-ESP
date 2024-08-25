@@ -7,6 +7,7 @@
         android:id="@+id/item_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -36,9 +37,5 @@
                 android:src="@drawable/baseline_unfold_more_24" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="?backgroundItemRipple" />
     </LinearLayout>
 </layout>

@@ -113,4 +113,5 @@
   <string name="txt_poor">Kém</string>
   <string name="txt_very_poor">Rất kém</string>
   <string name="error_element_not_found">Không tìm thấy nút này trên máy chủ. Không thể thao tác.</string>
+    <string name="error_firebase_realtime_authentication_failure">Xác thực với firebase realtime thất bại. Không thể lấy dữ liệu thiết bị</string>
 </resources>

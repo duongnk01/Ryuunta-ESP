@@ -18,7 +18,7 @@ import ryuunta.iot.ryuuntaesp.data.network.UrlManage
 import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.convertKelvinToCelsius
 import ryuunta.iot.ryuuntaesp.utils.gone
-import ryuunta.iot.ryuuntaesp.utils.randomBackground
+import ryuunta.iot.ryuuntaesp.utils.getRandomSticker
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
 import ryuunta.iot.ryuuntaesp.utils.show
 import java.util.Locale
@@ -116,7 +116,7 @@ class WeatherCardView : FrameLayout {
         RLog.d(TAG, "loading weather view")
         animLoading.show(!isLoading)
         if (!isLoading) {
-            randomBackground(context, "chibi", bgWeather)
+            getRandomSticker(context, "sticker", bgWeather)
             layoutError.gone()
             layoutWeather.show()
         }

@@ -2,7 +2,11 @@
 <resources>
     <attr name="backgroundColor" format="reference|color"/>
     <attr name="backgroundHeaderColor" format="reference|color"/>
+    <attr name="backgroundNavColor" format="reference|color"/>
     <attr name="backgroundItem" format="reference|color"/>
+    <attr name="backgroundItemLv2" format="reference|color"/>
+    <attr name="tintColorMainIconActive" format="reference|color"/>
+    <attr name="tintColorMainIconInactive" format="reference|color"/>
     <attr name="tintIcon" format="reference|color"/>
     <attr name="colorRipple" format="reference|color"/>
     <attr name="backgroundItemRipple" format="reference|color"/>

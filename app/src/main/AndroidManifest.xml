@@ -26,7 +26,6 @@
         <activity
             android:name=".InitiationActivity"
             android:configChanges="uiMode"
-            android:windowSoftInputMode="adjustResize|adjustPan"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,11 +35,6 @@
         </activity>
         <activity
             android:name=".RMainActivity"
-            android:configChanges="uiMode"
-            android:windowSoftInputMode="adjustResize|adjustPan"
-            android:exported="false" />
-        <activity
-            android:name=".devices.AddDeviceActivity"
             android:configChanges="uiMode"
             android:exported="false" />
     </application>

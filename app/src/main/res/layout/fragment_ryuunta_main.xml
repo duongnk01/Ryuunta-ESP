@@ -6,6 +6,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?backgroundColor"
         android:orientation="vertical">
 
         <!--        <LinearLayout-->
@@ -36,7 +37,7 @@
         <Spinner
             android:id="@+id/spin_home"
             style="@style/MyHeaderSpinnerStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 
@@ -63,7 +64,7 @@
                 android:id="@+id/bottomAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:backgroundTint="?backgroundHeaderColor"
+                app:backgroundTint="?backgroundNavColor"
                 android:layout_gravity="bottom"
                 app:fabCradleMargin="@dimen/_space8dp"
                 app:fabCradleRoundedCornerRadius="@dimen/_space24dp"
@@ -77,6 +78,7 @@
                     android:background="@android:color/transparent"
                     app:elevation="0dp"
                     app:itemBackground="@android:color/transparent"
+                    app:itemIconTint="@drawable/color_main_icon_tint_selector"
                     app:labelVisibilityMode="unlabeled"
                     app:menu="@menu/menu_bottom_nav" />
 

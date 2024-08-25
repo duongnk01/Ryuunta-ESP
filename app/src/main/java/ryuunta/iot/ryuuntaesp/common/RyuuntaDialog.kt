@@ -79,7 +79,7 @@ abstract class RyuuntaDialog<T : ViewDataBinding>(
             ViewGroup.LayoutParams.MATCH_PARENT,
             if (this.isFullScreen()) ViewGroup.LayoutParams.MATCH_PARENT else ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        dialog.window?.attributes?.windowAnimations = R.style.RogoDialogAnimation
+        dialog.window?.attributes?.windowAnimations = R.style.RyuuntaDialogAnimation
 
         dialog.onCreateContextMenu { menu, v, menuInfo ->
             onCreateContextMenu(menu, v, menuInfo)

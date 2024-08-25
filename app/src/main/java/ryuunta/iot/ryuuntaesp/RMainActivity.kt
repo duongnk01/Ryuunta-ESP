@@ -1,7 +1,7 @@
 package ryuunta.iot.ryuuntaesp
 
 import android.content.Intent
-import ryuunta.iot.ryuuntaesp.core.helper.AuthenticationHelper
+import ryuunta.iot.ryuuntaesp.helper.AuthenticationHelper
 import ryuunta.iot.ryuuntaesp.core.base.BaseActivity
 import ryuunta.iot.ryuuntaesp.databinding.ActivityMainBinding
 

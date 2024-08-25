@@ -10,6 +10,7 @@ import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.data.model.RoomObj
 import ryuunta.iot.ryuuntaesp.databinding.ItemSpinRoomBinding
 import ryuunta.iot.ryuuntaesp.databinding.SpinRoomBinding
+import ryuunta.iot.ryuuntaesp.utils.gone
 
 class RoomSpinnerAdapter (
     private val context: Context,
@@ -25,14 +26,11 @@ class RoomSpinnerAdapter (
         }
 
     override fun getCount(): Int {
-        return listRoom.size + 1
+        return listRoom.size
     }
 
     override fun getItem(position: Int): RoomObj {
-        return if (position == listRoom.size) RoomObj(
-            position,
-            context.getString(R.string.txxt_add_more))
-            else listRoom[position]
+        return listRoom[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -50,15 +48,17 @@ class RoomSpinnerAdapter (
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val v = ItemSpinRoomBinding.inflate(LayoutInflater.from(context), parent, false)
-        if (position == 0) {
-            v.imgShowMore.visibility = View.VISIBLE
-            v.txtRoomName.text = listRoom[position].name
-        } else if (position == listRoom.size) {
-            v.baseLine.visibility = View.GONE
-            v.txtRoomName.text = context.getString(R.string.txxt_add_more)
-        }
-        else {
-            v.txtRoomName.text = listRoom[position].name
+        when (position) {
+            0 -> {
+                v.imgShowMore.visibility = View.VISIBLE
+                v.txtRoomName.text = listRoom[position].name
+            }
+            listRoom.size - 1 -> {
+                v.baseLine.gone()
+            }
+            else -> {
+                v.txtRoomName.text = listRoom[position].name
+            }
         }
 
         return v.root

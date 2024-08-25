@@ -7,6 +7,7 @@
         android:id="@+id/item_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?backgroundItemLv2"
         android:elevation="@dimen/_space4dp"
         android:orientation="vertical">
 
@@ -23,6 +24,7 @@
             <TextView
                 android:id="@+id/txt_room_name"
                 style="@style/theme_title_text"
+                android:textColor="?textNormalColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

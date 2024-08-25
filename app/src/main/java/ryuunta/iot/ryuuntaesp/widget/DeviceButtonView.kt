@@ -8,7 +8,7 @@ import android.widget.Toast
 import com.google.gson.Gson
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.data.model.DeviceObj
-import ryuunta.iot.ryuuntaesp.home.devices.DeviceViewType
+import ryuunta.iot.ryuuntaesp.main.home.devices.DeviceViewType
 import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.show
 import ryuunta.iot.ryuuntaesp.utils.splitHashMap
