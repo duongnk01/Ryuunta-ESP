@@ -64,15 +64,17 @@ class AddDeviceFragment: BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMod
             binding.currentSSIDPickup = it
         }
     }
-    override fun initViews(view: Bundle?) {
+    override fun initViews(savedInstanceState: Bundle?) {
         checkPermissions(
             requireContext(),
             listPermission
-        )
-
-        listSSID = scanWifi(requireContext())
-        ssidAdapter.submitList(listSSID)
-        binding.rcvListSsid.adapter = ssidAdapter
+        ) {
+            if (it) {
+                listSSID = scanWifi(requireContext())
+                ssidAdapter.submitList(listSSID)
+                binding.rcvListSsid.adapter = ssidAdapter
+            }
+        }
 
         binding.swiperRefresh.setOnRefreshListener {
             binding.swiperRefresh.isRefreshing = true

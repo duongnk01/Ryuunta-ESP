@@ -1,5 +1,6 @@
 package ryuunta.iot.ryuuntaesp.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.wifi.WifiManager
@@ -8,6 +9,7 @@ import com.google.gson.Gson
 import ryuunta.iot.ryuuntaesp.data.model.WifiSSID
 import java.util.Random
 
+@SuppressLint("MissingPermission")
 fun scanWifi(context: Context): List<WifiSSID> {
     val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
     val wifiList = arrayListOf<WifiSSID>()
