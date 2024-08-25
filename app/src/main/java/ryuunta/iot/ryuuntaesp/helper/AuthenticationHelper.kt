@@ -1,9 +1,12 @@
 package ryuunta.iot.ryuuntaesp.helper
 
+import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.messaging.FirebaseMessaging
 import ryuunta.iot.ryuuntaesp.authentication.SignInMethod
+import ryuunta.iot.ryuuntaesp.preference.AppPref
+import ryuunta.iot.ryuuntaesp.preference.SettingPreference
 import ryuunta.iot.ryuuntaesp.utils.RLog
 
 object AuthenticationHelper {
@@ -13,12 +16,33 @@ object AuthenticationHelper {
         FirebaseAuth.getInstance()
     }
 
+    fun getInstance(): FirebaseAuth = firebaseAuth
+
+    fun getTokenId(context: Context): String {
+        var token = ""
+        firebaseAuth.currentUser?.let {
+            it.getIdToken(true).addOnCompleteListener { tokenTask ->
+                if (tokenTask.isSuccessful) {
+//                    RLog.d(TAG, "token: ${tokenTask.result.token}")
+                    token = if (tokenTask.result.token != null) {
+                        tokenTask.result.token!!
+                    } else {
+                        ""
+                    }
+                }
+
+            }
+        }
+        return  token
+    }
+
     fun getInfoUser(): FirebaseUser? {
         val user = firebaseAuth.currentUser
         RLog.d(TAG, "User name: ${user?.displayName}")
         RLog.d(TAG, "mail: ${user?.email}")
         RLog.d(TAG, "avatar url: ${user?.photoUrl}")
         RLog.d(TAG, "providerID: ${user?.providerId}")
+        RLog.d(TAG, "UID: ${user?.uid}")
         return user
     }
 

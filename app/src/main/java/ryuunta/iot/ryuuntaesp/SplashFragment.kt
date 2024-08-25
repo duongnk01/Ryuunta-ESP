@@ -35,10 +35,14 @@ class SplashFragment : BaseFragment<FragmentSplashScreenBinding, InitiationViewM
         if (currentUser != null) {
             (activity as InitiationActivity).nextToHomePage()
         } else {
-            //remove splash screen from back stack
-            navController.popBackStack(navController.graph.startDestinationId, true)
-            //navigate to sign in fragment
-            navController.navigate(R.id.signInFragment)
+            goToSignIn()
         }
+    }
+
+    private fun goToSignIn() {
+        //remove splash screen from back stack
+        navController.popBackStack(navController.graph.startDestinationId, true)
+        //navigate to sign in fragment
+        navController.navigate(R.id.signInFragment)
     }
 }

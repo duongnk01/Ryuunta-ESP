@@ -149,7 +149,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_space100dp" />
+                    android:layout_height="@dimen/_space64dp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

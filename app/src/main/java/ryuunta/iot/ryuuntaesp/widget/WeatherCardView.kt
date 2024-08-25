@@ -59,7 +59,7 @@ class WeatherCardView : FrameLayout {
     init {
         val inflater: LayoutInflater =
             context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        inflater.inflate(R.layout.weather_card_view, this, true)
+        inflater.inflate(R.layout.view_weather_card, this, true)
 
         layoutWeather = findViewById(R.id.layout_weather)
         layoutError = findViewById(R.id.layout_error)

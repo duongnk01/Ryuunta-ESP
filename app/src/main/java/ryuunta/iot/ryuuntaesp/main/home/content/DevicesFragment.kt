@@ -25,10 +25,6 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
 
     private var device: DeviceObj? = null
 
-    private val elementsAdapter: DeviceElementsAdapter by lazy {
-        DeviceElementsAdapter {}
-    }
-
     override fun initViews(savedInstanceState: Bundle?) {
 
         binding.apply {
@@ -44,13 +40,6 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
                 }
                 txtDeviceLabel.text = deviceItem.name
             }
-
-//            rcvDeviceElements.adapter = elementsAdapter
-//            val fanRemote = DeviceHelper().getAllDevices()[0]
-//            val listElms = fanRemote.buttonList.map {
-//                DeviceElement(fanRemote.devPath, it.value)
-//            }.toList()
-//            elementsAdapter.submitList(listElms)
 
         }
     }

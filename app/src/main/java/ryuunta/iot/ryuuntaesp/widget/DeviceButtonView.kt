@@ -28,7 +28,7 @@ class DeviceButtonView : LinearLayout {
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        inflater.inflate(R.layout.device_button_view, this, true)
+        inflater.inflate(R.layout.view_device_button, this, true)
 
         layout1 = findViewById(R.id.layout_1)
         layout2 = findViewById(R.id.layout_2)

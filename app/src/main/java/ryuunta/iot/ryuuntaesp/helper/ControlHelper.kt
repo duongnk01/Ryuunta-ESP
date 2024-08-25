@@ -2,13 +2,19 @@ package ryuunta.iot.ryuuntaesp.helper
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import ryuunta.iot.ryuuntaesp.utils.RLog
 
 class ControlHelper {
     private val TAG = "ControlHelper"
-    private val dataRealtime = FirebaseDatabase.getInstance()
+    private val db = FirebaseDatabase.getInstance()
+    private var userRef = db.getReference("users")
+
+    fun createUserNode(userId: String) {
+
+    }
 
     /**
      * Function to control data realtime firebase
@@ -29,7 +35,7 @@ class ControlHelper {
         }
 
         elementsPath.forEach { element ->
-            val node = dataRealtime.reference.child("$devicePath/$element")
+            val node = db.reference.child("$devicePath/$element")
             if (state == null) {
                 node.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {

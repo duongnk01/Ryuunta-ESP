@@ -42,7 +42,7 @@ class ButtonElementView constructor(context: Context, attrs: AttributeSet? = nul
     init {
         val inflater: LayoutInflater =
             context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        inflater.inflate(R.layout.button_element_view, this, true)
+        inflater.inflate(R.layout.view_button_element, this, true)
 
         btnButton = findViewById(R.id.btn_button)
         imgPower = findViewById(R.id.img_power)

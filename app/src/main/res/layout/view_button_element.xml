@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_space8dp"
         android:background="@drawable/bg_button_gradient_gray_48"
-        android:elevation="@dimen/_space4dp"
+        android:elevation="1dp"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/_space16dp">

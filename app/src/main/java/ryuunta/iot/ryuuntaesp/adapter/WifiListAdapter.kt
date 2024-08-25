@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import ryuunta.iot.ryuuntaesp.databinding.SsidItemBinding
 import ryuunta.iot.ryuuntaesp.data.model.WifiSSID
+import ryuunta.iot.ryuuntaesp.databinding.ItemSsidBinding
 
 class WifiListAdapter(
     private val onItemClick: (wifi: WifiSSID) -> Unit
@@ -22,7 +22,7 @@ class WifiListAdapter(
 
     }
 ) {
-     class WifiViewHolder constructor(val binding: SsidItemBinding): ViewHolder(binding.root) {
+     class WifiViewHolder constructor(val binding: ItemSsidBinding): ViewHolder(binding.root) {
          fun onBind(item: WifiSSID, onItemClick: (wifi: WifiSSID) -> Unit) {
              binding.ssid = item.ssid
              binding.rssi = item.level
@@ -33,7 +33,7 @@ class WifiListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WifiViewHolder {
-        val v = SsidItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val v = ItemSsidBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return WifiViewHolder(v)
     }
 
