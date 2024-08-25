@@ -2,7 +2,7 @@ package ryuunta.iot.ryuuntaesp
 
 import android.content.Intent
 import androidx.navigation.fragment.NavHostFragment
-import ryuunta.iot.ryuuntaesp.base.BaseActivity
+import ryuunta.iot.ryuuntaesp.core.base.BaseActivity
 import ryuunta.iot.ryuuntaesp.databinding.ActivityInitiationBinding
 
 class InitiationActivity : BaseActivity<ActivityInitiationBinding, InitiationViewModel>(InitiationViewModel::class.java) {
@@ -22,7 +22,7 @@ class InitiationActivity : BaseActivity<ActivityInitiationBinding, InitiationVie
     }
 
     fun nextToHomePage() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, RMainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }

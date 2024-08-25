@@ -1,13 +1,9 @@
-package ryuunta.iot.ryuuntaesp.authentication
+package ryuunta.iot.ryuuntaesp.core.helper
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.messaging.FirebaseMessaging
-import ryuunta.iot.ryuuntaesp.R
-import ryuunta.iot.ryuuntaesp.base.wrapper.AuthRequestCallbackWrapper
+import ryuunta.iot.ryuuntaesp.authentication.SignInMethod
 import ryuunta.iot.ryuuntaesp.utils.RLog
 
 object AuthenticationHelper {

@@ -8,12 +8,15 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import ryuunta.iot.ryuuntaesp.adapter.RoomSpinnerAdapter
-import ryuunta.iot.ryuuntaesp.base.BaseFragment
+import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.data.model.WeatherDataCompilation
 import ryuunta.iot.ryuuntaesp.data.network.ResponseCode
 import ryuunta.iot.ryuuntaesp.databinding.FragmentHomeBinding
-import ryuunta.iot.ryuuntaesp.MainActivity
 import ryuunta.iot.ryuuntaesp.MainViewModel
+import ryuunta.iot.ryuuntaesp.home.devices.DeviceListAdapter
+import ryuunta.iot.ryuuntaesp.utils.RLog
+import ryuunta.iot.ryuuntaesp.utils.gone
+import ryuunta.iot.ryuuntaesp.utils.show
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
     FragmentHomeBinding::inflate,
@@ -28,12 +31,37 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
         RoomSpinnerAdapter(requireContext(), viewModel.roomList)
     }
 
-    override fun initViews(savedInstanceState: Bundle?) {
-        binding.apply {
+    private val deviceListAdapter: DeviceListAdapter by lazy {
+        DeviceListAdapter(onItemClick) { isEmpty ->
+            //handler UI when device list empty
+            RLog.d(TAG, "device list empty: $isEmpty")
+
 
         }
+    }
 
+    override fun initViews(savedInstanceState: Bundle?) {
+        binding.apply {
+            rcvDevices.adapter = deviceListAdapter
+            rcvDevices.overScrollMode = View.OVER_SCROLL_NEVER
+        }
         viewModel.fetchCurrWeather(requireContext())
+
+        viewModel.deviceLiveData.observe(viewLifecycleOwner) {
+            viewModel.mappingDeviceUI { rItemList ->
+                if (rItemList.isEmpty()) {
+                    binding.rcvDevices.gone()
+                    binding.txtEmptyPlace.show()
+                    binding.imgEmpty.show()
+                } else {
+                    deviceListAdapter.submitList(rItemList)
+                    binding.rcvDevices.show()
+                    binding.txtEmptyPlace.gone()
+                    binding.imgEmpty.gone()
+                }
+            }
+        }
+
     }
 
     override fun initEvents() {
@@ -55,7 +83,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
 
             spinRoom.adapter = customRoomSpinnerAdapter
             spinRoom.onItemSelectedListener = object : OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
                     if (position == customRoomSpinnerAdapter.count - 1) {
                         Toast.makeText(requireContext(), "thêm phòng mới", Toast.LENGTH_SHORT)
                             .show()
@@ -63,8 +96,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
                         posRoomSelected = position
                         customRoomSpinnerAdapter.currRoomSelectedPosition = posRoomSelected
                         customRoomSpinnerAdapter.notifyDataSetChanged()
+                        spinRoom.setSelection(posRoomSelected)
+
+                        viewModel.refreshDeviceList()
                     }
-                    spinRoom.setSelection(posRoomSelected)
+
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -77,6 +113,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
 
     private fun onRefreshHomePage() {
         viewModel.fetchCurrWeather(requireContext())
+        viewModel.refreshDeviceList()
     }
 
     override fun handlerResponse(tag: String, data: Any?) {

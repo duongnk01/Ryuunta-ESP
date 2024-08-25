@@ -18,7 +18,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import ryuunta.iot.ryuuntaesp.R
-import ryuunta.iot.ryuuntaesp.base.BaseDialog
+import ryuunta.iot.ryuuntaesp.core.base.BaseDialog
 
 abstract class RyuuntaDialog<T : ViewDataBinding>(
     protected val context: Context,

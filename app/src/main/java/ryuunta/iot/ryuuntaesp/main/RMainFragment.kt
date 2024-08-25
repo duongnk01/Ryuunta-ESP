@@ -8,12 +8,12 @@ import android.widget.Toast
 import ryuunta.iot.ryuuntaesp.MainViewModel
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.adapter.CustomSpinnerAdapter
-import ryuunta.iot.ryuuntaesp.base.BaseFragment
+import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.databinding.FragmentRyuuntaMainBinding
 import ryuunta.iot.ryuuntaesp.utils.gone
 import ryuunta.iot.ryuuntaesp.utils.show
 
-class RyuuntaMainFragment : BaseFragment<FragmentRyuuntaMainBinding, MainViewModel>(
+class RMainFragment : BaseFragment<FragmentRyuuntaMainBinding, MainViewModel>(
     FragmentRyuuntaMainBinding::inflate,
     MainViewModel::class.java
 ) {
@@ -65,8 +65,9 @@ class RyuuntaMainFragment : BaseFragment<FragmentRyuuntaMainBinding, MainViewMod
                         currentHomePos = position
                         userHomeAdapter.currentPosSelected = currentHomePos
                         userHomeAdapter.notifyDataSetChanged()
+                        spinHome.setSelection(currentHomePos)
                     }
-                    spinHome.setSelection(currentHomePos)
+
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {

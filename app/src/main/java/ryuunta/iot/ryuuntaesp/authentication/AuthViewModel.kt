@@ -9,8 +9,9 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ryuunta.iot.ryuuntaesp.base.BaseViewModel
-import ryuunta.iot.ryuuntaesp.data.network.RetrofitService
+import ryuunta.iot.ryuuntaesp.core.base.BaseViewModel
+import ryuunta.iot.ryuuntaesp.core.helper.AuthenticationHelper
+import ryuunta.iot.ryuuntaesp.core.state.AuthenticationState
 
 class AuthViewModel : BaseViewModel() {
 

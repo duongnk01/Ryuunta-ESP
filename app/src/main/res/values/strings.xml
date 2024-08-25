@@ -104,4 +104,13 @@
     <string name="label_humidity_outside">Độ ẩm ngoài trời</string>
     <string name="label_fine_dust_outside">PM2.5 ngoài trời</string>
     <string name="error_load_background">Lỗi tải hình nền</string>
+    <string name="txt_switch_button">Công tắc</string>
+  <string name="txt_fan_remote">Điều khiển quạt</string>
+    <string name="txt_btn_1">Nút 1</string>
+  <string name="txt_good">Tốt</string>
+  <string name="txt_fair">Khá</string>
+  <string name="txt_moderate">Trung bình</string>
+  <string name="txt_poor">Kém</string>
+  <string name="txt_very_poor">Rất kém</string>
+  <string name="error_element_not_found">Không tìm thấy nút này trên máy chủ. Không thể thao tác.</string>
 </resources>

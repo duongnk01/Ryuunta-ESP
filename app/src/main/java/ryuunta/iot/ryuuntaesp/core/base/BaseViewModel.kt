@@ -1,4 +1,4 @@
-package ryuunta.iot.ryuuntaesp.base
+package ryuunta.iot.ryuuntaesp.core.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

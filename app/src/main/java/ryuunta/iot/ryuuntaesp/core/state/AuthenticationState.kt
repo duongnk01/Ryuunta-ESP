@@ -1,4 +1,4 @@
-package ryuunta.iot.ryuuntaesp.authentication
+package ryuunta.iot.ryuuntaesp.core.state
 
 sealed class AuthenticationState {
     data class Success(val isSuccess: Boolean) : AuthenticationState()

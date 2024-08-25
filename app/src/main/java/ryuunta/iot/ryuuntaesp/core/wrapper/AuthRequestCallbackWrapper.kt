@@ -1,4 +1,4 @@
-package ryuunta.iot.ryuuntaesp.base.wrapper
+package ryuunta.iot.ryuuntaesp.core.wrapper
 
 class AuthRequestCallbackWrapper {
     private var onSuccess: (Boolean) -> Unit = {}
@@ -7,7 +7,7 @@ class AuthRequestCallbackWrapper {
     private var failureCode: Int? = null
     private var failureMess: String? = null
 
-    internal val callback = object :AuthRequestCallback {
+    internal val callback = object : AuthRequestCallback {
         override fun onSuccess() {
             this@AuthRequestCallbackWrapper.onSuccess
             if (this@AuthRequestCallbackWrapper.success == null) {

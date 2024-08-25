@@ -8,10 +8,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.MotionLayout.TransitionListener
 import ryuunta.iot.ryuuntaesp.R
-import ryuunta.iot.ryuuntaesp.base.BaseFragment
+import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.common.DialogLottie
 import ryuunta.iot.ryuuntaesp.databinding.FragmentSignInBinding
-import ryuunta.iot.ryuuntaesp.MainActivity
+import ryuunta.iot.ryuuntaesp.RMainActivity
+import ryuunta.iot.ryuuntaesp.core.state.AuthenticationState
 import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.fadeIn
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
@@ -177,7 +178,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, AuthViewModel>(
     }
 
     private fun nextToHomePage() {
-        val intent = Intent(requireActivity(), MainActivity::class.java)
+        val intent = Intent(requireActivity(), RMainActivity::class.java)
         intent.flags =
             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)

@@ -7,7 +7,7 @@ import ryuunta.iot.ryuuntaesp.home.HomeFragment
 import ryuunta.iot.ryuuntaesp.manage.ManageFragment
 import ryuunta.iot.ryuuntaesp.notification.NotificationFragment
 
-fun RyuuntaMainFragment.initViewPager() {
+fun RMainFragment.initViewPager() {
     val fragmentList = listOf(
         HomeFragment.newInstance(),
         NotificationFragment.newInstance(),

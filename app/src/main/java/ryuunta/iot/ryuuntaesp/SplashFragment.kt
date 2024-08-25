@@ -3,8 +3,8 @@ package ryuunta.iot.ryuuntaesp
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import ryuunta.iot.ryuuntaesp.authentication.AuthenticationHelper
-import ryuunta.iot.ryuuntaesp.base.BaseFragment
+import ryuunta.iot.ryuuntaesp.core.helper.AuthenticationHelper
+import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.databinding.FragmentSplashScreenBinding
 
 class SplashFragment : BaseFragment<FragmentSplashScreenBinding, InitiationViewModel>(

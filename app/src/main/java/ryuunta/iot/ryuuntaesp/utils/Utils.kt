@@ -1,10 +1,15 @@
 package ryuunta.iot.ryuuntaesp.utils
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.net.wifi.WifiManager
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import com.google.gson.Gson
 import ryuunta.iot.ryuuntaesp.data.model.WifiSSID
+import ryuunta.iot.ryuuntaesp.widget.DeviceButtonView
+import java.util.Random
 
 fun scanWifi(context: Context): List<WifiSSID> {
     val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
@@ -23,7 +28,7 @@ fun scanWifi(context: Context): List<WifiSSID> {
 
     // Duyệt qua danh sách mạng
     for (scanResult in scanResults) {
-        Log.d("scanWifi", "Wifi scan:  ${Gson().toJson(scanResult)}")
+        RLog.d("scanWifi", "Wifi scan:  ${Gson().toJson(scanResult)}")
         // Thêm mạng vào danh sách
         wifiList.add(
             WifiSSID(
@@ -53,4 +58,29 @@ fun convertPixelsToDp(px: Float, context: Context): Float {
     val metrics = resources.displayMetrics
     val dp = px / (metrics.densityDpi / 160f)
     return dp
+}
+
+fun <K, V> splitHashMap(map: Map<K, V>, chunkSize: Int): List<Map<K, V>> {
+    val list = map.toList()
+    val subLists = list.chunked(chunkSize)
+    return subLists.map { it.toMap() }
+}
+
+fun randomBackground(context: Context, assetPath : String, iv: ImageView) {
+    RLog.d("randomBackground", "load random background")
+    val assetManager = context.assets
+    try {
+        val files = assetManager.list(assetPath)
+        if (!files.isNullOrEmpty()) {
+            val randomAssetName = Random().nextInt(files.size)
+            val randomFile = files[randomAssetName]
+
+            val inputStream = context.assets.open("$assetPath/$randomFile")
+            val drawable = Drawable.createFromStream(inputStream, null)
+            iv.setImageDrawable(drawable)
+            inputStream.close()
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }

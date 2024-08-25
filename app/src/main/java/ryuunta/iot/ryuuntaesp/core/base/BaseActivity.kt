@@ -1,4 +1,4 @@
-package ryuunta.iot.ryuuntaesp.base
+package ryuunta.iot.ryuuntaesp.core.base
 
 import android.content.res.Configuration
 import android.os.Bundle

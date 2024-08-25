@@ -3,14 +3,13 @@ package ryuunta.iot.ryuuntaesp.widget
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import ryuunta.iot.ryuuntaesp.R
@@ -19,12 +18,12 @@ import ryuunta.iot.ryuuntaesp.data.network.UrlManage
 import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.convertKelvinToCelsius
 import ryuunta.iot.ryuuntaesp.utils.gone
+import ryuunta.iot.ryuuntaesp.utils.randomBackground
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
 import ryuunta.iot.ryuuntaesp.utils.show
 import java.util.Locale
-import java.util.Random
 
-class WeatherCardView : CardView {
+class WeatherCardView : FrameLayout {
     private val TAG = this.javaClass.simpleName
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -41,11 +40,11 @@ class WeatherCardView : CardView {
     private var weatherDesc: TextView
 
     private val airQualityPoint = mapOf(
-        1 to "Tốt",
-        2 to "Khá",
-        3 to "Trung bình",
-        4 to "Kém",
-        5 to "Rất kém",
+        1 to context.getString(R.string.txt_good),
+        2 to context.getString(R.string.txt_fair),
+        3 to context.getString(R.string.txt_moderate),
+        4 to context.getString(R.string.txt_poor),
+        5 to context.getString(R.string.txt_very_poor),
     )
 
     private var loadingData: Boolean = false
@@ -72,26 +71,6 @@ class WeatherCardView : CardView {
         animLoading = findViewById(R.id.anim_load_data)
         weatherDesc = findViewById(R.id.txt_weather_desc)
 
-
-    }
-
-    private fun randomBackground() {
-        RLog.d(TAG, "load random background")
-        val assetManager = context.assets
-        try {
-            val files = assetManager.list("")
-            if (!files.isNullOrEmpty()) {
-                val randomAssetName = Random().nextInt(files.size)
-                val randomFile = files[randomAssetName]
-
-                val inputStream = context.assets.open(randomFile)
-                val drawable = Drawable.createFromStream(inputStream, null)
-                bgWeather.setImageDrawable(drawable)
-                inputStream.close()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 
     fun fetchDataWeather(data: WeatherDataCompilation) {
@@ -129,7 +108,7 @@ class WeatherCardView : CardView {
 
     }
 
-    private fun airQualityAssessment(aqi: Int) : String {
+    private fun airQualityAssessment(aqi: Int): String {
         return airQualityPoint[aqi] ?: "null"
     }
 
@@ -137,7 +116,7 @@ class WeatherCardView : CardView {
         RLog.d(TAG, "loading weather view")
         animLoading.show(!isLoading)
         if (!isLoading) {
-            randomBackground()
+            randomBackground(context, "chibi", bgWeather)
             layoutError.gone()
             layoutWeather.show()
         }

@@ -1,4 +1,4 @@
-package ryuunta.iot.ryuuntaesp.base
+package ryuunta.iot.ryuuntaesp.core.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -102,12 +102,15 @@ abstract class BaseFragment<VB : ViewBinding, V : BaseViewModel>(
      */
     abstract fun initViews(savedInstanceState: Bundle?)
     protected open fun initEvents() {
-        binding.root.setOnClickListener {
-            it.hideKeyboard()
-        }
+
+//        binding.root.setOnClickListener {     //This is what causes the ripple effect error.
+//            it.hideKeyboard()
+//        }
     }
 
     protected open fun onSetViewInfo() {}
+
+    protected open fun onViewModelObserve() {}
 
     /**
      * Xử lí response

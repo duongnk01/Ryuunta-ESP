@@ -8,7 +8,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import ryuunta.iot.ryuuntaesp.base.BaseFragment
+import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.databinding.FragmentManageBinding
 
 class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(FragmentManageBinding::inflate, ManageViewModel::class.java) {
@@ -56,7 +56,7 @@ class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(Frag
 
     private fun initFirebase() {
         val db = FirebaseDatabase.getInstance()
-        nodeLed = db.reference.child("$pathDB/digital/led")
+        nodeLed = db.reference.child("fan_remote/level1")
         nodeLed.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val value = (snapshot.value as Long).toInt()

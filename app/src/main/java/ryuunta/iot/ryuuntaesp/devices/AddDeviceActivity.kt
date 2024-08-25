@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.adapter.WifiListAdapter
-import ryuunta.iot.ryuuntaesp.base.BaseActivity
+import ryuunta.iot.ryuuntaesp.core.base.BaseActivity
 import ryuunta.iot.ryuuntaesp.data.model.WifiSSID
 import ryuunta.iot.ryuuntaesp.databinding.FragmentAddDeviceBinding
 import ryuunta.iot.ryuuntaesp.utils.PermissionUtils.checkPermissions
