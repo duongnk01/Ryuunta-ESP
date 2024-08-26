@@ -6,7 +6,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/_space16dp"
+        android:paddingTop="@dimen/_space36dp"
         android:background="?backgroundColor"
         android:orientation="vertical">
 
@@ -16,10 +16,12 @@
             android:layout_height="wrap_content"
             style="@style/theme_header_text"
             android:gravity="center"
+            android:layout_marginTop="@dimen/_space16dp"
             android:paddingVertical="@dimen/_space4dp"
-            android:drawableStart="@drawable/ic_arrow_back_24"
+            android:paddingHorizontal="@dimen/_space16dp"
             android:layout_gravity="center_horizontal"
-            android:text="Device"/>
+            android:text="Device"
+            app:drawableStartCompat="@drawable/ic_arrow_back_24" />
 
         <LinearLayout
             android:layout_width="match_parent"

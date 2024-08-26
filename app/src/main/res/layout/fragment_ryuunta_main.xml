@@ -38,7 +38,7 @@
             android:id="@+id/spin_home"
             style="@style/MyHeaderSpinnerStyle"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/_space32dp"
+            android:layout_marginTop="@dimen/_space36dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 

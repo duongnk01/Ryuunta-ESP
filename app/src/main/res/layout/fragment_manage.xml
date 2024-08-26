@@ -13,7 +13,7 @@
             android:id="@+id/layout_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_space32dp"
+            android:paddingTop="@dimen/_space36dp"
             android:background="@android:color/transparent"
             android:orientation="horizontal">
 
