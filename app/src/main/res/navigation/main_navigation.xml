@@ -35,7 +35,7 @@
     <!--        tools:layout="@layout/fragment_notification" />-->
     <!--    <fragment-->
     <!--        android:id="@+id/userFragment"-->
-    <!--        android:name="ryuunta.iot.ryuuntaesp.authentication.UserFragment"-->
+    <!--        android:name="ryuunta.iot.ryuuntaesp.main.setting.UserFragment"-->
     <!--        android:label="UserFragment"-->
     <!--        tools:layout="@layout/fragment_user" />-->
     <fragment

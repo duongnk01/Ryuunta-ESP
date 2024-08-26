@@ -8,13 +8,7 @@ import ryuunta.iot.ryuuntaesp.utils.DeviceHomeDiff
 
 class DeviceListAdapter(
     private val onItemClick: (RItem) -> Unit,
-    private val onAdapterEmpty: (Boolean) -> Unit
 ) : ListAdapter<RItem, RViewHolder<RItem>>(DeviceHomeDiff()) {
-
-    override fun getItemCount(): Int {
-        onAdapterEmpty(currentList.isEmpty())
-        return super.getItemCount()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RViewHolder<RItem> {
         return HomeDeviceHolderFactory.getViewHolder(viewType, parent)

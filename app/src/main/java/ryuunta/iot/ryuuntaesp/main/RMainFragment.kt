@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.Toast
 import ryuunta.iot.ryuuntaesp.MainViewModel
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.adapter.HomeSpinnerAdapter
@@ -27,6 +26,10 @@ class RMainFragment : BaseFragment<FragmentRyuuntaMainBinding, MainViewModel>(
     override fun initViews(savedInstanceState: Bundle?) {
         binding.apply {
             initViewPager()
+            if (viewModel.currentPager == 2 || viewModel.currentPager == 3) {
+                spinHome.gone()
+            }
+            vpMain.currentItem = viewModel.currentPager
 
             bottomNavigationView.menu.getItem(2).isEnabled = false  //disable placeholder item
             bottomNavigationView.setOnItemSelectedListener {
@@ -93,6 +96,7 @@ class RMainFragment : BaseFragment<FragmentRyuuntaMainBinding, MainViewModel>(
         super.initEvents()
         binding.fabAddDevice.setOnClickListener {
             navController.navigate(R.id.action_ryuuntaMainFragment_to_addDeviceFragment)
+            viewModel.currentPager = binding.vpMain.currentItem
         }
 
     }

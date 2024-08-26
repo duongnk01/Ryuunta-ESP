@@ -3,11 +3,23 @@
     <style name="Base.Theme.RyuuntaESP" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="android:statusBarColor">?backgroundHeaderColor</item>
-        <item name="android:textColorPrimary">?textNormalColor</item>
+
     </style>
 
-    <style name="Theme.RyuuntaESP" parent="Base.Theme.RyuuntaESP" >
+    <style name="Theme.RyuuntaESP" parent="Base.Theme.RyuuntaESP">
+        <!-- Status bar color. -->
+        <item name="android:autofilledHighlight" >@android:color/transparent
+        </item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <!-- Optional: set to transparent if your app is drawing behind the status bar. -->
+        <item name="android:statusBarColor">@color/bg_header_daylight</item>
+        <!-- Optional: set the status bar light and content dark. -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:enforceNavigationBarContrast" >false</item>
+        <item name="android:enforceStatusBarContrast" >false</item>
+
+        <!-- Customize your theme here. -->
+        <item name="android:textColorPrimary">?textNormalColor</item>
         <item name="backgroundHeaderColor">@color/bg_header_daylight</item>
         <item name="backgroundColor">@color/bg_color_daylight</item>
         <item name="backgroundItem">@color/bg_item_daylight</item>
@@ -22,36 +34,27 @@
         <item name="tintColorMainIconInactive">@color/tint_icon_daylight_inactive</item>
         <item name="backgroundNavColor">@color/bg_nav_daylight</item>
 
-<!--                <item name="backgroundHeaderColor">@color/bg_header_darkmode</item>-->
-<!--                <item name="backgroundColor">@color/bg_color_darkmode</item>-->
-<!--                <item name="backgroundItem">@color/bg_item_darkmode</item>-->
-<!--                <item name="backgroundItemRipple">@color/bg_item_ripple_darkmode</item>-->
-<!--                <item name="textHeaderColor">@color/text_header_color_darkmode</item>-->
-<!--                <item name="textNormalColor">@color/text_normal_color_darkmode</item>-->
-<!--                <item name="textHintColor">@color/text_hint_color_darkmode</item>-->
-<!--                <item name="tintIcon">@color/tint_icon_darkmode</item>-->
-<!--                <item name="colorRipple">?android:selectableItemBackgroundBorderless</item>-->
-<!--                <item name="accentColor">@color/accent_color_darkmode</item>-->
-<!--        <item name="backgroundItemLv2">@color/bg_item_darkmode_lv2</item>-->
-<!--        <item name="tintColorMainIconInactive">@color/tint_icon_darkmode_inactive</item>-->
-<!--        <item name="backgroundNavColor">@color/bg_nav_darkmode</item>-->
 
     </style>
 
-<!--    <style name="Theme.RyuuntaESP.Dark" parent="Base.Theme.RyuuntaESP">-->
-<!--        &lt;!&ndash; Customize your dark theme here. &ndash;&gt;-->
-<!--        &lt;!&ndash; <item name="colorPrimary">@color/my_dark_primary</item> &ndash;&gt;-->
-<!--        <item name="backgroundHeaderColor">@color/bg_header_darkmode</item>-->
-<!--        <item name="backgroundColor">@color/bg_color_darkmode</item>-->
-<!--        <item name="backgroundItem">@color/bg_item_darkmode</item>-->
-<!--        <item name="backgroundItemRipple">@color/bg_item_ripple_darkmode</item>-->
-<!--        <item name="textHeaderColor">@color/text_header_color_darkmode</item>-->
-<!--        <item name="textNormalColor">@color/text_normal_color_darkmode</item>-->
-<!--        <item name="textHintColor">@color/text_hint_color_darkmode</item>-->
-<!--        <item name="tintIcon">@color/tint_icon_darkmode</item>-->
-<!--        <item name="colorRipple">?android:selectableItemBackgroundBorderless</item>-->
-<!--        <item name="accentColor">@color/accent_color_darkmode</item>-->
-<!--    </style>-->
+    <style name="Theme.RyuuntaESP.Dark" parent="Base.Theme.RyuuntaESP">
+        <!-- Customize your dark theme here. -->
+        <item name="android:statusBarColor">?backgroundHeaderColor</item>
+        <item name="android:textColorPrimary">?textNormalColor</item>
+        <item name="backgroundHeaderColor">@color/bg_header_darkmode</item>
+        <item name="backgroundColor">@color/bg_color_darkmode</item>
+        <item name="backgroundItem">@color/bg_item_darkmode</item>
+        <item name="backgroundItemRipple">@color/bg_item_ripple_darkmode</item>
+        <item name="textHeaderColor">@color/text_header_color_darkmode</item>
+        <item name="textNormalColor">@color/text_normal_color_darkmode</item>
+        <item name="textHintColor">@color/text_hint_color_darkmode</item>
+        <item name="tintIcon">@color/tint_icon_darkmode</item>
+        <item name="colorRipple">?android:selectableItemBackgroundBorderless</item>
+        <item name="accentColor">@color/accent_color_darkmode</item>
+        <item name="backgroundItemLv2">@color/bg_item_darkmode_lv2</item>
+        <item name="tintColorMainIconInactive">@color/tint_icon_darkmode_inactive</item>
+        <item name="backgroundNavColor">@color/bg_nav_darkmode</item>
+    </style>
 
     <style name="DialogTheme2" parent="@style/Base.Theme.AppCompat.Light.Dialog">
         <item name="android:windowIsFloating">false</item>
@@ -87,7 +90,7 @@
         <item name="android:fontFamily">@font/sfprodisplay_regular</item>
         <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:textColor">?textNormalColor</item>
-<!--        <item name="android:layout_marginHorizontal">@dimen/_space8dp</item>-->
+        <!--        <item name="android:layout_marginHorizontal">@dimen/_space8dp</item>-->
     </style>
 
     <style name="theme_hint_text">
@@ -109,7 +112,7 @@
         <item name="android:fontFamily">@font/sfprodisplay_semibold</item>
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:textColor">@color/white</item>
-<!--        <item name="android:textStyle">italic</item>-->
+        <!--        <item name="android:textStyle">italic</item>-->
         <item name="android:gravity">center</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:padding">@dimen/_space12dp</item>
@@ -120,7 +123,7 @@
         <item name="android:fontFamily">@font/sfprodisplay_semibold</item>
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:textColor">@color/white</item>
-<!--        <item name="android:textStyle">italic</item>-->
+        <!--        <item name="android:textStyle">italic</item>-->
         <item name="android:gravity">center</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:padding">@dimen/_space12dp</item>
@@ -128,7 +131,7 @@
     </style>
 
     <style name="MyHeaderSpinnerStyle">
-<!--        <item name="android:background">@drawable/bg_spinner</item>-->
+        <!--        <item name="android:background">@drawable/bg_spinner</item>-->
         <item name="android:background">@drawable/bg_item_selector_no_border</item>
         <item name="android:spinnerMode">dropdown</item>
         <item name="android:spinnerDropDownItemStyle">@style/MyHeaderSpinnerDropDownItem</item>
@@ -144,13 +147,13 @@
         <!--        <item name="android:background">@drawable/bg_spinner</item>-->
         <item name="android:background">@android:color/transparent</item>
         <item name="android:spinnerMode">dropdown</item>
-        <item name="android:popupBackground">@drawable/bg_white_item_selector_corner_12</item>
-        <item name="android:spinnerDropDownItemStyle">@style/MyHeaderSpinnerDropDownItem</item>
+        <item name="android:popupBackground">@drawable/bg_item_lv2_selector_corner_8</item>
+        <item name="android:spinnerDropDownItemStyle">@style/MySpinnerDropDownItem</item>
     </style>
 
     <style name="MySpinnerDropDownItem">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:background">@drawable/bg_white_item_selector_corner_12</item>
+        <item name="android:background">@drawable/bg_item_lv2_selector_corner_8</item>
         <item name="android:textColor">?textNormalColor</item>
     </style>
 

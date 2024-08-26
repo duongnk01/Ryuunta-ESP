@@ -49,8 +49,7 @@
                 android:id="@+id/vp_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                android:orientation="horizontal" />
 
             <View
                 android:layout_width="match_parent"
@@ -65,6 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:backgroundTint="?backgroundNavColor"
+                android:paddingBottom="0dp"
                 android:layout_gravity="bottom"
                 app:fabCradleMargin="@dimen/_space8dp"
                 app:fabCradleRoundedCornerRadius="@dimen/_space24dp"
@@ -80,7 +80,8 @@
                     app:itemBackground="@android:color/transparent"
                     app:itemIconTint="@drawable/color_main_icon_tint_selector"
                     app:labelVisibilityMode="unlabeled"
-                    app:menu="@menu/menu_bottom_nav" />
+                    app:menu="@menu/menu_bottom_nav"
+                    app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"/>
 
             </com.google.android.material.bottomappbar.BottomAppBar>
 

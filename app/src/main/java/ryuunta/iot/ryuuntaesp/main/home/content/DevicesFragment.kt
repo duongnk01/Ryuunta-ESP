@@ -2,15 +2,15 @@ package ryuunta.iot.ryuuntaesp.main.home.content
 
 import android.os.Bundle
 import androidx.navigation.fragment.navArgs
-import com.ryuunta.iot.esp.widget.hideSoftKeyboard
 import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
-import ryuunta.iot.ryuuntaesp.helper.ControlHelper
-import ryuunta.iot.ryuuntaesp.helper.DeviceHelper
 import ryuunta.iot.ryuuntaesp.data.model.DeviceObj
 import ryuunta.iot.ryuuntaesp.databinding.FragmentDevicesBinding
+import ryuunta.iot.ryuuntaesp.helper.ControlHelper
+import ryuunta.iot.ryuuntaesp.helper.DeviceHelper
 import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.hideKeyboard
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
+import ryuunta.iot.ryuuntaesp.utils.showDialogError
 
 class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
     FragmentDevicesBinding::inflate,
@@ -24,6 +24,12 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
     private val controlHelper = ControlHelper()
 
     private var device: DeviceObj? = null
+
+    private val onError: (Int, String) -> Unit = { code, message ->
+        RLog.e(TAG, "onError: $message")
+        requireContext().showDialogError(lifecycle, message)
+    }
+
 
     override fun initViews(savedInstanceState: Bundle?) {
 
@@ -58,10 +64,19 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
 
     private fun controlStateElement(elmsPath: List<String>, state: Boolean? = null) {
         RLog.d(TAG, "controlStateElement: $elmsPath")
-        controlHelper.controlDevice(device?.devPath!!, elmsPath, state) { elmPath, isOn ->
-            RLog.d(TAG, "controlStateElement: control from ${if (state == null) "server" else "app"}")
-            binding.layoutElementButton.updateView(elmPath, isOn)
-        }
+        controlHelper.controlDevice(
+            device?.devPath!!,
+            elmsPath,
+            state,
+            onStateUpdated = { elmPath, isOn ->
+                RLog.d(
+                    TAG,
+                    "controlStateElement: control from ${if (state == null) "server" else "app"}"
+                )
+                binding.layoutElementButton.updateView(elmPath, isOn)
+            },
+            onError = onError
+        )
 //        if (state != null) { //control from app
 //
 //        } else {

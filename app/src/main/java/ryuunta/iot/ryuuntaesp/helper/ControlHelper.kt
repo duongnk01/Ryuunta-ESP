@@ -26,8 +26,8 @@ class ControlHelper {
         devicePath: String,
         elementsPath: List<String>,
         state: Boolean?,
-//        onStateChanged: (String, Boolean) -> Unit = {elmPath, isOn -> },
-        onStateUpdated: (String, Boolean) -> Unit = {elmPath, isOn -> }
+        onStateUpdated: (String, Boolean) -> Unit = {elmPath, isOn -> },
+        onError: (code: Int, message: String) -> Unit = {code, message -> }
     ) {
         if (elementsPath.isEmpty()) {
             RLog.e(TAG, "elementPath is empty")
@@ -50,7 +50,7 @@ class ControlHelper {
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-
+                        onError(error.code, error.message)
                         RLog.d(
                             TAG,
                             "Data realtime cancelled: \nerror code: ${error.code}\nerror message: ${error.message}\nerror details: ${error.details}"

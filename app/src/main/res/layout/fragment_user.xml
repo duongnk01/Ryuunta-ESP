@@ -60,7 +60,7 @@
                     android:layout_below="@id/txt_email"
                     android:layout_alignStart="@id/txt_username"
                     android:layout_marginTop="@dimen/_space12dp"
-                    android:background="@drawable/bg_white_item_selector_corner_12"
+                    android:background="@drawable/bg_item_lv2_selector_corner_8"
                     android:elevation="@dimen/_space2dp"
                     android:orientation="horizontal"
                     android:padding="@dimen/_space4dp">
@@ -98,36 +98,45 @@
                 android:orientation="vertical"
                 android:padding="@dimen/_space8dp">
 
-                <ImageView
-                    android:layout_width="@dimen/_space128dp"
-                    android:layout_height="@dimen/_space128dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_space128dp"
-                    android:alpha="0.3"
-                    app:srcCompat="@drawable/paimon_sleep" />
+<!--                <SeekBar-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:progressDrawable="@drawable/seek_bar_fan_level"-->
+<!--                    android:max="2"/>-->
 
-                <TextView
-                    android:id="@+id/textView"
-                    style="@style/theme_hint_text"
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spin_theme"
+                    android:layout_marginTop="@dimen/_space16dp"
+                    style="@style/MySpinnerStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_space24dp"
-                    android:gravity="center"
-                    android:text="@string/txt_nothing_here_for_now" />
 
-                <SeekBar
+                    android:spinnerMode="dialog"/>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:progressDrawable="@drawable/seek_bar_fan_level"
-                    android:max="2"/>
+                    android:paddingVertical="@dimen/_space8dp"
+                    android:paddingHorizontal="@dimen/_space4dp"
+                    android:layout_marginTop="@dimen/_space8dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_item_lv2_selector_corner_8"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/btn_switch_darkmode"
-                    android:layout_marginTop="@dimen/_space24dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="darkmode"
-                    android:gravity="center"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txt_dark_mode"
+                        android:layout_weight="1"
+                        style="@style/theme_title_text"/>
+
+                    <ryuunta.iot.ryuuntaesp.widget.SwitchView
+                        android:id="@+id/sw_theme"
+                        android:layout_width="wrap_content"
+                        android:layout_marginEnd="@dimen/_space8dp"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"

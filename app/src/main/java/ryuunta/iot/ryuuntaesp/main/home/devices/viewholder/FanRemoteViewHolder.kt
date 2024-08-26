@@ -20,7 +20,7 @@ class FanRemoteViewHolder(val binding: ItemFanRemoteBinding) : RViewHolder<RItem
                     controlHelper.controlDevice(
                         (item as DeviceItem.FanRemote).device.devPath,
                         listOf(item.device.buttonList[1].toString()),
-                        state) { elmPath, isOn ->
+                        state, onStateUpdated =  { elmPath, isOn ->
                             btnQuickSwitch.isClickable = true
                             if (!isOn) {
                                 btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_off)
@@ -28,7 +28,9 @@ class FanRemoteViewHolder(val binding: ItemFanRemoteBinding) : RViewHolder<RItem
                                 btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_on)
                             }
                             state = isOn
-                        }
+                        }, onError = { code, message ->
+                            btnQuickSwitch.isClickable = true
+                        })
 
                 }
 
@@ -45,14 +47,15 @@ class FanRemoteViewHolder(val binding: ItemFanRemoteBinding) : RViewHolder<RItem
             imgDeviceIcon.setImageResource(fanRemote.resIcon)
 
             controlHelper.controlDevice(fanRemote.device.devPath,
-                listOf(fanRemote.device.buttonList[1].toString()), null) { elmPath, isOn ->
+                listOf(fanRemote.device.buttonList[1].toString()), null, { elmPath, isOn ->
                     state = isOn
                     if (!isOn) {
                         btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_off)
                     } else {
                         btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_on)
                     }
-                }
+                }, onError = { code, message ->
+                })
         }
     }
 }

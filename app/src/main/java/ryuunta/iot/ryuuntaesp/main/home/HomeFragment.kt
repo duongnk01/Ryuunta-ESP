@@ -32,12 +32,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
     }
 
     private val deviceListAdapter: DeviceListAdapter by lazy {
-        DeviceListAdapter(onItemClick) { isEmpty ->
-            //handler UI when device list empty
-            RLog.d(TAG, "device list empty: $isEmpty")
-
-
-        }
+        DeviceListAdapter(onItemClick)
     }
 
     override fun initViews(savedInstanceState: Bundle?) {

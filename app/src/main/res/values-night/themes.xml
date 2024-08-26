@@ -3,12 +3,23 @@
     <style name="Base.Theme.RyuuntaESP" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-        <item name="android:statusBarColor">?backgroundHeaderColor</item>
-        <item name="android:textColorPrimary">?textNormalColor</item>
+
 
     </style>
 
-    <style name="Theme.RyuuntaESP.Dark" parent="Base.Theme.RyuuntaESP">
+    <style name="Theme.RyuuntaESP" parent="Base.Theme.RyuuntaESP">
+        <!-- Status bar color. -->
+        <item name="android:autofilledHighlight" >@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <!-- Optional: set to transparent if your app is drawing behind the status bar. -->
+        <item name="android:statusBarColor">@color/bg_header_darkmode</item>
+        <!-- Optional: set the status bar light and content dark. -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:enforceNavigationBarContrast" >false</item>
+        <item name="android:enforceStatusBarContrast" >false</item>
+
+        <!-- customize theme -->
+<!--        <item name="android:textColorPrimary">?textNormalColor</item>-->
         <item name="backgroundHeaderColor">@color/bg_header_darkmode</item>
         <item name="backgroundColor">@color/bg_color_darkmode</item>
         <item name="backgroundItem">@color/bg_item_darkmode</item>

@@ -44,16 +44,16 @@ fun scanWifi(context: Context): List<WifiSSID> {
     return wifiList.sortedBy { it.level }.asReversed()
 }
 
-fun convertDpToPixel(dp: Float, context: Context): Float {
-    val resources = context.resources
+fun Context.convertDpToPixel(dp: Float): Float {
+    val resources = resources
     val metrics = resources.displayMetrics
 
     val px = dp * (metrics.densityDpi / 160f)
     return px
 }
 
-fun convertPixelsToDp(px: Float, context: Context): Float {
-    val resources = context.resources
+fun Context.convertPixelsToDp(px: Float): Float {
+    val resources = resources
     val metrics = resources.displayMetrics
     val dp = px / (metrics.densityDpi / 160f)
     return dp

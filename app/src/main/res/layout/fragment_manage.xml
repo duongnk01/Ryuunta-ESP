@@ -3,106 +3,120 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView2"
+        <LinearLayout
+            android:id="@+id/layout_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="scenarios_fragment"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_door"
-            tools:layout_editor_absoluteX="16dp" />
+            android:background="?backgroundHeaderColor"
+            android:orientation="horizontal">
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/sw_led"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="ESP LED"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:switchPadding="8dp" />
+            <TextView
+                android:id="@+id/txt_label_manage"
+                style="@style/theme_header_text"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_space36dp"
+                android:layout_marginHorizontal="0dp"
+                android:layout_marginVertical="@dimen/_space8dp"
+                android:gravity="center"
+                android:text="@string/txt_home_manage" />
+        </LinearLayout>
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/sw_relay_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="SWITCH 1"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sw_led"
-            app:switchPadding="8dp" />
+        <LinearLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_color_header_gradient"
+            android:padding="@dimen/_space16dp"
+            android:orientation="vertical">
 
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sw_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="ESP LED"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:switchPadding="8dp" />
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/sw_relay_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="SWITCH 2"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sw_relay_1"
-            app:switchPadding="8dp" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/sw_relay_esp_01"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="SWITCH ESP 01"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sw_relay_2"
-            app:switchPadding="8dp" />
-
-        <TextView
-            android:id="@+id/txt_door"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="Door Lock"
-            android:textSize="24dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sw_relay_esp_01" />
-
-        <Button
-            android:id="@+id/btn_lock_door"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Lock"
-            android:textAllCaps="true"
-            app:layout_constraintEnd_toStartOf="@id/btn_open_door"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_door" />
-
-        <Button
-            android:id="@+id/btn_open_door"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Open"
-            android:textAllCaps="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn_lock_door"
-            app:layout_constraintTop_toBottomOf="@+id/txt_door" />
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sw_relay_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="SWITCH 1"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sw_led"
+                app:switchPadding="8dp" />
 
 
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sw_relay_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="SWITCH 2"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sw_relay_1"
+                app:switchPadding="8dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sw_relay_esp_01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="SWITCH ESP 01"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sw_relay_2"
+                app:switchPadding="8dp" />
+
+            <TextView
+                android:id="@+id/txt_door"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:text="Door Lock"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sw_relay_esp_01" />
+
+            <Button
+                android:id="@+id/btn_lock_door"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Lock"
+                android:textAllCaps="true"
+                app:layout_constraintEnd_toStartOf="@id/btn_open_door"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_door" />
+
+            <Button
+                android:id="@+id/btn_open_door"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Open"
+                android:textAllCaps="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_lock_door"
+                app:layout_constraintTop_toBottomOf="@+id/txt_door" />
+        </LinearLayout>
+    </LinearLayout>
 
 </layout>

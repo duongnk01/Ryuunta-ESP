@@ -1,19 +1,24 @@
-package ryuunta.iot.ryuuntaesp.authentication
+package ryuunta.iot.ryuuntaesp.main.setting
 
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
-import ryuunta.iot.ryuuntaesp.databinding.FragmentUserBinding
-import ryuunta.iot.ryuuntaesp.RMainActivity
+import kotlinx.coroutines.withContext
 import ryuunta.iot.ryuuntaesp.MainViewModel
-import ryuunta.iot.ryuuntaesp.R
+import ryuunta.iot.ryuuntaesp.RMainActivity
+import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
+import ryuunta.iot.ryuuntaesp.core.base.Config
+import ryuunta.iot.ryuuntaesp.databinding.FragmentUserBinding
 import ryuunta.iot.ryuuntaesp.helper.AuthenticationHelper
 import ryuunta.iot.ryuuntaesp.preference.ThemePreference
+import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.setDarkModeTheme
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
+import ryuunta.iot.ryuuntaesp.widget.SwitchView
 
 class UserFragment : BaseFragment<FragmentUserBinding, MainViewModel>(
     FragmentUserBinding::inflate,
@@ -21,14 +26,8 @@ class UserFragment : BaseFragment<FragmentUserBinding, MainViewModel>(
 ) {
 
     private val TAG = "UserFragment"
-    var isDarkMode = false
 
     override fun initViews(savedInstanceState: Bundle?) {
-        ThemePreference.getThemePreferenceData(requireContext(), onError = {
-
-        }, onComplete = {
-            isDarkMode = it.isDarkMode
-        })
         AuthenticationHelper.getInfoUser()?.let {
             if (!it.displayName.isNullOrEmpty())
                 binding.txtUsername.text = it.displayName
@@ -38,6 +37,7 @@ class UserFragment : BaseFragment<FragmentUserBinding, MainViewModel>(
                 Glide.with(requireContext()).load(it.photoUrl).into(binding.imgUserAvt)
             }
         }
+        binding.swTheme.setEnable(Config.isDarkMode)
     }
 
     override fun initEvents() {
@@ -47,18 +47,21 @@ class UserFragment : BaseFragment<FragmentUserBinding, MainViewModel>(
                 (activity as RMainActivity).logout()
             }
 
-            btnSwitchDarkmode.setPreventDoubleClick {
-                isDarkMode = !isDarkMode
-                setDarkModeTheme(isDarkMode)
-                CoroutineScope(Dispatchers.Default).launch {
-                    ThemePreference.setDarkMode(requireContext(), isDarkMode)
+            swTheme.switchViewListener = object : SwitchView.SwitchViewListener {
+                override fun onSwitchChange(enable: Boolean) {
+                    if (enable != Config.isDarkMode) {
+                        Config.isDarkMode = enable
+                        setDarkModeTheme(Config.isDarkMode)
+                        RLog.d(TAG, "isDarkMode change: $enable")
+                        CoroutineScope(Dispatchers.Default).launch {
+                            ThemePreference.setDarkMode(requireContext(), Config.isDarkMode)
+                            withContext(Dispatchers.Main) {
+                                requireActivity().startActivity(Intent(requireActivity(), RMainActivity::class.java))
+                                requireActivity().finish()
+                            }
+                        }
+                    }
                 }
-//                if (isDarkMode) {
-//                    requireActivity().setTheme(R.style.Theme_RyuuntaESP)
-//                } else {
-//                    requireActivity().setTheme(R.style.Theme_RyuuntaESP_Dark)
-//                }
-
             }
         }
     }

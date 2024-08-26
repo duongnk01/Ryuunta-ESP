@@ -26,8 +26,13 @@ import ryuunta.iot.ryuuntaesp.main.home.devices.DeviceViewType
 import ryuunta.iot.ryuuntaesp.main.home.devices.listDeviceType
 
 class MainViewModel() : BaseViewModel() {
+    private val _isDarkMode = MutableLiveData(false)
+    val isDarkMode: LiveData<Boolean> = _isDarkMode
+
     private val _deviceLiveData = MutableLiveData<List<DeviceObj>>(listOf())
     val deviceLiveData: LiveData<List<DeviceObj>> = _deviceLiveData
+
+    var currentPager = 0
 
     private var deviceHelper: DeviceHelper? = null
 
@@ -146,4 +151,8 @@ class MainViewModel() : BaseViewModel() {
 
     }
 
+    fun setDarkMode(isDarkMode: Boolean) {
+        _isDarkMode.postValue(isDarkMode)
+
+    }
 }

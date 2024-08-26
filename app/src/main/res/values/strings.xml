@@ -80,7 +80,7 @@
     <string name="txt_login_success">Đăng nhập xong rồi!</string>
     <string name="txt_start_using_app">Bắt đầu sử dụng ứng dụng</string>
     <string name="txt_failure">Tạch rate</string>
-    <string name="txt_info_login_failure">Chúc mừng bạn đã thất bại, thử lại nhé 😉</string>
+    <string name="txt_failure_message">Chúc mừng bạn đã thất bại, thử lại nhé 😉</string>
     <string name="txt_email">Email</string>
     <string name="hint_password">••••••••</string>
 
@@ -105,13 +105,15 @@
     <string name="label_fine_dust_outside">PM2.5 ngoài trời</string>
     <string name="error_load_background">Lỗi tải hình nền</string>
     <string name="txt_switch_button">Công tắc</string>
-  <string name="txt_fan_remote">Điều khiển quạt</string>
+    <string name="txt_fan_remote">Điều khiển quạt</string>
     <string name="txt_btn_1">Nút 1</string>
-  <string name="txt_good">Tốt</string>
-  <string name="txt_fair">Khá</string>
-  <string name="txt_moderate">Trung bình</string>
-  <string name="txt_poor">Kém</string>
-  <string name="txt_very_poor">Rất kém</string>
-  <string name="error_element_not_found">Không tìm thấy nút này trên máy chủ. Không thể thao tác.</string>
+    <string name="txt_good">Tốt</string>
+    <string name="txt_fair">Khá</string>
+    <string name="txt_moderate">Trung bình</string>
+    <string name="txt_poor">Kém</string>
+    <string name="txt_very_poor">Rất kém</string>
+    <string name="error_element_not_found">Không tìm thấy nút này trên máy chủ. Không thể thao tác.</string>
     <string name="error_firebase_realtime_authentication_failure">Xác thực với firebase realtime thất bại. Không thể lấy dữ liệu thiết bị</string>
+    <string name="txt_dark_mode">Chế độ nền tối</string>
+    <string name="txt_home_manage">Quản lí nhà</string>
 </resources>

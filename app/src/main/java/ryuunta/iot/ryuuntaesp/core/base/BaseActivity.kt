@@ -1,6 +1,5 @@
 package ryuunta.iot.ryuuntaesp.core.base
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -49,7 +48,9 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel>(
 
 //    override fun onConfigurationChanged(newConfig: Configuration) {
 //        super.onConfigurationChanged(newConfig)
-//        val darkModeFlag = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+//        val darkModeFlag = AppCompatDelegate.getDefaultNightMode()
+//        setDarkModeTheme(darkModeFlag == Configuration.UI_MODE_NIGHT_YES)
+//        viewModel.appThemeObserve(darkModeFlag == Configuration.UI_MODE_NIGHT_YES)
 //        if (darkModeFlag == Configuration.UI_MODE_NIGHT_NO) {
 //            setTheme(R.style.Theme_RyuuntaESP)
 //        } else {
@@ -60,12 +61,15 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel>(
     override fun onCreate(savedInstanceState: Bundle?) {
         initViewModel(this)
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge()  //this func will get layout overflow system bar
         binding = DataBindingUtil.setContentView(this, getLayoutRes()) as VB
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            //get dimensions of status bar and navigation bar
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            //set padding for root layout to avoid status bar and navigation bar
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+
         }
         initViews()
         initEvents()
