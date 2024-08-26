@@ -6,13 +6,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/bg_header_green_gradient"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/layout_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?backgroundHeaderColor"
+            android:paddingTop="@dimen/_space32dp"
+            android:background="@android:color/transparent"
             android:orientation="horizontal">
 
             <TextView
@@ -30,7 +32,7 @@
             android:id="@+id/layout_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_color_header_gradient"
+            android:background="@android:color/transparent"
             android:padding="@dimen/_space16dp"
             android:orientation="vertical">
 

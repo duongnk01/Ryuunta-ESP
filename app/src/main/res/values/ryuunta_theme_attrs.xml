@@ -3,6 +3,7 @@
     <attr name="backgroundColor" format="reference|color"/>
     <attr name="backgroundHeaderColor" format="reference|color"/>
     <attr name="backgroundNavColor" format="reference|color"/>
+    <attr name="backgroundManageColor" format="reference|color"/>
     <attr name="backgroundItem" format="reference|color"/>
     <attr name="backgroundItemLv2" format="reference|color"/>
     <attr name="tintColorMainIconActive" format="reference|color"/>
@@ -14,4 +15,5 @@
     <attr name="textNormalColor" format="reference|color"/>
     <attr name="textHintColor" format="reference|color"/>
     <attr name="accentColor" format="reference|color"/>
+    <attr name="backgroundNotiColor" format="reference|color" />
 </resources>

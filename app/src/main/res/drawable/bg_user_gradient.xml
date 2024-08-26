@@ -4,5 +4,7 @@
     <gradient
         android:startColor="@color/accent_color_faded"
         android:endColor="?backgroundColor"
+        android:centerColor="?backgroundColor"
+        android:centerY="0.3"
         android:angle="270"/>
 </shape>

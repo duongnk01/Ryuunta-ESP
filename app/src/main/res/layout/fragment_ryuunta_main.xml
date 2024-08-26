@@ -6,7 +6,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?backgroundColor"
+        android:background="?backgroundHeaderColor"
         android:orientation="vertical">
 
         <!--        <LinearLayout-->
@@ -38,6 +38,7 @@
             android:id="@+id/spin_home"
             style="@style/MyHeaderSpinnerStyle"
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_space32dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 
@@ -64,8 +65,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:backgroundTint="?backgroundNavColor"
-                android:paddingBottom="0dp"
                 android:layout_gravity="bottom"
+                app:fabAnchorMode="cradle"
                 app:fabCradleMargin="@dimen/_space8dp"
                 app:fabCradleRoundedCornerRadius="@dimen/_space24dp"
                 app:fabCradleVerticalOffset="0dp">

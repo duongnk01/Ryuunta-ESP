@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:background="@drawable/bg_color_header_gradient"
+        android:background="@drawable/bg_header_color_gradient"
         android:orientation="vertical">
 
         <ImageView

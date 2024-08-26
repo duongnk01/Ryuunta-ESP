@@ -32,6 +32,7 @@
     <color name="accent_color_daylight">#7C8DF1</color>
     <color name="accent_color_faded">#666B79CC</color>
     <color name="tint_icon_daylight_inactive">#CFCFCF</color>
+    <color name="bg_pink_daylight_fade">#66D56BC9</color>
 
 
     //darkmode theme color
@@ -49,6 +50,9 @@
     <color name="accent_color_darkmode">#3C4371</color>
     <color name="tint_icon_active">#6B79CC</color>
     <color name="tint_icon_darkmode_inactive">#EEEEEE</color>
+    <color name="bg_pink_darkmode_fade">#669E5095</color>
+    <color name="bg_green_darkmode_fade">#661D3A37</color>
+    <color name="bg_green_daylight_fade">#666ACFC5</color>
 
 
 </resources>

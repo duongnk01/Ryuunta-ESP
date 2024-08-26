@@ -33,5 +33,7 @@
         <item name="backgroundItemLv2">@color/bg_item_darkmode_lv2</item>
         <item name="tintColorMainIconInactive">@color/tint_icon_darkmode_inactive</item>
         <item name="backgroundNavColor">@color/bg_nav_darkmode</item>
+        <item name="backgroundManageColor">@color/bg_pink_darkmode_fade</item>
+        <item name="backgroundNotiColor">@color/bg_green_darkmode_fade</item>
     </style>
 </resources>

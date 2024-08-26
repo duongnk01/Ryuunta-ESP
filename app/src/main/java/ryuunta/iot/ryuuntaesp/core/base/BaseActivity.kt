@@ -3,6 +3,7 @@ package ryuunta.iot.ryuuntaesp.core.base
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
@@ -59,18 +61,26 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel>(
 //    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        initViewModel(this)
-        super.onCreate(savedInstanceState)
         enableEdgeToEdge()  //this func will get layout overflow system bar
+        super.onCreate(savedInstanceState)
+        initViewModel(this)
         binding = DataBindingUtil.setContentView(this, getLayoutRes()) as VB
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             //get dimensions of status bar and navigation bar
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             //set padding for root layout to avoid status bar and navigation bar
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                leftMargin = systemBars.left
+                bottomMargin = systemBars.bottom
+                rightMargin = systemBars.right
+//                topMargin = systemBars.top
+            }
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            WindowInsetsCompat.CONSUMED
 
         }
+
+
         initViews()
         initEvents()
         RLog.d(TAG, "oncreate baseactivity")
