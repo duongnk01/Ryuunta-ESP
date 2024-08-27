@@ -118,4 +118,6 @@
     <string name="txt_home_manage">Quản lí nhà</string>
     <string name="txt_this_function_zz">Tính năng này..hmm..zz</string>
   <string name="txt_develop_in_progress">zzz..Vẫn chưa làm xong..zzz</string>
+  <string name="oops">Oops!!</string>
+    <string name="txt_cannot_get_data_user">Không thể lấy dữ liệu người dùng!!</string>
 </resources>

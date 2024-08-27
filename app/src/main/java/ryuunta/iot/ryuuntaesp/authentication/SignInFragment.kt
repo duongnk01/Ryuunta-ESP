@@ -13,12 +13,15 @@ import ryuunta.iot.ryuuntaesp.common.DialogLottie
 import ryuunta.iot.ryuuntaesp.databinding.FragmentSignInBinding
 import ryuunta.iot.ryuuntaesp.RMainActivity
 import ryuunta.iot.ryuuntaesp.core.state.AuthenticationState
+import ryuunta.iot.ryuuntaesp.data.network.ResponseCode
+import ryuunta.iot.ryuuntaesp.helper.AuthenticationHelper
 import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.fadeIn
 import ryuunta.iot.ryuuntaesp.utils.hideKeyboard
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
 import ryuunta.iot.ryuuntaesp.utils.showDialogError
 import ryuunta.iot.ryuuntaesp.utils.showDialogNegative
+import ryuunta.iot.ryuuntaesp.utils.showDialogNotification
 import ryuunta.iot.ryuuntaesp.utils.slideInBottom
 import ryuunta.iot.ryuuntaesp.widget.StepView
 
@@ -128,9 +131,14 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, AuthViewModel>(
                 is AuthenticationState.Success -> {
                     RLog.d("AuthenticationState", "Success ${it.isSuccess}")
                     if (it.isSuccess) {
-                        dialogLottie.onDismissWhenAnimationDone {
-                            nextToHomePage()
+                        viewModel.fetchDataUser().observe(viewLifecycleOwner) {
+                            if (it == true) {
+                                dialogLottie.onDismissWhenAnimationDone {
+                                    nextToHomePage()
+                                }
+                            }
                         }
+
                     }
                 }
 
@@ -167,6 +175,26 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, AuthViewModel>(
                 else -> {}
             }
 
+        }
+    }
+
+    override fun handlerError(tag: String, message: String) {
+        super.handlerError(tag, message)
+        if (tag == ResponseCode.generateUser) {
+            if (dialogLottie.isShowing) {
+                dialogLottie.onDismissWhenAnimationDone {
+                    requireContext().showDialogNotification(
+                        R.string.txt_failure,
+                        R.raw.anim_nana_crying,
+                        lifecycle,
+                        R.string.txt_cannot_get_data_user,
+                        errorMess = message,
+                        onConfirm = {
+                            AuthenticationHelper.signOut {  }
+                        }
+                    )
+                }
+            }
         }
     }
 

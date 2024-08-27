@@ -12,6 +12,9 @@ import kotlinx.coroutines.launch
 import ryuunta.iot.ryuuntaesp.core.base.BaseViewModel
 import ryuunta.iot.ryuuntaesp.helper.AuthenticationHelper
 import ryuunta.iot.ryuuntaesp.core.state.AuthenticationState
+import ryuunta.iot.ryuuntaesp.data.model.UserInfo
+import ryuunta.iot.ryuuntaesp.data.network.ResponseCode
+import ryuunta.iot.ryuuntaesp.helper.ControlHelper
 
 class AuthViewModel : BaseViewModel() {
 
@@ -76,5 +79,26 @@ class AuthViewModel : BaseViewModel() {
                 loading.postValue(false)
                 onFailure(code, message)
             })
+    }
+
+    fun fetchDataUser() : LiveData<Boolean> {
+        val isSuccess = MutableLiveData<Boolean>()
+        val user = AuthenticationHelper.getInfoUser()
+        user?.let {
+            val userInfo = UserInfo(
+                it.displayName ?: "",
+                it.email ?: ""
+            )
+            ControlHelper().generateUserData(it.uid, userInfo,
+                onSuccess = {
+                    isSuccess.postValue(true)
+                },
+                onFailure = { code, message ->
+                    onError(mapOf(ResponseCode.generateUser to message))
+                    isSuccess.postValue(false)
+                }
+            )
+        }
+        return isSuccess
     }
 }

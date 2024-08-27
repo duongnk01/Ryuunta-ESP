@@ -26,16 +26,14 @@ import ryuunta.iot.ryuuntaesp.helper.DeviceHelper
 import ryuunta.iot.ryuuntaesp.main.home.devices.DeviceViewType
 import ryuunta.iot.ryuuntaesp.main.home.devices.listDeviceType
 
-class MainViewModel() : BaseViewModel() {
-    private val _isDarkMode = MutableLiveData(false)
-    val isDarkMode: LiveData<Boolean> = _isDarkMode
+class MainViewModel : BaseViewModel() {
 
     private val _deviceLiveData = MutableLiveData<List<DeviceObj>>(listOf())
     val deviceLiveData: LiveData<List<DeviceObj>> = _deviceLiveData
 
     var currentPager = 0
 
-    private var deviceHelper: DeviceHelper? = null
+    private var deviceHelper: DeviceHelper = DeviceHelper()
 
     val listHomeUser = listOf(
         IconWithTextObj(0, R.drawable.ic_no_face, "Ryuunta"),
@@ -95,8 +93,7 @@ class MainViewModel() : BaseViewModel() {
     }
 
     fun refreshDeviceList() {
-        deviceHelper = DeviceHelper()
-        _deviceLiveData.postValue(deviceHelper?.getAllDevices() ?: listOf())
+        _deviceLiveData.postValue(deviceHelper.getAllDevices())
 
     }
 
@@ -159,8 +156,4 @@ class MainViewModel() : BaseViewModel() {
 
     }
 
-    fun setDarkMode(isDarkMode: Boolean) {
-        _isDarkMode.postValue(isDarkMode)
-
-    }
 }

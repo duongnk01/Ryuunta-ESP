@@ -1,17 +1,19 @@
-package ryuunta.iot.ryuuntaesp.core.wrapper
+package ryuunta.iot.ryuuntaesp.core.callback
+
+import ryuunta.iot.ryuuntaesp.data.model.UserInfo
 
 class AuthRequestCallbackWrapper {
-    private var onSuccess: (Boolean) -> Unit = {}
+    private var onSuccess: (UserInfo) -> Unit = {}
     private var onFailure: (code: Int, message: String) -> Unit = { _, _ -> }
-    private var success: Boolean? = null
+    private var userInfo: UserInfo? = null
     private var failureCode: Int? = null
     private var failureMess: String? = null
 
     internal val callback = object : AuthRequestCallback {
-        override fun onSuccess() {
+        override fun onSuccess(userInfo: UserInfo) {
             this@AuthRequestCallbackWrapper.onSuccess
-            if (this@AuthRequestCallbackWrapper.success == null) {
-                this@AuthRequestCallbackWrapper.success = true
+            if (this@AuthRequestCallbackWrapper.userInfo == null) {
+                this@AuthRequestCallbackWrapper.userInfo = UserInfo("Ryuunta ESP", "")
             }
         }
 
@@ -25,9 +27,9 @@ class AuthRequestCallbackWrapper {
 
     }
 
-    fun onSuccess(func: (Boolean) -> Unit) : AuthRequestCallbackWrapper {
+    fun onSuccess(func: (UserInfo) -> Unit) : AuthRequestCallbackWrapper {
         onSuccess = func
-        if (success != null) func(success!!)
+        if (userInfo != null) func(userInfo!!)
         return this
     }
 
@@ -39,6 +41,6 @@ class AuthRequestCallbackWrapper {
 }
 
 interface AuthRequestCallback {
-    fun onSuccess()
+    fun onSuccess(userInfo: UserInfo)
     fun onFailure(code: Int, message: String)
 }

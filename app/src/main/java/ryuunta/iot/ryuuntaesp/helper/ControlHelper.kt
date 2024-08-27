@@ -2,17 +2,42 @@ package ryuunta.iot.ryuuntaesp.helper
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import ryuunta.iot.ryuuntaesp.core.base.Config
+import ryuunta.iot.ryuuntaesp.data.model.UserInfo
 import ryuunta.iot.ryuuntaesp.utils.RLog
 
 class ControlHelper {
     private val TAG = "ControlHelper"
-    private val db = FirebaseDatabase.getInstance()
-    private var userRef = db.getReference("users")
+    private val db : FirebaseDatabase by lazy {
+        FirebaseDatabase.getInstance()
+    }
 
-    fun createUserNode(userId: String) {
+    fun generateUserData(
+        uid: String,
+        user: UserInfo,
+        onSuccess: () -> Unit = {},
+        onFailure: (code: Int, message: String) -> Unit = { code, message -> }
+    ) {
+        RLog.d(TAG, "fetch user data from node")
+        val userRef = db.reference.child("users")
+        userRef.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (!snapshot.exists()) {
+                    RLog.d(TAG, "create new user")
+                    userRef.child(uid).setValue(user)
+                }
+                Config.userUid = uid
+                onSuccess()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                RLog.d(TAG, "onCancelled: ${error.message}")
+                onFailure(-2, error.message)
+            }
+
+        })
 
     }
 
@@ -26,8 +51,8 @@ class ControlHelper {
         devicePath: String,
         elementsPath: List<String>,
         state: Boolean?,
-        onStateUpdated: (String, Boolean) -> Unit = {elmPath, isOn -> },
-        onError: (code: Int, message: String) -> Unit = {code, message -> }
+        onStateUpdated: (String, Boolean) -> Unit = { elmPath, isOn -> },
+        onError: (code: Int, message: String) -> Unit = { code, message -> }
     ) {
         if (elementsPath.isEmpty()) {
             RLog.e(TAG, "elementPath is empty")

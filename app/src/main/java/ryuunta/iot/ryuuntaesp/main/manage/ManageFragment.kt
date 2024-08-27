@@ -8,10 +8,20 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
+import ryuunta.iot.ryuuntaesp.data.model.UserInfo
 import ryuunta.iot.ryuuntaesp.databinding.FragmentManageBinding
+import ryuunta.iot.ryuuntaesp.helper.AuthenticationHelper
+import ryuunta.iot.ryuuntaesp.helper.ControlHelper
+import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
+import ryuunta.iot.ryuuntaesp.utils.showDialogError
+import ryuunta.iot.ryuuntaesp.utils.showDialogResultAnnounce
 
-class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(FragmentManageBinding::inflate, ManageViewModel::class.java) {
+class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(
+    FragmentManageBinding::inflate,
+    ManageViewModel::class.java
+) {
 
     private val pathDB = "esp8266"
     private lateinit var nodeLed: DatabaseReference
@@ -19,6 +29,8 @@ class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(Frag
     private lateinit var nodeRelay2: DatabaseReference
     private lateinit var relayEsp01: DatabaseReference
     private lateinit var doorLock: DatabaseReference
+
+    private val controlHelper = ControlHelper()
 
     override fun initViews(savedInstanceState: Bundle?) {
         initFirebase()
@@ -50,6 +62,35 @@ class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(Frag
             }
             btnOpenDoor.setOnClickListener {
                 doorLock.setValue(1)
+            }
+
+            button.setPreventDoubleClick {
+                val user = AuthenticationHelper.getInfoUser()
+                user?.let {
+                    val userInfo = UserInfo(
+                        it.displayName ?: "",
+                        it.email ?: "",
+                    )
+                    controlHelper.generateUserData(it.uid, userInfo, onSuccess = {
+                        requireContext().showDialogResultAnnounce(
+                            titleRes = R.string.txt_done,
+                            messStr = "đăng ký người dùng thành công.",
+                            lifecycle = lifecycle
+                        )
+                    }, onFailure = { code, message ->
+                        if (code == -1) {
+                            requireContext().showDialogResultAnnounce(
+                                R.string.oops,
+                                R.raw.anim_paimon_bikkurisuru,
+                                lifecycle,
+                                messStr = message
+                            )
+                        } else {
+                            requireContext().showDialogError(lifecycle, message)
+                        }
+
+                    })
+                }
             }
         }
     }

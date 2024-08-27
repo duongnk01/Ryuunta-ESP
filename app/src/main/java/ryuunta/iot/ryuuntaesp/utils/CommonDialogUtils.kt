@@ -405,12 +405,13 @@ fun Context.showDialogResultAnnounce(
             }
         }
     }
-//    binding.btnConfirm.setPreventDoubleClick {
-//        onConfirm()
-//        isShow = false
-//        lifecycle.removeObserver(observer)
-//        dialog.dismiss()
-//    }
+    Handler(Looper.getMainLooper()).postDelayed({
+        onConfirm()
+        isShow = false
+        lifecycle.removeObserver(observer)
+        dialog.dismiss()
+    }, 2000)
+
     lifecycle.addObserver(observer)
 
     if (!dialog.isShowing) {

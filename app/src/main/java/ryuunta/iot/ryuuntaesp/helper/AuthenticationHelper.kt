@@ -16,8 +16,6 @@ object AuthenticationHelper {
         FirebaseAuth.getInstance()
     }
 
-    fun getInstance(): FirebaseAuth = firebaseAuth
-
     fun getTokenId(context: Context): String {
         var token = ""
         firebaseAuth.currentUser?.let {

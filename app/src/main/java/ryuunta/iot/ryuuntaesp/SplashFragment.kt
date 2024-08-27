@@ -3,13 +3,17 @@ package ryuunta.iot.ryuuntaesp
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import ryuunta.iot.ryuuntaesp.helper.AuthenticationHelper
+import ryuunta.iot.ryuuntaesp.authentication.AuthViewModel
 import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
+import ryuunta.iot.ryuuntaesp.data.model.UserInfo
 import ryuunta.iot.ryuuntaesp.databinding.FragmentSplashScreenBinding
+import ryuunta.iot.ryuuntaesp.helper.AuthenticationHelper
+import ryuunta.iot.ryuuntaesp.helper.ControlHelper
+import ryuunta.iot.ryuuntaesp.utils.showDialogNotification
 
-class SplashFragment : BaseFragment<FragmentSplashScreenBinding, InitiationViewModel>(
+class SplashFragment : BaseFragment<FragmentSplashScreenBinding, AuthViewModel>(
     FragmentSplashScreenBinding::inflate,
-    InitiationViewModel::class.java
+    AuthViewModel::class.java
 ) {
     override fun initViews(savedInstanceState: Bundle?) {
         // This is used to hide the status bar and make
@@ -22,20 +26,41 @@ class SplashFragment : BaseFragment<FragmentSplashScreenBinding, InitiationViewM
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN
 //            )
 //        }
+
         Handler(Looper.getMainLooper()).postDelayed({
             checkUser()
-        }, 2000)
-
-
+        }, 1000)
 
     }
 
     private fun checkUser() {
         val currentUser = AuthenticationHelper.getInfoUser()
         if (currentUser != null) {
-            (activity as InitiationActivity).nextToHomePage()
+            val userInfo = UserInfo(
+                currentUser.displayName ?: "",
+                currentUser.email ?: ""
+            )
+            ControlHelper().generateUserData(currentUser.uid, userInfo,
+                onSuccess = {
+                    (activity as InitiationActivity).nextToHomePage()
+                },
+                onFailure = { code, message ->
+                    requireContext().showDialogNotification(
+                        R.string.txt_failure,
+                        R.raw.anim_nana_crying,
+                        lifecycle,
+                        R.string.txt_cannot_get_data_user,
+                        errorMess = message,
+                        onConfirm = {
+                            goToSignIn()
+                        }
+                    )
+
+                })
+
         } else {
             goToSignIn()
+
         }
     }
 
