@@ -56,7 +56,7 @@ class ControlHelper {
      */
     fun controlDevice(
         deviceId: String,
-        elements: List<ElementInfoObj>,
+        elements: Map<String, ElementInfoObj>,
         state: Boolean?,
         onStateUpdated: (ElementInfoObj) -> Unit = { elm -> },
         onError: (code: Int, message: String) -> Unit = { code, message -> }
@@ -65,8 +65,8 @@ class ControlHelper {
             RLog.e(TAG, "elementPath is empty")
             return
         }
-        elements.forEachIndexed { index, element ->
-            val myElmRef = myRef.child(deviceId).child(BUTTON_LIST).child(index.toString())
+        elements.forEach { (key, element) ->
+            val myElmRef = myRef.child(deviceId).child(BUTTON_LIST).child(key)
             if (state == null) {
                 myElmRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {

@@ -19,12 +19,10 @@ class DeviceHelper {
     private val userRef = db.getReference(USERS).child(Config.userUid)
     private val myRef = db.getReference(USERS).child(Config.userUid).child(DEVICES)
 
-    fun addNewDevice(button: DeviceObj, listElm: List<ElementInfoObj>) {
+    fun addNewDevice(button: DeviceObj, listElm: Map<String, ElementInfoObj>) {
         myRef.child(button.id).setValue(button).addOnCompleteListener {
-            listElm.forEach {
-                myRef.child(button.id).child(BUTTON_LIST).child(it.id).setValue(it)
-            }
 
+            myRef.child(button.id).child(BUTTON_LIST).setValue(listElm)
         }
     }
 

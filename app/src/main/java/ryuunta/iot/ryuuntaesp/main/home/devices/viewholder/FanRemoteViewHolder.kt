@@ -19,7 +19,7 @@ class FanRemoteViewHolder(val binding: ItemFanRemoteBinding) : RViewHolder<RItem
                     btnQuickSwitch.isClickable = false
                     controlHelper.controlDevice(
                         (item as DeviceItem.FanRemote).device.id,
-                        item.device.buttonList.filterIndexed { index, elementInfoObj -> index == 1 },
+                        item.device.buttonList.filterKeys { it.startsWith("1") },       //select id start with 1 it means button 1 (fan level 1)
                         state == 1, onStateUpdated = { elm ->
                             btnQuickSwitch.isClickable = true
                             if (elm.value == 0) {
@@ -47,7 +47,7 @@ class FanRemoteViewHolder(val binding: ItemFanRemoteBinding) : RViewHolder<RItem
             imgDeviceIcon.setImageResource(fanRemote.resIcon)
 
             controlHelper.controlDevice(fanRemote.device.id,
-                item.device.buttonList.filterIndexed { index, elementInfoObj -> index == 1 },
+                item.device.buttonList.filterKeys { it.startsWith("1") },
                 null, { elm ->
                     state = elm.value
                     if (state == 0) {

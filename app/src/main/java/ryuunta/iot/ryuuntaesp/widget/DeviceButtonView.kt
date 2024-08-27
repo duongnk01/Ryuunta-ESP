@@ -39,25 +39,25 @@ class DeviceButtonView : LinearLayout {
     fun initView(deviceItem: DeviceObj, onElementClick: (ElementInfoObj, Boolean) -> Unit) {
         when (deviceItem.type) {
             DeviceViewType.SWITCH_BUTTON.name, DeviceViewType.FAN_REMOTE.name -> {
-                val splitList = deviceItem.buttonList.chunked(2)
-                val gson = Gson().toJson(splitList)
-                RLog.d(TAG, "initView: $gson")
+                val splitMap = splitHashMap(deviceItem.buttonList, 2)
+//                val gson = Gson().toJson(splitMap)
+//                RLog.d(TAG, "initView: $gson")
 
-                splitList.forEachIndexed { index, list ->
-                    for (item in list) {
+                splitMap.forEach {
+                    for ((key, value) in it) {
                         val button = ButtonElementView(context)
-                        button.initView(item) { state ->
-                            onElementClick(item, state)
+                        button.initView(value) { state ->
+                            onElementClick(value, state)
                         }
                         listElement.add(button)
-                        when (index) {
-                            0 -> layout1.addView(button)
-                            1 -> {
+                        when (key.first().digitToInt()) {
+                            1,2 -> layout1.addView(button)      //button 1, 2
+                            3,4 -> {                            //buttom 3, 4
                                 layout2.show()
                                 layout2.addView(button)
                             }
 
-                            2 -> {
+                            5,6 -> {                            //buttom 5, 6
                                 layout3.show()
                                 layout3.addView(button)
                             }

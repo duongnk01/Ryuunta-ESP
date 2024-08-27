@@ -22,7 +22,6 @@
             android:layout_width="@dimen/_space24dp"
             android:layout_height="@dimen/_space24dp"
             android:layout_alignParentEnd="true"
-            android:visibility="gone"
             android:src="@drawable/ic_power_switch_on" />
 
         <TextView
