@@ -14,14 +14,15 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ryuunta.iot.ryuuntaesp.core.base.BaseViewModel
-import ryuunta.iot.ryuuntaesp.helper.DeviceHelper
 import ryuunta.iot.ryuuntaesp.data.model.DeviceItem
 import ryuunta.iot.ryuuntaesp.data.model.DeviceObj
 import ryuunta.iot.ryuuntaesp.data.model.IconWithTextObj
 import ryuunta.iot.ryuuntaesp.data.model.RItem
 import ryuunta.iot.ryuuntaesp.data.model.RoomObj
+import ryuunta.iot.ryuuntaesp.data.model.ScenarioItem
 import ryuunta.iot.ryuuntaesp.data.model.WeatherDataCompilation
 import ryuunta.iot.ryuuntaesp.data.network.ResponseCode
+import ryuunta.iot.ryuuntaesp.helper.DeviceHelper
 import ryuunta.iot.ryuuntaesp.main.home.devices.DeviceViewType
 import ryuunta.iot.ryuuntaesp.main.home.devices.listDeviceType
 
@@ -48,6 +49,13 @@ class MainViewModel() : BaseViewModel() {
         RoomObj(2, "Nhà bếp"),
         RoomObj(3, "Gara"),
         RoomObj(4, "Phòng ngủ")
+    )
+    val quickScenarioList = listOf(
+        ScenarioItem.QuickScenario("Tắt đèn hành lang"),
+        ScenarioItem.QuickScenario("Đi ngủ"),
+        ScenarioItem.QuickScenario("đi ra ngoài"),
+        ScenarioItem.QuickScenario("bật tất cả quạt"),
+        ScenarioItem.QuickScenario("Đi làm"),
     )
 
     fun fetchCurrWeather(context: Context) {

@@ -35,13 +35,13 @@
         <item name="backgroundNavColor">@color/bg_nav_daylight</item>
         <item name="backgroundManageColor">@color/bg_pink_daylight_fade</item>
         <item name="backgroundNotiColor">@color/bg_green_daylight_fade</item>
+        <item name="backgroundDialogColor">@color/bg_color_daylight</item>
 
 
     </style>
 
     <style name="Theme.RyuuntaESP.Dark" parent="Base.Theme.RyuuntaESP">
         <!-- Customize your dark theme here. -->
-        <item name="android:statusBarColor">?backgroundHeaderColor</item>
         <item name="android:textColorPrimary">?textNormalColor</item>
         <item name="backgroundHeaderColor">@color/bg_header_darkmode</item>
         <item name="backgroundColor">@color/bg_color_darkmode</item>
@@ -58,6 +58,8 @@
         <item name="backgroundNavColor">@color/bg_nav_darkmode</item>
         <item name="backgroundManageColor">@color/bg_pink_darkmode_fade</item>
         <item name="backgroundNotiColor">@color/bg_green_darkmode_fade</item>
+        <item name="backgroundDialogColor">@color/bg_item_darkmode_lv2</item>
+
     </style>
 
     <style name="DialogTheme2" parent="@style/Base.Theme.AppCompat.Light.Dialog">

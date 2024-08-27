@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/btn_quick_scenario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_space4dp"
+        android:layout_marginVertical="@dimen/_space8dp"
+        android:background="@drawable/bg_button_confirm"
+        android:backgroundTint="@color/accent_color_daylight"
+        android:elevation="2dp"
+        android:fontFamily="@font/sfprodisplay_semibold"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_space18dp"
+        android:paddingVertical="@dimen/_space12dp"
+        android:text="Scenario"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_14" />
+</layout>

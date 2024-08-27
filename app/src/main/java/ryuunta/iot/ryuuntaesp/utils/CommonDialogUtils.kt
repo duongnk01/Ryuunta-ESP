@@ -1,7 +1,5 @@
 package ryuunta.iot.ryuuntaesp.utils
 
-import android.animation.Animator
-import android.animation.Animator.AnimatorListener
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -12,14 +10,15 @@ import android.os.Looper
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.databinding.DialogConfirmDeleteBinding
-import ryuunta.iot.ryuuntaesp.databinding.DialogLottieBinding
 import ryuunta.iot.ryuuntaesp.databinding.DialogNotificationBinding
+import ryuunta.iot.ryuuntaesp.databinding.DialogNotificationStickerBinding
 import ryuunta.iot.ryuuntaesp.databinding.DialogNotificationWithConfirmButtonBinding
 import ryuunta.iot.ryuuntaesp.databinding.DialogResultAnnounceBinding
 
@@ -120,7 +119,7 @@ fun Context.showDialogError(lifecycle: Lifecycle, errorMess: String?) {
         lifecycle,
         R.string.txt_failure_message,
         errorMess = errorMess,
-        isAnimLoop =  true
+        isAnimLoop = true
     )
 }
 
@@ -203,14 +202,27 @@ fun Context.showDialogNotification(
     }
 }
 
-fun Context.showDialogLottie(
+fun Context.developInProgress(lifecycle: Lifecycle) {
+    showDialogNotificationWithSticker(
+        lifecycle,
+        R.drawable.im_elf_project_bunny_emoji_3,
+        R.string.txt_this_function_zz,
+        R.string.txt_develop_in_progress
+    )
+}
+
+fun Context.showDialogNotificationWithSticker(
     lifecycle: Lifecycle,
-    @RawRes lottieAnim: Int,
+    @DrawableRes stickerRes: Int = R.drawable.im_elf_project_bunny_emoji_3,
+    @StringRes titleRes: Int,
+    @StringRes messRes: Int? = null,
+    messStr: String = "",
+    @StringRes textConfirm: Int = R.string.ok,
     onComplete: () -> Unit = {},
 ) {
     var isShow = false
     val dialog: Dialog
-    val view: View = LayoutInflater.from(this).inflate(R.layout.dialog_lottie, null)
+    val view: View = LayoutInflater.from(this).inflate(R.layout.dialog_notification_sticker, null)
     val builder = AlertDialog.Builder(this)
         .setView(view)
         .setCancelable(false)
@@ -219,9 +231,15 @@ fun Context.showDialogLottie(
     dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     dialog.getWindow()?.setGravity(Gravity.BOTTOM)
 
-    val binding = DialogLottieBinding.bind(view)
-    binding.animationView.setAnimation(lottieAnim)
-    binding.animationView.repeatCount = 0
+    val binding = DialogNotificationStickerBinding.bind(view)
+    binding.imgSticker.setImageResource(stickerRes)
+    binding.txtTitle.setText(titleRes)
+    if (messRes == null) {
+        binding.txtMessage.text = messStr
+    } else {
+        binding.txtMessage.setText(messRes)
+    }
+    binding.txtConfirm.setText(textConfirm)
 
     val observer = LifecycleEventObserver { _, event ->
         when (event) {
@@ -244,33 +262,12 @@ fun Context.showDialogLottie(
         }
     }
 
-    binding.animationView.addAnimatorListener(object : AnimatorListener {
-        override fun onAnimationStart(p0: Animator) {
-
-        }
-
-        override fun onAnimationEnd(p0: Animator) {
-            isShow = false
-            lifecycle.removeObserver(observer)
-            dialog.dismiss()
-            onComplete()
-        }
-
-        override fun onAnimationCancel(p0: Animator) {
-
-        }
-
-        override fun onAnimationRepeat(p0: Animator) {
-
-        }
-
-    })
-
-//    Handler(Looper.getMainLooper()).postDelayed({
-//        isShow = false
-//        lifecycle.removeObserver(observer)
-//        dialog.dismiss()
-//    }, timeDismiss)
+    binding.txtConfirm.setPreventDoubleClick {
+        onComplete()
+        isShow = false
+        lifecycle.removeObserver(observer)
+        dialog.dismiss()
+    }
 
     lifecycle.addObserver(observer)
 

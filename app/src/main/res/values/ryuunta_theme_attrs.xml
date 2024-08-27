@@ -2,6 +2,7 @@
 <resources>
     <attr name="backgroundColor" format="reference|color"/>
     <attr name="backgroundHeaderColor" format="reference|color"/>
+    <attr name="backgroundDialogColor" format="reference|color"/>
     <attr name="backgroundNavColor" format="reference|color"/>
     <attr name="backgroundManageColor" format="reference|color"/>
     <attr name="backgroundItem" format="reference|color"/>

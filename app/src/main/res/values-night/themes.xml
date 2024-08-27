@@ -12,7 +12,7 @@
         <item name="android:autofilledHighlight" >@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <!-- Optional: set to transparent if your app is drawing behind the status bar. -->
-        <item name="android:statusBarColor">@color/bg_header_darkmode</item>
+<!--        <item name="android:statusBarColor">@color/bg_header_darkmode</item>-->
         <!-- Optional: set the status bar light and content dark. -->
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:enforceNavigationBarContrast" >false</item>
@@ -20,6 +20,7 @@
 
         <!-- customize theme -->
 <!--        <item name="android:textColorPrimary">?textNormalColor</item>-->
+        <item name="android:textColorPrimary">?textNormalColor</item>
         <item name="backgroundHeaderColor">@color/bg_header_darkmode</item>
         <item name="backgroundColor">@color/bg_color_darkmode</item>
         <item name="backgroundItem">@color/bg_item_darkmode</item>
@@ -35,5 +36,6 @@
         <item name="backgroundNavColor">@color/bg_nav_darkmode</item>
         <item name="backgroundManageColor">@color/bg_pink_darkmode_fade</item>
         <item name="backgroundNotiColor">@color/bg_green_darkmode_fade</item>
+        <item name="backgroundDialogColor">@color/bg_item_darkmode_lv2</item>
     </style>
 </resources>

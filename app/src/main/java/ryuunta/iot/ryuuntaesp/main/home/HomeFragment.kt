@@ -7,14 +7,16 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
+import ryuunta.iot.ryuuntaesp.MainViewModel
+import ryuunta.iot.ryuuntaesp.adapter.QuickScenarioListAdapter
 import ryuunta.iot.ryuuntaesp.adapter.RoomSpinnerAdapter
 import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
+import ryuunta.iot.ryuuntaesp.data.model.ScenarioItem
 import ryuunta.iot.ryuuntaesp.data.model.WeatherDataCompilation
 import ryuunta.iot.ryuuntaesp.data.network.ResponseCode
 import ryuunta.iot.ryuuntaesp.databinding.FragmentHomeBinding
-import ryuunta.iot.ryuuntaesp.MainViewModel
 import ryuunta.iot.ryuuntaesp.main.home.devices.DeviceListAdapter
-import ryuunta.iot.ryuuntaesp.utils.RLog
+import ryuunta.iot.ryuuntaesp.utils.developInProgress
 import ryuunta.iot.ryuuntaesp.utils.gone
 import ryuunta.iot.ryuuntaesp.utils.show
 
@@ -31,12 +33,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
         RoomSpinnerAdapter(requireContext(), viewModel.roomList)
     }
 
+    private val quickScenarioListAdapter: QuickScenarioListAdapter by lazy {
+        QuickScenarioListAdapter {
+            Toast.makeText(
+                requireContext(),
+                "Active scenario ${(it as ScenarioItem.QuickScenario).label}",
+                Toast.LENGTH_SHORT
+            ).show()
+            requireContext().developInProgress(lifecycle)
+        }
+    }
+
     private val deviceListAdapter: DeviceListAdapter by lazy {
         DeviceListAdapter(onItemClick)
     }
 
     override fun initViews(savedInstanceState: Bundle?) {
         binding.apply {
+            rcvQuickScenarios.adapter = quickScenarioListAdapter
+            rcvQuickScenarios.overScrollMode = View.OVER_SCROLL_NEVER
+            quickScenarioListAdapter.submitList(viewModel.quickScenarioList)
             rcvDevices.adapter = deviceListAdapter
             rcvDevices.overScrollMode = View.OVER_SCROLL_NEVER
         }
@@ -108,6 +124,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
     }
 
     private fun onRefreshHomePage() {
+        quickScenarioListAdapter.submitList(viewModel.quickScenarioList)
         viewModel.fetchCurrWeather(requireContext())
         viewModel.refreshDeviceList()
     }

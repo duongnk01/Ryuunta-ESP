@@ -17,7 +17,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_corner_20"
+            android:background="@drawable/bg_dialog_corner_20"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -27,15 +27,14 @@
                 android:layout_width="@dimen/_space128dp"
                 android:layout_height="@dimen/_space128dp"
                 android:layout_marginTop="@dimen/space_screen_small"
+                android:layout_marginBottom="@dimen/space_screen_small"
                 app:layout_constraintBottom_toTopOf="@+id/txt_title"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginBottom="@dimen/space_screen_small"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                app:lottie_rawRes="@raw/anim_arona_kururu"
-                />
+                app:lottie_rawRes="@raw/anim_arona_kururu" />
 
             <TextView
                 android:id="@+id/txt_title"
@@ -52,17 +51,17 @@
 
             <TextView
                 android:id="@+id/txt_message"
+                style="@style/theme_hint_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_space64dp"
                 android:layout_marginEnd="@dimen/_space64dp"
                 android:layout_marginBottom="@dimen/space_screen_normal"
                 android:gravity="center"
-                style="@style/theme_hint_text"
-                tools:text="@string/wait_a_few"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="@string/wait_a_few" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

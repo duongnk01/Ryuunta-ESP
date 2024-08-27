@@ -1,22 +1,11 @@
 package ryuunta.iot.ryuuntaesp.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import ryuunta.iot.ryuuntaesp.data.model.DeviceElement
+import ryuunta.iot.ryuuntaesp.data.model.DeviceItem
 import ryuunta.iot.ryuuntaesp.data.model.RItem
+import ryuunta.iot.ryuuntaesp.data.model.ScenarioItem
 
-open class UIDiff<T> : DiffUtil.ItemCallback<T>() {
-    override fun areItemsTheSame(oldItem: T & Any, newItem: T & Any): Boolean {
-        return oldItem == newItem
-    }
-
-    override fun areContentsTheSame(oldItem: T & Any, newItem: T & Any): Boolean {
-        return oldItem == newItem
-    }
-
-
-}
-
-class DeviceHomeDiff : UIDiff<RItem>() {
+open class UIDiff : DiffUtil.ItemCallback<RItem>() {
     override fun areItemsTheSame(oldItem: RItem, newItem: RItem): Boolean {
         return oldItem.viewType == newItem.viewType
     }
@@ -25,18 +14,39 @@ class DeviceHomeDiff : UIDiff<RItem>() {
         return oldItem.viewType == newItem.viewType
     }
 
+
 }
 
-class DeviceElementDiff : UIDiff<DeviceElement>() {
-
-    override fun areItemsTheSame(oldItem: DeviceElement, newItem: DeviceElement): Boolean {
-        return oldItem.elmPath == newItem.elmPath
-
+class DeviceHomeDiff : UIDiff() {
+    override fun areItemsTheSame(oldItem: RItem, newItem: RItem): Boolean {
+        if (oldItem is DeviceItem && newItem is DeviceItem) {
+            return oldItem.device.devPath == newItem.device.devPath
+        }
+        return super.areItemsTheSame(oldItem, newItem)
     }
 
-    override fun areContentsTheSame(oldItem: DeviceElement, newItem: DeviceElement): Boolean {
-        return oldItem.elmPath == newItem.elmPath
-
+    override fun areContentsTheSame(oldItem: RItem, newItem: RItem): Boolean {
+        if (oldItem is DeviceItem && newItem is DeviceItem) {
+            return oldItem.device.label == newItem.device.label
+        }
+        return super.areContentsTheSame(oldItem, newItem)
     }
 
+}
+
+
+class ScenarioItemDiff : DiffUtil.ItemCallback<ScenarioItem>() {
+    override fun areItemsTheSame(oldItem: ScenarioItem, newItem: ScenarioItem): Boolean {
+        if (oldItem is ScenarioItem.QuickScenario && newItem is ScenarioItem.QuickScenario) {
+            return oldItem.label == newItem.label
+        }
+        return oldItem.viewType == newItem.viewType
+    }
+
+    override fun areContentsTheSame(oldItem: ScenarioItem, newItem: ScenarioItem): Boolean {
+        if (oldItem is ScenarioItem.QuickScenario && newItem is ScenarioItem.QuickScenario) {
+            return (oldItem.label + oldItem.bgColor.toString()) == newItem.label + newItem.bgColor.toString()
+        }
+        return oldItem.viewType == newItem.viewType
+    }
 }

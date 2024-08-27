@@ -17,9 +17,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_screen_super_small"
             android:layout_marginBottom="@dimen/_space4dp"
-            android:orientation="vertical"
+            android:background="@drawable/bg_dialog_corner_20"
             android:gravity="center_horizontal"
-            android:background="@drawable/bg_corner_20"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -35,9 +35,9 @@
 
             <TextView
                 android:id="@+id/txt_title"
+                style="@style/theme_title_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/theme_title_text"
                 android:layout_marginHorizontal="@dimen/_space8dp"
                 android:layout_marginBottom="@dimen/space_screen_super_small"
                 android:gravity="center"
@@ -45,13 +45,13 @@
 
             <TextView
                 android:id="@+id/txt_message"
+                style="@style/theme_content_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/theme_content_text"
                 android:layout_marginHorizontal="@dimen/space_screen_super_small"
                 android:layout_marginBottom="@dimen/_space36dp"
                 android:gravity="center"
-                tool:text="Message"/>
+                tool:text="Message" />
 
             <LinearLayout
                 android:id="@+id/ll_button"
@@ -63,23 +63,23 @@
 
                 <TextView
                     android:id="@+id/txt_cancel"
+                    style="@style/theme_button_cancel"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/_space16dp"
                     android:layout_marginEnd="@dimen/_space8dp"
-                    style="@style/theme_button_cancel"
-                    android:text="@string/cancel"/>
+                    android:layout_weight="1"
+                    android:text="@string/cancel" />
 
                 <TextView
                     android:id="@+id/txt_confirm"
+                    style="@style/theme_button_confirm"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="@dimen/_space16dp"
                     android:layout_marginStart="@dimen/_space8dp"
-                    style="@style/theme_button_confirm"
-                    android:text="@string/ok"/>
+                    android:layout_marginEnd="@dimen/_space16dp"
+                    android:layout_weight="1"
+                    android:text="@string/ok" />
             </LinearLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

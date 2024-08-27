@@ -44,7 +44,7 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
                     RLog.d(TAG, "initView: onElementClick $elmPath -- state is $state")
                     controlStateElement(listOf(elmPath), state)
                 }
-                txtDeviceLabel.text = deviceItem.name
+                txtDeviceLabel.text = deviceItem.label
             }
 
         }

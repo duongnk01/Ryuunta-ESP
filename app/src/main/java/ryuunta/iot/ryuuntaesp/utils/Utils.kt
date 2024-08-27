@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.net.wifi.WifiManager
 import android.widget.ImageView
 import com.google.gson.Gson
+import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.data.model.WifiSSID
 import java.util.Random
 
@@ -65,7 +66,7 @@ fun <K, V> splitHashMap(map: Map<K, V>, chunkSize: Int): List<Map<K, V>> {
     return subLists.map { it.toMap() }
 }
 
-fun getRandomSticker(context: Context, assetPath : String, iv: ImageView) {
+fun getRandomSticker(context: Context, assetPath: String, iv: ImageView) {
     RLog.d("getRandomSticker", "load random sticker")
     val assetManager = context.assets
     try {
@@ -84,7 +85,7 @@ fun getRandomSticker(context: Context, assetPath : String, iv: ImageView) {
     }
 }
 
-fun getAssetBackground(context: Context, assetName : String, iv: ImageView) {
+fun getAssetBackground(context: Context, assetName: String, iv: ImageView) {
     RLog.d("getAssetBackground", "load specific background")
     try {
         val inputStream = context.assets.open("background/$assetName")
@@ -95,4 +96,27 @@ fun getAssetBackground(context: Context, assetName : String, iv: ImageView) {
         e.printStackTrace()
 
     }
+}
+
+fun getRandomColor(): Int {
+    val listColor = listOf(
+        R.color.pastel_blue,
+        R.color.pastel_pink,
+        R.color.pastel_blue_sea,
+        R.color.pastel_lavender_blue,
+//        R.color.pastel_pink_light,
+        R.color.pastel_green_mint,
+//        R.color.pastel_blue_sea_light,
+//        R.color.pastel_blue_sky_light,
+        R.color.pastel_lavender_purple,
+//        R.color.pastel_green_mint_light,
+        R.color.pastel_orange_1,
+        R.color.pastel_orange_2,
+        R.color.pastel_peach_1,
+        R.color.pastel_peach_2,
+        R.color.pastel_green_1,
+        R.color.pastel_green_2,
+    )
+    return listColor[Random().nextInt(listColor.size)]
+
 }
