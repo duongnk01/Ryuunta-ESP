@@ -71,7 +71,7 @@
 
         <argument
             android:name="deviceId"
-            app:argType="integer" />
+            app:argType="string" />
         <argument
             android:name="deviceLabelRes"
             app:argType="integer" />

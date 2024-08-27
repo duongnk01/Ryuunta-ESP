@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.google.gson.Gson
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.data.model.DeviceObj
+import ryuunta.iot.ryuuntaesp.data.model.ElementInfoObj
 import ryuunta.iot.ryuuntaesp.main.home.devices.DeviceViewType
 import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.show
@@ -35,9 +36,9 @@ class DeviceButtonView : LinearLayout {
         layout3 = findViewById(R.id.layout_3)
     }
 
-    fun initView(deviceItem: DeviceObj, onElementClick: (String, Boolean) -> Unit) {
+    fun initView(deviceItem: DeviceObj, onElementClick: (ElementInfoObj, Boolean) -> Unit) {
         when (deviceItem.type) {
-            DeviceViewType.SWITCH_BUTTON -> {
+            DeviceViewType.SWITCH_BUTTON.name -> {
                 val splitMap = splitHashMap(deviceItem.buttonList, 2)
                 val gson = Gson().toJson(splitMap)
                 RLog.d(TAG, "initView: $gson")
@@ -45,10 +46,10 @@ class DeviceButtonView : LinearLayout {
                 splitMap.forEachIndexed { index, map ->
                     for ((key, value) in map) {
                         val button = ButtonElementView(context)
-                        button.initView(value) { state ->
+                        button.initView(value.label) { state ->
                             onElementClick(value, state)
                         }
-                        button.label = value
+                        button.label = value.label
                         listElement.add(button)
                         when (index) {
                             0 -> layout1.addView(button)
@@ -68,7 +69,7 @@ class DeviceButtonView : LinearLayout {
                 }
             }
 
-            DeviceViewType.FAN_REMOTE -> {
+            DeviceViewType.FAN_REMOTE.name -> {
 
             }
 
@@ -76,11 +77,11 @@ class DeviceButtonView : LinearLayout {
         }
     }
 
-    fun updateView(elm: String, state: Boolean) {
+    fun updateView(elm: ElementInfoObj) {
         try {
-            val button = listElement.single { it.label == elm }
-            RLog.d(TAG, "updateView: button = ${button.label}, state = $state")
-            button.isOn = state
+            val button = listElement.single { it.label == elm.label }
+            RLog.d(TAG, "updateView: button = ${button.label}, state = ${elm.value}")
+            button.isOn = elm.value == 1
         } catch (e: Exception) {
             e.printStackTrace()
             Toast.makeText(

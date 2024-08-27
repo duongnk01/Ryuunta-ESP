@@ -9,6 +9,9 @@ import com.google.gson.Gson
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.data.model.WifiSSID
 import java.util.Random
+import java.util.UUID
+
+fun randomId() = UUID.randomUUID().toString()
 
 @SuppressLint("MissingPermission")
 fun scanWifi(context: Context): List<WifiSSID> {

@@ -20,7 +20,7 @@ open class UIDiff : DiffUtil.ItemCallback<RItem>() {
 class DeviceHomeDiff : UIDiff() {
     override fun areItemsTheSame(oldItem: RItem, newItem: RItem): Boolean {
         if (oldItem is DeviceItem && newItem is DeviceItem) {
-            return oldItem.device.devPath == newItem.device.devPath
+            return oldItem.device.id == newItem.device.id
         }
         return super.areItemsTheSame(oldItem, newItem)
     }

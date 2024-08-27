@@ -93,7 +93,9 @@ class MainViewModel : BaseViewModel() {
     }
 
     fun refreshDeviceList() {
-        _deviceLiveData.postValue(deviceHelper.getAllDevices())
+        deviceHelper.getAllDevices {
+            _deviceLiveData.postValue(it)
+        }
 
     }
 
@@ -111,7 +113,7 @@ class MainViewModel : BaseViewModel() {
 
         listDeviceType.forEach { type ->
             val deviceViewType = deviceFlow.filter {
-                it.type == type
+                it.type == type.name
             }.toList()
             if (deviceViewType.isNotEmpty()) {
                 when (type) {

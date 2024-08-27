@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.navigation.fragment.navArgs
 import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.data.model.DeviceObj
+import ryuunta.iot.ryuuntaesp.data.model.ElementInfoObj
 import ryuunta.iot.ryuuntaesp.databinding.FragmentDevicesBinding
 import ryuunta.iot.ryuuntaesp.helper.ControlHelper
 import ryuunta.iot.ryuuntaesp.helper.DeviceHelper
@@ -35,17 +36,20 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
 
         binding.apply {
             val deviceId = args.deviceId
-            device = deviceHelper.getDeviceById(deviceId)
-            device?.let { deviceItem ->
-                //when view created -> get state of device elm from firebase and update UI
-                controlStateElement(deviceItem.buttonList.map { it.value })
+            deviceHelper.getDeviceById(deviceId) {
+                device = it
+                device?.let { deviceItem ->
+                    //when view created -> get state of device elm from firebase and update UI
+                    controlStateElement(deviceItem.buttonList)
 
-                layoutElementButton.initView(deviceItem) { elmPath, state ->
-                    RLog.d(TAG, "initView: onElementClick $elmPath -- state is $state")
-                    controlStateElement(listOf(elmPath), state)
+                    layoutElementButton.initView(deviceItem) { elm, state ->
+                        RLog.d(TAG, "initView: onElementClick ${elm.label} -- state is ${elm.value}")
+                        controlStateElement(mapOf(elm.id to elm), state)
+                    }
+                    txtDeviceLabel.text = deviceItem.label
                 }
-                txtDeviceLabel.text = deviceItem.label
             }
+
 
         }
     }
@@ -62,18 +66,18 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
         }
     }
 
-    private fun controlStateElement(elmsPath: List<String>, state: Boolean? = null) {
+    private fun controlStateElement(elmsPath: Map<String, ElementInfoObj>, state: Boolean? = null) {
         RLog.d(TAG, "controlStateElement: $elmsPath")
         controlHelper.controlDevice(
-            device?.devPath!!,
+            device?.id!!,
             elmsPath,
             state,
-            onStateUpdated = { elmPath, isOn ->
+            onStateUpdated = { elm ->
                 RLog.d(
                     TAG,
                     "controlStateElement: control from ${if (state == null) "server" else "app"}"
                 )
-                binding.layoutElementButton.updateView(elmPath, isOn)
+                binding.layoutElementButton.updateView(elm)
             },
             onError = onError
         )

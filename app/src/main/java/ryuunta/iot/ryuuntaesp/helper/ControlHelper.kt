@@ -5,14 +5,22 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import ryuunta.iot.ryuuntaesp.core.base.Config
+import ryuunta.iot.ryuuntaesp.data.model.ElementInfoObj
+import ryuunta.iot.ryuuntaesp.data.model.RItem
 import ryuunta.iot.ryuuntaesp.data.model.UserInfo
+import ryuunta.iot.ryuuntaesp.helper.DatabaseNode.BUTTON_LIST
+import ryuunta.iot.ryuuntaesp.helper.DatabaseNode.DEVICES
+import ryuunta.iot.ryuuntaesp.helper.DatabaseNode.USERS
 import ryuunta.iot.ryuuntaesp.utils.RLog
 
 class ControlHelper {
     private val TAG = "ControlHelper"
-    private val db : FirebaseDatabase by lazy {
+    private val db: FirebaseDatabase by lazy {
         FirebaseDatabase.getInstance()
     }
+
+    private val userRef = db.getReference(USERS)
+    private val myRef = db.getReference(USERS).child(Config.userUid).child(DEVICES)
 
     fun generateUserData(
         uid: String,
@@ -21,7 +29,6 @@ class ControlHelper {
         onFailure: (code: Int, message: String) -> Unit = { code, message -> }
     ) {
         RLog.d(TAG, "fetch user data from node")
-        val userRef = db.reference.child("users")
         userRef.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (!snapshot.exists()) {
@@ -43,35 +50,34 @@ class ControlHelper {
 
     /**
      * Function to control data realtime firebase
-     * @param devicePath : device's path in firebase realtime database
-     * @param elementsPath : list of elements' path of device in firebase realtime database
+     * @param deviceId : device's path in firebase realtime database
+     * @param elements : list of elements' of device in firebase realtime database
      * @param state : if state is not null -> function will send state to firebase otherwise will get state from firebase to update UI
      */
     fun controlDevice(
-        devicePath: String,
-        elementsPath: List<String>,
+        deviceId: String,
+        elements: Map<String, ElementInfoObj>,
         state: Boolean?,
-        onStateUpdated: (String, Boolean) -> Unit = { elmPath, isOn -> },
+        onStateUpdated: (ElementInfoObj) -> Unit = { elm -> },
         onError: (code: Int, message: String) -> Unit = { code, message -> }
     ) {
-        if (elementsPath.isEmpty()) {
+        if (elements.isEmpty()) {
             RLog.e(TAG, "elementPath is empty")
             return
         }
 
-        elementsPath.forEach { element ->
-            val node = db.reference.child("$devicePath/$element")
+        for ((key, value) in elements) {
+            val myElmRef = myRef.child(deviceId).child(BUTTON_LIST).child(key)
             if (state == null) {
-                node.addValueEventListener(object : ValueEventListener {
+                myElmRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        try {
-                            val value = (snapshot.value as Long).toInt()
-                            RLog.d(TAG, "$devicePath/$element state = $value")
-                            onStateUpdated(element, value == 1)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
+                        val elm = snapshot.getValue(ElementInfoObj::class.java)
+                        RLog.d(TAG, "${elm?.label} state = ${elm?.value}")
+                        if (elm != null) {
+                            onStateUpdated(elm)
+                        } else {
+                            onError(-1, "Element is null")
                         }
-
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -84,11 +90,95 @@ class ControlHelper {
 
                 })
             } else {
-                node.setValue(if (state) 1 else 0)
-                onStateUpdated(element, state)
+                value.value = if (state) 1 else 0
+                myElmRef.setValue(value)
+                onStateUpdated(value)
             }
-
         }
 
+//        elements.forEach { element ->
+//            val node = db.reference.child("$deviceId/$element")
+//            if (state == null) {
+//                node.addValueEventListener(object : ValueEventListener {
+//                    override fun onDataChange(snapshot: DataSnapshot) {
+//                        try {
+//                            val value = (snapshot.value as Long).toInt()
+//                            RLog.d(TAG, "$deviceId/$element state = $value")
+//                            onStateUpdated(element, value == 1)
+//                        } catch (e: Exception) {
+//                            e.printStackTrace()
+//                        }
+//
+//                    }
+//
+//                    override fun onCancelled(error: DatabaseError) {
+//                        onError(error.code, error.message)
+//                        RLog.d(
+//                            TAG,
+//                            "Data realtime cancelled: \nerror code: ${error.code}\nerror message: ${error.message}\nerror details: ${error.details}"
+//                        )
+//                    }
+//
+//                })
+//            } else {
+//                node.setValue(if (state) 1 else 0)
+//                onStateUpdated(element, state)
+//            }
+//
+//        }
+
     }
+
+    /*fun getDataFromNode(targetNode: String) {
+        val node = db.getReference(targetNode)
+        node.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                //all data of child node here
+                for (childSnapshot in snapshot.children)    //get all child node
+                {
+                    val childKey = childSnapshot.key        //get key of child node
+                    val childValue =
+                        childSnapshot.getValue(RItem::class.java)    //get value of child node and parse to RItem object
+                    //do something with childKey and childValue
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                //handler error
+            }
+
+        })
+    }
+
+    fun exampleQuerryDatabase() {
+        val node = db.getReference("users")
+
+        //add a new child node in users")
+        node.child("key").setValue("value")
+            .addOnCompleteListener { }
+            .addOnFailureListener { }
+
+        //add a child node with unique key
+        val user = "Alice"
+        val newChildRef = node.push()
+        newChildRef.setValue(user)
+
+        //add many child node in users
+        val newUsers = mapOf(
+            "user1" to "Alice",
+            "user2" to "Bob"
+        )
+        node.updateChildren(newUsers)
+
+        //update name of user1 in users node
+        node.child("user1").child("name").setValue("Alice")
+            .addOnCompleteListener { }
+            .addOnFailureListener { }
+
+        //delete user1 in users node
+        node.child("user1").removeValue()
+            .addOnCompleteListener { }
+            .addOnFailureListener { }
+    }*/
+
 }
