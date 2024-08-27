@@ -66,10 +66,10 @@ class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(
             }
 
             button.setPreventDoubleClick {
-                val listElm = mutableMapOf<String, ElementInfoObj>()
+                val listElm = mutableListOf<ElementInfoObj>()
                 for (i in 1..4) {
                     val randomId = randomId()
-                    listElm[randomId] = ElementInfoObj(randomId, "Nút $i")
+                    listElm.add(ElementInfoObj(i.toString() + randomId, "Nút $i"))
 
                 }
                 deviceHelper.addNewDevice(
@@ -77,8 +77,9 @@ class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(
                         randomId(),
                         "test",
                         DeviceViewType.SWITCH_BUTTON.name,
-                        listElm
-                    )
+                        listOf()
+                    ),
+                    listElm
                 )
             }
         }

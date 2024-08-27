@@ -38,18 +38,17 @@ class DeviceButtonView : LinearLayout {
 
     fun initView(deviceItem: DeviceObj, onElementClick: (ElementInfoObj, Boolean) -> Unit) {
         when (deviceItem.type) {
-            DeviceViewType.SWITCH_BUTTON.name -> {
-                val splitMap = splitHashMap(deviceItem.buttonList, 2)
-                val gson = Gson().toJson(splitMap)
+            DeviceViewType.SWITCH_BUTTON.name, DeviceViewType.FAN_REMOTE.name -> {
+                val splitList = deviceItem.buttonList.chunked(2)
+                val gson = Gson().toJson(splitList)
                 RLog.d(TAG, "initView: $gson")
 
-                splitMap.forEachIndexed { index, map ->
-                    for ((key, value) in map) {
+                splitList.forEachIndexed { index, list ->
+                    for (item in list) {
                         val button = ButtonElementView(context)
-                        button.initView(value.label) { state ->
-                            onElementClick(value, state)
+                        button.initView(item) { state ->
+                            onElementClick(item, state)
                         }
-                        button.label = value.label
                         listElement.add(button)
                         when (index) {
                             0 -> layout1.addView(button)
@@ -79,16 +78,17 @@ class DeviceButtonView : LinearLayout {
 
     fun updateView(elm: ElementInfoObj) {
         try {
-            val button = listElement.single { it.label == elm.label }
+            val button = listElement.single { it.id == elm.id }
             RLog.d(TAG, "updateView: button = ${button.label}, state = ${elm.value}")
             button.isOn = elm.value == 1
+            button.label = elm.label
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(
-                context,
-                context.getString(R.string.error_element_not_found),
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                context,
+//                context.getString(R.string.error_element_not_found),
+//                Toast.LENGTH_SHORT
+//            ).show()
         }
     }
 }

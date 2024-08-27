@@ -7,5 +7,5 @@ data class DeviceObj(
     var label: String = "",
 //    var devPath: String = "",
     var type: String = DeviceViewType.SWITCH_BUTTON.name,
-    var buttonList: Map<String, ElementInfoObj> = mapOf()
+    var buttonList: List<ElementInfoObj> = listOf()
 )

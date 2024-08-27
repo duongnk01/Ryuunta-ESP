@@ -27,8 +27,17 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
     private var device: DeviceObj? = null
 
     private val onError: (Int, String) -> Unit = { code, message ->
-        RLog.e(TAG, "onError: $message")
-        requireContext().showDialogError(lifecycle, message)
+        RLog.e(TAG, "onError: $message -- code $code")
+        try {
+            requireContext().showDialogError(lifecycle, message) {
+                if (code == -1) {
+                    navController.popBackStack()
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
 
@@ -44,7 +53,7 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
 
                     layoutElementButton.initView(deviceItem) { elm, state ->
                         RLog.d(TAG, "initView: onElementClick ${elm.label} -- state is ${elm.value}")
-                        controlStateElement(mapOf(elm.id to elm), state)
+                        controlStateElement(listOf(elm), state)
                     }
                     txtDeviceLabel.text = deviceItem.label
                 }
@@ -66,7 +75,7 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
         }
     }
 
-    private fun controlStateElement(elmsPath: Map<String, ElementInfoObj>, state: Boolean? = null) {
+    private fun controlStateElement(elmsPath: List<ElementInfoObj>, state: Boolean? = null) {
         RLog.d(TAG, "controlStateElement: $elmsPath")
         controlHelper.controlDevice(
             device?.id!!,

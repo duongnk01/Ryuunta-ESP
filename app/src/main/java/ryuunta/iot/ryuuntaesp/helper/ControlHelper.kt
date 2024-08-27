@@ -56,7 +56,7 @@ class ControlHelper {
      */
     fun controlDevice(
         deviceId: String,
-        elements: Map<String, ElementInfoObj>,
+        elements: List<ElementInfoObj>,
         state: Boolean?,
         onStateUpdated: (ElementInfoObj) -> Unit = { elm -> },
         onError: (code: Int, message: String) -> Unit = { code, message -> }
@@ -65,9 +65,8 @@ class ControlHelper {
             RLog.e(TAG, "elementPath is empty")
             return
         }
-
-        for ((key, value) in elements) {
-            val myElmRef = myRef.child(deviceId).child(BUTTON_LIST).child(key)
+        elements.forEachIndexed { index, element ->
+            val myElmRef = myRef.child(deviceId).child(BUTTON_LIST).child(index.toString())
             if (state == null) {
                 myElmRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -90,9 +89,9 @@ class ControlHelper {
 
                 })
             } else {
-                value.value = if (state) 1 else 0
-                myElmRef.setValue(value)
-                onStateUpdated(value)
+                element.value = if (state) 1 else 0
+                myElmRef.setValue(element)
+                onStateUpdated(element)
             }
         }
 
@@ -129,6 +128,10 @@ class ControlHelper {
 
     }
 
+    /**
+     * addValueEventListener() : get an observable of data from firebase realtime database
+     * addListenerForSingleValueEvent() : get data and stop listening from firebase realtime database
+     */
     /*fun getDataFromNode(targetNode: String) {
         val node = db.getReference(targetNode)
         node.addValueEventListener(object : ValueEventListener {

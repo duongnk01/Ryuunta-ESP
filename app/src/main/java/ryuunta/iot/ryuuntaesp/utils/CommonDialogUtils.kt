@@ -112,14 +112,15 @@ fun Context.showDialogNotificationWithConfirmButton(
     }
 }
 
-fun Context.showDialogError(lifecycle: Lifecycle, errorMess: String?) {
+fun Context.showDialogError(lifecycle: Lifecycle, errorMess: String?, onConfirm: () -> Unit = {}) {
     showDialogNotification(
         R.string.txt_failure,
         R.raw.anim_nana_crying,
         lifecycle,
         R.string.txt_failure_message,
         errorMess = errorMess,
-        isAnimLoop = true
+        isAnimLoop = true,
+        onConfirm = onConfirm
     )
 }
 

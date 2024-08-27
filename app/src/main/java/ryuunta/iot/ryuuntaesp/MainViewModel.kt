@@ -94,7 +94,7 @@ class MainViewModel : BaseViewModel() {
 
     fun refreshDeviceList() {
         deviceHelper.getAllDevices {
-            _deviceLiveData.postValue(it)
+            _deviceLiveData.value =it
         }
 
     }

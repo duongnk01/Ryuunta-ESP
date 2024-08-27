@@ -6,6 +6,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import ryuunta.iot.ryuuntaesp.core.base.Config
 import ryuunta.iot.ryuuntaesp.data.model.DeviceObj
+import ryuunta.iot.ryuuntaesp.data.model.ElementInfoObj
+import ryuunta.iot.ryuuntaesp.helper.DatabaseNode.BUTTON_LIST
 import ryuunta.iot.ryuuntaesp.helper.DatabaseNode.DEVICES
 import ryuunta.iot.ryuuntaesp.helper.DatabaseNode.USERS
 
@@ -17,8 +19,13 @@ class DeviceHelper {
     private val userRef = db.getReference(USERS).child(Config.userUid)
     private val myRef = db.getReference(USERS).child(Config.userUid).child(DEVICES)
 
-    fun addNewDevice(device: DeviceObj) {
-        myRef.child(device.id).setValue(device)
+    fun addNewDevice(button: DeviceObj, listElm: List<ElementInfoObj>) {
+        myRef.child(button.id).setValue(button).addOnCompleteListener {
+            listElm.forEach {
+                myRef.child(button.id).child(BUTTON_LIST).child(it.id).setValue(it)
+            }
+
+        }
     }
 
 
@@ -77,7 +84,7 @@ class DeviceHelper {
     }
 
     fun getDeviceById(deviceId: String, onCompleted: (DeviceObj) -> Unit) {
-        myRef.child(deviceId).addValueEventListener(object : ValueEventListener {
+        myRef.child(deviceId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.getValue(DeviceObj::class.java)?.let {
                     it.id = deviceId

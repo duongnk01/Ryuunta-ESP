@@ -2,15 +2,15 @@ package ryuunta.iot.ryuuntaesp.main.home.devices.viewholder
 
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.core.base.RViewHolder
-import ryuunta.iot.ryuuntaesp.helper.ControlHelper
 import ryuunta.iot.ryuuntaesp.data.model.DeviceItem
 import ryuunta.iot.ryuuntaesp.data.model.RItem
 import ryuunta.iot.ryuuntaesp.databinding.ItemFanRemoteBinding
+import ryuunta.iot.ryuuntaesp.helper.ControlHelper
 
 class FanRemoteViewHolder(val binding: ItemFanRemoteBinding) : RViewHolder<RItem>(binding.root) {
 
     private val controlHelper = ControlHelper()
-    private var state = false
+    private var state = 0
 
     init {
         binding.apply {
@@ -19,15 +19,15 @@ class FanRemoteViewHolder(val binding: ItemFanRemoteBinding) : RViewHolder<RItem
                     btnQuickSwitch.isClickable = false
                     controlHelper.controlDevice(
                         (item as DeviceItem.FanRemote).device.id,
-                        item.device.buttonList,
-                        state, onStateUpdated =  { elm ->
+                        item.device.buttonList.filterIndexed { index, elementInfoObj -> index == 1 },
+                        state == 1, onStateUpdated = { elm ->
                             btnQuickSwitch.isClickable = true
                             if (elm.value == 0) {
                                 btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_off)
                             } else {
                                 btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_on)
                             }
-                            state = elm.value == 1
+                            state = if (elm.value == 1) 0 else 1
                         }, onError = { code, message ->
                             btnQuickSwitch.isClickable = true
                         })
@@ -46,16 +46,17 @@ class FanRemoteViewHolder(val binding: ItemFanRemoteBinding) : RViewHolder<RItem
             txtDeviceLabel.text = getString(fanRemote.resLabel)
             imgDeviceIcon.setImageResource(fanRemote.resIcon)
 
-//            controlHelper.controlDevice(fanRemote.device.id,
-//                fanRemote.device.buttonList, null, { elm ->
-//                    state = isOn
-//                    if (!isOn) {
-//                        btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_off)
-//                    } else {
-//                        btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_on)
-//                    }
-//                }, onError = { code, message ->
-//                })
+            controlHelper.controlDevice(fanRemote.device.id,
+                item.device.buttonList.filterIndexed { index, elementInfoObj -> index == 1 },
+                null, { elm ->
+                    state = elm.value
+                    if (state == 0) {
+                        btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_off)
+                    } else {
+                        btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_on)
+                    }
+                }, onError = { code, message ->
+                })
         }
     }
 }
