@@ -138,7 +138,7 @@ abstract class RyuuntaDialog<T : ViewDataBinding>(
     protected open fun onBackStack() {}
 
     protected abstract fun onCreate()
-    protected open fun getLayoutId(): Int = -1
+    protected abstract fun getLayoutId(): Int
     protected abstract fun initBinding(): T
 
     open fun isCancellable() = true

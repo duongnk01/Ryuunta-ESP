@@ -1,17 +1,24 @@
 package ryuunta.iot.ryuuntaesp.main.home.content
 
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.widget.PopupMenu
 import androidx.navigation.fragment.navArgs
+import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.data.model.DeviceObj
 import ryuunta.iot.ryuuntaesp.data.model.ElementInfoObj
 import ryuunta.iot.ryuuntaesp.databinding.FragmentDevicesBinding
+import ryuunta.iot.ryuuntaesp.dialog.DialogChangeRoom
+import ryuunta.iot.ryuuntaesp.dialog.DialogUpdateNameDevice
 import ryuunta.iot.ryuuntaesp.helper.ControlHelper
 import ryuunta.iot.ryuuntaesp.helper.DeviceHelper
 import ryuunta.iot.ryuuntaesp.utils.RLog
+import ryuunta.iot.ryuuntaesp.utils.developInProgress
 import ryuunta.iot.ryuuntaesp.utils.hideKeyboard
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
 import ryuunta.iot.ryuuntaesp.utils.showDialogError
+import ryuunta.iot.ryuuntaesp.utils.showDialogNotification
 
 class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
     FragmentDevicesBinding::inflate,
@@ -25,6 +32,21 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
     private val controlHelper = ControlHelper()
 
     private var device: DeviceObj? = null
+
+    private val dialogUpdateNameDevice: DialogUpdateNameDevice by lazy {
+        DialogUpdateNameDevice(requireContext()) {
+            requireContext().showDialogNotification(
+                R.string.txt_done,
+                R.raw.anim_paimon_like,
+                lifecycle,
+                R.string.txt_new_device_name_updated
+            )
+        }
+    }
+
+    private val dialogChangeRoom: DialogChangeRoom by lazy {
+        DialogChangeRoom(requireContext())
+    }
 
     private val onError: (Int, String) -> Unit = { code, message ->
         RLog.e(TAG, "onError: $message -- code $code")
@@ -40,7 +62,6 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
 
     }
 
-
     override fun initViews(savedInstanceState: Bundle?) {
 
         binding.apply {
@@ -52,13 +73,27 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
                     controlStateElement(deviceItem.buttonList)
 
                     layoutElementButton.initView(deviceItem) { elm, state ->
-                        RLog.d(TAG, "initView: onElementClick ${elm.label} -- state is ${elm.value}")
-                        controlStateElement(mapOf(elm.id to  elm), state)
+                        RLog.d(
+                            TAG,
+                            "initView: onElementClick ${elm.label} -- state is ${elm.value}"
+                        )
+                        controlStateElement(mapOf(elm.id to elm), state)
                     }
                     txtDeviceLabel.text = deviceItem.label
+
+                    if (deviceItem.roomId == null) {
+                        txtRoomLabel.text = getString(R.string.txt_still_no_room)
+                    } else {
+                        viewModel.getRoomName(deviceItem.roomId!!) { deviceName ->
+                            txtRoomLabel.text = deviceName
+                        }
+                    }
+
                 }
             }
-
+            viewModel.getDeviceName(deviceId) {
+                txtDeviceLabel.text = it
+            }
 
         }
     }
@@ -69,9 +104,26 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
             container.setPreventDoubleClick {
                 it?.hideKeyboard()
             }
-            txtDeviceLabel.setPreventDoubleClick {
+            btnNavBack.setPreventDoubleClick {
                 navController.popBackStack()
             }
+
+            btnTurnOnAll.setPreventDoubleClick {
+                turnAll(true)
+            }
+            btnTurnOffAll.setPreventDoubleClick {
+                turnAll(false)
+            }
+
+            btnEditDevice.setPreventDoubleClick {
+                showPopUpMenu(it!!)
+            }
+        }
+    }
+
+    private fun turnAll(isOn: Boolean) {
+        device?.let {
+            controlStateElement(it.buttonList, isOn)
         }
     }
 
@@ -100,6 +152,26 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
 //        }
 
 
+    }
+
+    private fun showPopUpMenu(view: View) {
+        PopupMenu(requireContext(), view).run {
+            menuInflater.inflate(R.menu.menu_edit_device, menu)
+            setOnMenuItemClickListener {
+                if (it.itemId == R.id.btn_edit_name) {
+                    device?.let { dev ->
+                        dialogUpdateNameDevice.show(lifecycle, dev.id)
+                    }
+                } else {
+                    device?.let { dev ->
+//                        dialogChangeRoom.show(lifecycle, dev.id)
+                        requireContext().developInProgress(lifecycle)
+                    }
+                }
+                true
+            }
+            show()
+        }
     }
 
 

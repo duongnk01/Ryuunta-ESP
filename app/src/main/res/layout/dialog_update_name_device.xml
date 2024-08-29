@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="name"
+            type="String" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@android:color/transparent"
+        android:gravity="bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_space8dp"
+            android:layout_marginHorizontal="@dimen/_space8dp"
+            android:layout_marginBottom="@dimen/_space4dp"
+            android:background="@drawable/bg_dialog_corner_20">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/_space8dp"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/btn_nav_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_space8dp"
+                    layout="@layout/view_button_nav_back"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/change_name"
+                    android:layout_weight="1"
+                    style="@style/theme_header_text"
+                    android:gravity="center"/>
+
+                <View
+                    android:layout_width="@dimen/_space36dp"
+                    android:layout_height="@dimen/_space36dp"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_space24dp"
+                app:boxBackgroundMode="none"
+                android:layout_marginHorizontal="@dimen/_space8dp"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_device"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/theme_text_input"
+                    android:background="@drawable/bg_button_gradient_gray_48"
+                    android:paddingVertical="@dimen/_space12dp"
+                    android:fontFamily="@font/sfprodisplay_semibold"
+                    android:inputType="text"
+                    android:textSize="@dimen/text_size_20"
+                    android:hint="@{name}"
+                    tools:text="Device"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/btn_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/theme_button_confirm"
+                android:layout_marginTop="@dimen/_space36dp"
+                android:layout_marginHorizontal="@dimen/_space8dp"
+                android:layout_marginBottom="@dimen/_space16dp"
+                android:text="@string/ok"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

@@ -66,6 +66,30 @@ class GroupHelper {
         })
     }
 
+    fun getHouseName(
+        onCompleted: (String) -> Unit
+    ) {
+        ref.getHouseReference().child("name").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val name = snapshot.value.toString()
+                onCompleted(name)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                //TODO("Not yet implemented")
+            }
+        })
+
+    }
+
+    fun changeNameHouse(
+        newName: String,
+        onCompleted: () -> Unit
+    ) {
+        ref.getHouseReference().child("name").setValue(newName)
+            .addOnCompleteListener { onCompleted() }
+    }
+
     fun getRoomsInHouse(onCompleted: (List<HouseObj.RoomObj>) -> Unit) {
         ref.getRoomsReference().addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -86,14 +110,32 @@ class GroupHelper {
         })
     }
 
+    fun getRoomName(roomId: String, onCompleted: (String) -> Unit) {
+        ref.getRoomReference(roomId).child("name").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                onCompleted(snapshot.value.toString())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                //TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    fun changeRoomName(roomId: String, newName: String, onCompleted: () -> Unit) {
+        ref.getRoomReference(roomId).child("name").setValue(newName)
+            .addOnCompleteListener { onCompleted() }
+    }
+
+
     fun signDevicesInRoom(
-        houseId: String,
         roomId: String,
         deviceIds: List<String>,
-        onSuccess: (houseId: String, roomId: String, deviceIds: List<String>) -> Unit
+        onSuccess: (roomId: String, deviceIds: List<String>) -> Unit
     ) {
         ref.getRoomReference(roomId).child(DBNode.DEVICES_ID_SIGNED.path)
-            .setValue(deviceIds).addOnCompleteListener { onSuccess(houseId, roomId, deviceIds) }
+            .setValue(deviceIds).addOnCompleteListener { onSuccess(roomId, deviceIds) }
     }
 
     fun changeRoom(

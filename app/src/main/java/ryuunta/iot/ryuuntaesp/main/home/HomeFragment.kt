@@ -6,20 +6,15 @@ import android.os.Looper
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
-import ryuunta.iot.ryuuntaesp.InitiationActivity
 import ryuunta.iot.ryuuntaesp.MainViewModel
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.adapter.QuickScenarioListAdapter
 import ryuunta.iot.ryuuntaesp.adapter.RoomSpinnerAdapter
 import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
-import ryuunta.iot.ryuuntaesp.core.base.Config
 import ryuunta.iot.ryuuntaesp.data.model.WeatherDataCompilation
 import ryuunta.iot.ryuuntaesp.data.network.ResponseCode
 import ryuunta.iot.ryuuntaesp.databinding.FragmentHomeBinding
 import ryuunta.iot.ryuuntaesp.main.home.devices.DeviceListAdapter
-import ryuunta.iot.ryuuntaesp.preference.AppPref
-import ryuunta.iot.ryuuntaesp.preference.SettingPreference
-import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.developInProgress
 import ryuunta.iot.ryuuntaesp.utils.gone
 import ryuunta.iot.ryuuntaesp.utils.show
@@ -32,11 +27,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
 
     private val TAG = this.javaClass.simpleName
 
-    private var posRoomSelected: Int = 0
+//    private var currentHomePos: Int = 0
 
+    private var posRoomSelected: Int = 0
     private var currentRoomId = "0"
 
-    private val customRoomSpinnerAdapter: RoomSpinnerAdapter by lazy {
+//    private val userHomeAdapter: HomeSpinnerAdapter by lazy {
+//        HomeSpinnerAdapter(requireContext())
+//    }
+
+    private val roomSpinnerAdapter: RoomSpinnerAdapter by lazy {
         RoomSpinnerAdapter(requireContext())
     }
 
@@ -62,39 +62,43 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
             quickScenarioListAdapter.submitList(viewModel.quickScenarioList)
             rcvDevices.adapter = deviceListAdapter
             rcvDevices.overScrollMode = View.OVER_SCROLL_NEVER
-        }
-        viewModel.fetchCurrWeather(requireContext())
 
-        viewModel.deviceLiveData.observe(viewLifecycleOwner) {
-            viewModel.mappingDeviceUI { rItemList ->
-                if (rItemList.isEmpty()) {
-                    binding.rcvDevices.gone()
-                    binding.txtEmptyPlace.show()
-                    binding.imgEmpty.show()
-                } else {
-                    deviceListAdapter.submitList(rItemList)
-                    binding.rcvDevices.show()
-                    binding.txtEmptyPlace.gone()
-                    binding.imgEmpty.gone()
+            viewModel.getHouseName {
+                txtHeaderLabel.text = it
+            }
+
+            viewModel.fetchCurrWeather(requireContext())
+
+            viewModel.mappingRoomSpin {
+                roomSpinnerAdapter.listRoom = it
+                roomSpinnerAdapter.notifyDataSetChanged()
+            }
+            spinRoom.adapter = roomSpinnerAdapter
+            spinRoom.setSelection(0)
+
+            viewModel.deviceLiveData.observe(viewLifecycleOwner) {
+                viewModel.mappingDeviceUI { rItemList ->
+                    if (rItemList.isEmpty()) {
+                        binding.rcvDevices.gone()
+                        binding.txtEmptyPlace.show()
+                        binding.imgEmpty.show()
+                    } else {
+                        deviceListAdapter.submitList(rItemList)
+                        binding.rcvDevices.show()
+                        binding.txtEmptyPlace.gone()
+                        binding.imgEmpty.gone()
+                    }
                 }
             }
         }
-//        SettingPreference.getData(requireContext(), listOf(AppPref.CURRENT_HOUSE_ID)) {
-//            if (it.data.isNotEmpty()) {
-//                Config.currentHouseId = it.data
-//            }
-//            RLog.d(TAG, "vao day")
+
+//        viewModel.fetchHousesData {
+//            RLog.d(TAG, "fetchHousesData: ${it.size}")
+//            userHomeAdapter.listHomeUser = it
+//            userHomeAdapter.notifyDataSetChanged()
 //
 //        }
-        viewModel.mappingRoomSpin {
-
-            customRoomSpinnerAdapter.listRoom = it
-            customRoomSpinnerAdapter.notifyDataSetChanged()
-        }
-        binding.spinRoom.adapter = customRoomSpinnerAdapter
-        binding.spinRoom.setSelection(0)
-
-
+//        binding.spinHome.adapter = userHomeAdapter
     }
 
     override fun initEvents() {
@@ -114,6 +118,38 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
 
             }
 
+            /*            binding.spinHome.onItemSelectedListener = object : OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>?,
+                                view: View?,
+                                position: Int,
+                                id: Long
+                            ) {
+
+                                currentHomePos = position
+                                userHomeAdapter.currentPosSelected = currentHomePos
+            //                userHomeAdapter.notifyDataSetChanged()
+            //                binding.spinHome.setSelection(currentHomePos)
+
+                                val currHouseId = userHomeAdapter.getItem(currentHomePos).id
+                                CoroutineScope(Dispatchers.Default).launch {
+                                    SettingPreference.saveData(
+                                        requireContext(),
+                                        mapOf(AppPref.CURRENT_HOUSE_ID to currHouseId)
+                                    )
+                                    withContext(Dispatchers.Main) {
+                                        Config.currentHouseId = currHouseId
+                                    }
+                                }
+
+                            }
+
+                            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                            }
+
+                        }*/
+
             spinRoom.onItemSelectedListener = object : OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -122,10 +158,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
                     id: Long
                 ) {
                     posRoomSelected = position
-                    customRoomSpinnerAdapter.currRoomSelectedPosition = posRoomSelected
+                    roomSpinnerAdapter.currRoomSelectedPosition = posRoomSelected
 //                    customRoomSpinnerAdapter.notifyDataSetChanged()
 //                    spinRoom.setSelection(posRoomSelected)
-                    currentRoomId = customRoomSpinnerAdapter.listRoom[posRoomSelected].id
+                    currentRoomId = roomSpinnerAdapter.listRoom[posRoomSelected].id
 
 //                    viewModel.refreshDeviceList()
                     viewModel.refreshDeviceListByRoom(currentRoomId)

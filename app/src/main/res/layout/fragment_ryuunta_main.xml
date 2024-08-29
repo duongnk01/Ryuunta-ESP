@@ -34,13 +34,13 @@
         <!--                android:drawablePadding="@dimen/_space12dp"/>-->
         <!--        </LinearLayout>-->
 
-        <Spinner
-            android:id="@+id/spin_home"
-            style="@style/MyHeaderSpinnerStyle"
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/_space36dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+<!--        <Spinner-->
+<!--            android:id="@+id/spin_home"-->
+<!--            style="@style/MyHeaderSpinnerStyle"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_marginTop="@dimen/_space36dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center" />-->
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"

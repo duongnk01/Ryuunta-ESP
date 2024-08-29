@@ -51,6 +51,10 @@ class MainViewModel : BaseViewModel() {
         ScenarioItem.QuickScenario("Đi làm"),
     )
 
+    fun getHouseName(onCompleted: (String) -> Unit) {
+        groupHelper.getHouseName(onCompleted)
+    }
+
     fun fetchHousesData(onCompleted: (List<HouseObj>) -> Unit) {
         groupHelper.getHouseList {
             onCompleted(it)

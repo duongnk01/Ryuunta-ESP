@@ -30,11 +30,27 @@
                 android:text="@string/txt_home_manage" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnCreateaHouse"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="create house" />
+            android:layout_marginVertical="@dimen/_space8dp"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_new_name_house"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                style="@style/theme_text_input"
+                android:hint="Enter new name"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnChangeNameHouse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="change name house" />
 
         <Button
             android:id="@+id/btn_creata_room"

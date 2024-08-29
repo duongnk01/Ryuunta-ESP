@@ -44,7 +44,11 @@ class SwitchButtonViewHolder(val binding: ItemSwitchButtonBinding) :
         super.onBind(item)
         val switchButton = item as DeviceItem.SwitchButton
         binding.apply {
-            txtDeviceLabel.text = getString(switchButton.resLabel)
+            if (switchButton.device.label.isNotEmpty()) {
+                txtDeviceLabel.text = switchButton.device.label
+            } else {
+                txtDeviceLabel.text = getString(switchButton.resLabel)
+            }
             imgDeviceIcon.setImageResource(switchButton.resIcon)
 
             controlHelper.controlDevice(switchButton.device.id,

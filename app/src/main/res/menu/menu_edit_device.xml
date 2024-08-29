@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/btn_edit_name"
+        android:title="@string/change_name" />
+
+    <item
+        android:id="@+id/btn_change_rooma"
+        android:title="@string/txt_chane_room" />
+</menu>

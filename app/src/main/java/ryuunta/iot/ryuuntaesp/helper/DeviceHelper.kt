@@ -56,7 +56,7 @@ class DeviceHelper {
         onCompleted: (List<DeviceObj>) -> Unit
     ) {
         ref.getDevicesReference()
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val deviceList = mutableListOf<DeviceObj>()
                     if (roomId == "0") {
@@ -101,6 +101,26 @@ class DeviceHelper {
             }
 
         })
+    }
+
+    fun getDeviceName(deviceId: String, onCompleted: (String) -> Unit) {
+        ref.getDeviceReference(deviceId).child("label").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                onCompleted(snapshot.value.toString())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    fun changeNameDevice(deviceId: String, newName: String, onCompleted: () -> Unit) {
+        ref.getDevicesReference().child(deviceId).updateChildren(mapOf("label" to newName))
+            .addOnCompleteListener {
+                onCompleted()
+            }
+
     }
 
 }
