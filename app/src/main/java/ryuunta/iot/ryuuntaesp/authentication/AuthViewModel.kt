@@ -10,11 +10,15 @@ import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ryuunta.iot.ryuuntaesp.core.base.BaseViewModel
+import ryuunta.iot.ryuuntaesp.core.base.Config
 import ryuunta.iot.ryuuntaesp.helper.AuthenticationHelper
 import ryuunta.iot.ryuuntaesp.core.state.AuthenticationState
+import ryuunta.iot.ryuuntaesp.data.model.HouseObj
 import ryuunta.iot.ryuuntaesp.data.model.UserInfo
 import ryuunta.iot.ryuuntaesp.data.network.ResponseCode
 import ryuunta.iot.ryuuntaesp.helper.ControlHelper
+import ryuunta.iot.ryuuntaesp.helper.GroupHelper
+import ryuunta.iot.ryuuntaesp.utils.randomId
 
 class AuthViewModel : BaseViewModel() {
 
@@ -91,7 +95,22 @@ class AuthViewModel : BaseViewModel() {
             )
             ControlHelper().generateUserData(it.uid, userInfo,
                 onSuccess = {
-                    isSuccess.postValue(true)
+                    GroupHelper().getHouseList { houses ->
+                        if (houses.isEmpty()) {     //auto generate a house if not exist
+                            GroupHelper().createHouse(
+                                HouseObj(
+                                    randomId(),
+                                    "My House"
+                                )
+                            ) { houseId ->
+                                Config.currentHouseId = houseId
+                                isSuccess.postValue(true)
+                            }
+                        } else {
+                            Config.currentHouseId = houses[0].id
+                            isSuccess.postValue(true)
+                        }
+                    }
                 },
                 onFailure = { code, message ->
                     onError(mapOf(ResponseCode.generateUser to message))
@@ -100,5 +119,9 @@ class AuthViewModel : BaseViewModel() {
             )
         }
         return isSuccess
+    }
+
+    private fun fetchHouseData() {
+
     }
 }

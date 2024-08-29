@@ -13,19 +13,19 @@ class WifiListAdapter(
 ) : ListAdapter<WifiSSID, WifiListAdapter.WifiViewHolder>(
     object : DiffUtil.ItemCallback<WifiSSID>() {
         override fun areItemsTheSame(oldItem: WifiSSID, newItem: WifiSSID): Boolean {
-            return oldItem == newItem
+            return oldItem.ssid == newItem.ssid
         }
 
         override fun areContentsTheSame(oldItem: WifiSSID, newItem: WifiSSID): Boolean {
-            return oldItem == newItem
+            return oldItem.level == newItem.level
         }
 
     }
 ) {
      class WifiViewHolder constructor(val binding: ItemSsidBinding): ViewHolder(binding.root) {
          fun onBind(item: WifiSSID, onItemClick: (wifi: WifiSSID) -> Unit) {
-             binding.ssid = item.ssid
-             binding.rssi = item.level
+             binding.txtSsid.text = item.ssid
+             binding.txtRssi.text = item.level.toString()
              binding.lnSsid.setOnClickListener {
                  onItemClick(item)
              }

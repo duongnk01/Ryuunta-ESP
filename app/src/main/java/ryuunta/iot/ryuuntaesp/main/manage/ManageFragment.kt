@@ -1,183 +1,128 @@
 package ryuunta.iot.ryuuntaesp.main.manage
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
-import ryuunta.iot.ryuuntaesp.data.model.DeviceObj
-import ryuunta.iot.ryuuntaesp.data.model.ElementInfoObj
+import ryuunta.iot.ryuuntaesp.data.model.HouseObj
 import ryuunta.iot.ryuuntaesp.databinding.FragmentManageBinding
-import ryuunta.iot.ryuuntaesp.helper.ControlHelper
 import ryuunta.iot.ryuuntaesp.helper.DeviceHelper
-import ryuunta.iot.ryuuntaesp.main.home.devices.DeviceViewType
+import ryuunta.iot.ryuuntaesp.helper.GroupHelper
 import ryuunta.iot.ryuuntaesp.utils.randomId
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
+import ryuunta.iot.ryuuntaesp.utils.showDialogNotification
 
 class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(
     FragmentManageBinding::inflate,
     ManageViewModel::class.java
 ) {
 
-    private val pathDB = "esp8266"
-    private lateinit var nodeLed: DatabaseReference
-    private lateinit var nodeRelay1: DatabaseReference
-    private lateinit var nodeRelay2: DatabaseReference
-    private lateinit var relayEsp01: DatabaseReference
-    private lateinit var doorLock: DatabaseReference
-
-    private val controlHelper = ControlHelper()
+    private val groupHelper = GroupHelper()
     private val deviceHelper = DeviceHelper()
 
+    private var currHouseId = ""
+    private var currRoomId = ""
+    private var currDevicesId = listOf<String>()
+
     override fun initViews(savedInstanceState: Bundle?) {
-        initFirebase()
     }
 
     override fun initEvents() {
+
         binding.apply {
-            swLed.setOnCheckedChangeListener { _, isChecked ->
-                nodeLed.setValue(if (isChecked) 0 else 1)
-                binding.root.setBackgroundColor(if (isChecked) Color.BLUE else Color.WHITE)
-
-            }
-            swRelay1.setOnCheckedChangeListener { _, isChecked ->
-                nodeRelay1.setValue(if (isChecked) 0 else 1)
-                binding.root.setBackgroundColor(if (isChecked) Color.CYAN else Color.WHITE)
-            }
-            swRelay2.setOnCheckedChangeListener { _, isChecked ->
-                nodeRelay2.setValue(if (isChecked) 0 else 1)
-                binding.root.setBackgroundColor(if (isChecked) Color.RED else Color.WHITE)
-            }
-
-            swRelayEsp01.setOnCheckedChangeListener { _, isChecked ->
-                relayEsp01.setValue(if (isChecked) 0 else 1)
-                binding.root.setBackgroundColor(if (isChecked) Color.CYAN else Color.WHITE)
-            }
-
-            btnLockDoor.setOnClickListener {
-                doorLock.setValue(0)
-            }
-            btnOpenDoor.setOnClickListener {
-                doorLock.setValue(1)
-            }
-
-            button.setPreventDoubleClick {
-                val listElm = mutableMapOf<String, ElementInfoObj>()
-                for (i in 1..4) {
-                    val randomId = i.toString() + randomId()        //add index into first of id for sorting on database
-                    listElm[randomId] = ElementInfoObj(randomId, "Nút $i")
-
+            btnCreateaHouse.setPreventDoubleClick {
+                val rooms = mutableMapOf<String, HouseObj.RoomObj>()
+                for (i in 1 until 5) {
+                    val ranId = randomId()
+                    val room = HouseObj.RoomObj(
+                        ranId,
+                        "Room $i"
+                    )
+                    rooms[ranId] = room
                 }
-                deviceHelper.addNewDevice(
-                    DeviceObj(
+                groupHelper.createHouse(
+                    HouseObj(
                         randomId(),
-                        "test",
-                        DeviceViewType.SWITCH_BUTTON.name,
-                        mapOf()
-                    ),
-                    listElm
-                )
+                        "House 1",
+                        rooms
+                    )
+                ) {
+                    currHouseId = it
+                    requireContext().showDialogNotification(
+                        R.string.txt_done,
+                        R.raw.anim_paimon_like,
+                        lifecycle,
+                        R.string.txt_house_created
+                    ) {
+                        refreshListData()
+                    }
+                }
+            }
+
+            btnCreataRoom.setPreventDoubleClick {
+                groupHelper.addRoom(HouseObj.RoomObj(
+                    randomId(),
+                    "Room ${System.currentTimeMillis().toString().takeLast(4)}",
+                    mapOf()
+                )) {
+                    currRoomId = it
+                    requireContext().showDialogNotification(
+                        R.string.txt_done,
+                        R.raw.anim_paimon_like,
+                        lifecycle,
+                        R.string.txt_room_created
+                    ) {
+                        refreshListData()
+                    }
+                }
+
+            }
+
+            btnSignDevices.setPreventDoubleClick {
+                deviceHelper.getDevicesByRoom { listDev ->
+                    val listDevId = listDev.map {it.id}
+
+                    groupHelper.signDevicesInRoom(currHouseId, currRoomId, listDevId ) { houseId, roomId, deviceIds ->
+                        currHouseId = houseId
+                        currRoomId = roomId
+                        currDevicesId = deviceIds
+                        requireContext().showDialogNotification(
+                            R.string.txt_done,
+                            R.raw.anim_paimon_like,
+                            lifecycle,
+                            R.string.txt_device_signed
+                        ) {
+                            refreshListData()
+                        }
+                    }
+                }
+            }
+            btnChangeRoom.setPreventDoubleClick {
+                groupHelper.getHouseById(currHouseId, onSuccess = {
+                    val rooms = it.rooms
+                    var newRoomId = rooms.keys.random()
+                    while (newRoomId == currRoomId) {
+                        newRoomId = rooms.keys.random()
+                    }
+                    groupHelper.changeRoom(currDevicesId[0], currRoomId, newRoomId) {
+                        requireContext().showDialogNotification(
+                            R.string.txt_done,
+                            R.raw.anim_paimon_like,
+                            lifecycle,
+                            R.string.txt_device_signed
+                        ) {
+                            refreshListData()
+                        }
+                    }
+
+                }, onError = { code, message -> })
             }
         }
     }
 
-    private fun initFirebase() {
-        val db = FirebaseDatabase.getInstance()
-        nodeLed = db.reference.child("fan_remote/level1")
-        nodeLed.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val value = (snapshot.value as Long).toInt()
-                Log.d("duongnk", "led state = $value")
-                binding.swLed.isChecked = value == 0
-                binding.root.setBackgroundColor(if (value == 0) Color.BLUE else Color.WHITE)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("error_tag", error.message)
-            }
-
-        })
-
-        nodeRelay1 = db.reference.child("$pathDB/switch/relay1")
-        nodeRelay1.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val value = (snapshot.value as Long).toInt()
-                Log.d("duongnk", "switch 1 state = $value")
-                binding.swRelay1.isChecked = value == 0
-                binding.root.setBackgroundColor(if (value == 0) Color.CYAN else Color.WHITE)
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("error_tag", error.message)
-            }
-
-        })
-
-        nodeRelay2 = db.reference.child("$pathDB/switch/relay2")
-        nodeRelay2.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val value = (snapshot.value as Long).toInt()
-                Log.d("duongnk", "switch 2 state = $value")
-                binding.swRelay2.isChecked = value == 0
-                binding.root.setBackgroundColor(if (value == 0) Color.RED else Color.WHITE)
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("error_tag", error.message)
-            }
-
-        })
-
-        relayEsp01 = db.reference.child("$pathDB/switch/relay_esp01")
-        relayEsp01.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val value = (snapshot.value as Long).toInt()
-                Log.d("duongnk", "switch esp 01 state = $value")
-                binding.swRelayEsp01.isChecked = value == 0
-                binding.root.setBackgroundColor(if (value == 0) Color.RED else Color.WHITE)
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("error_tag", error.message)
-            }
-
-        })
-
-        doorLock = db.reference.child(("$pathDB/stepper/door_lock"))
-        doorLock.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val value = (snapshot.value as Long).toInt()
-                Log.d("duongnk", "switch esp 01 state = $value")
-                if (value == 1) {
-                    binding.apply {
-                        btnOpenDoor.setBackgroundColor(Color.MAGENTA)
-                        btnOpenDoor.isClickable = false
-                        btnLockDoor.setBackgroundColor(Color.GRAY)
-                        btnLockDoor.isClickable = true
-                    }
-                } else {
-                    binding.apply {
-                        btnLockDoor.setBackgroundColor(Color.MAGENTA)
-                        btnLockDoor.isClickable = false
-                        btnOpenDoor.setBackgroundColor(Color.GRAY)
-                        btnOpenDoor.isClickable = true
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("error_tag", error.message)
-            }
-
-        })
+    private fun refreshListData() {
+        //refresh list house here
     }
+
 
     companion object {
         fun newInstance() = ManageFragment()

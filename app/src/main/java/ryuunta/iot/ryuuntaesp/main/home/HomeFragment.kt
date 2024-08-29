@@ -6,19 +6,24 @@ import android.os.Looper
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.Toast
+import ryuunta.iot.ryuuntaesp.InitiationActivity
 import ryuunta.iot.ryuuntaesp.MainViewModel
+import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.adapter.QuickScenarioListAdapter
 import ryuunta.iot.ryuuntaesp.adapter.RoomSpinnerAdapter
 import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
-import ryuunta.iot.ryuuntaesp.data.model.ScenarioItem
+import ryuunta.iot.ryuuntaesp.core.base.Config
 import ryuunta.iot.ryuuntaesp.data.model.WeatherDataCompilation
 import ryuunta.iot.ryuuntaesp.data.network.ResponseCode
 import ryuunta.iot.ryuuntaesp.databinding.FragmentHomeBinding
 import ryuunta.iot.ryuuntaesp.main.home.devices.DeviceListAdapter
+import ryuunta.iot.ryuuntaesp.preference.AppPref
+import ryuunta.iot.ryuuntaesp.preference.SettingPreference
+import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.developInProgress
 import ryuunta.iot.ryuuntaesp.utils.gone
 import ryuunta.iot.ryuuntaesp.utils.show
+import ryuunta.iot.ryuuntaesp.utils.showDialogNotification
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
     FragmentHomeBinding::inflate,
@@ -29,17 +34,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
 
     private var posRoomSelected: Int = 0
 
+    private var currentRoomId = "0"
+
     private val customRoomSpinnerAdapter: RoomSpinnerAdapter by lazy {
-        RoomSpinnerAdapter(requireContext(), viewModel.roomList)
+        RoomSpinnerAdapter(requireContext())
     }
 
     private val quickScenarioListAdapter: QuickScenarioListAdapter by lazy {
         QuickScenarioListAdapter {
-            Toast.makeText(
-                requireContext(),
-                "Active scenario ${(it as ScenarioItem.QuickScenario).label}",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                requireContext(),
+//                "Active scenario ${(it as ScenarioItem.QuickScenario).label}",
+//                Toast.LENGTH_SHORT
+//            ).show()
             requireContext().developInProgress(lifecycle)
         }
     }
@@ -72,6 +79,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
                 }
             }
         }
+//        SettingPreference.getData(requireContext(), listOf(AppPref.CURRENT_HOUSE_ID)) {
+//            if (it.data.isNotEmpty()) {
+//                Config.currentHouseId = it.data
+//            }
+//            RLog.d(TAG, "vao day")
+//
+//        }
+        viewModel.mappingRoomSpin {
+
+            customRoomSpinnerAdapter.listRoom = it
+            customRoomSpinnerAdapter.notifyDataSetChanged()
+        }
+        binding.spinRoom.adapter = customRoomSpinnerAdapter
+        binding.spinRoom.setSelection(0)
+
 
     }
 
@@ -92,7 +114,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
 
             }
 
-            spinRoom.adapter = customRoomSpinnerAdapter
             spinRoom.onItemSelectedListener = object : OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -100,18 +121,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
                     position: Int,
                     id: Long
                 ) {
-//                    if (position == customRoomSpinnerAdapter.count - 1) {
-//                        Toast.makeText(requireContext(), "thêm phòng mới", Toast.LENGTH_SHORT)
-//                            .show()
-//                    } else {
-//
-//                    }
                     posRoomSelected = position
                     customRoomSpinnerAdapter.currRoomSelectedPosition = posRoomSelected
-                    customRoomSpinnerAdapter.notifyDataSetChanged()
-                    spinRoom.setSelection(posRoomSelected)
+//                    customRoomSpinnerAdapter.notifyDataSetChanged()
+//                    spinRoom.setSelection(posRoomSelected)
+                    currentRoomId = customRoomSpinnerAdapter.listRoom[posRoomSelected].id
 
-                    viewModel.refreshDeviceList()
+//                    viewModel.refreshDeviceList()
+                    viewModel.refreshDeviceListByRoom(currentRoomId)
 
                 }
 
@@ -126,7 +143,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
     private fun onRefreshHomePage() {
         quickScenarioListAdapter.submitList(viewModel.quickScenarioList)
         viewModel.fetchCurrWeather(requireContext())
-        viewModel.refreshDeviceList()
+//        viewModel.refreshDeviceList()
+        viewModel.refreshDeviceListByRoom(currentRoomId)
     }
 
     override fun handlerResponse(tag: String, data: Any?) {
@@ -148,6 +166,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
             binding.cvWeather.onLoadError {
                 viewModel.fetchCurrWeather(requireContext())
             }
+        }
+        if (tag == ResponseCode.HOUSE_NOT_FOUND) {
+            requireContext().showDialogNotification(
+                R.string.oops,
+                R.raw.anim_paimon_bikkurisuru,
+                lifecycle,
+                R.string.txt_house_not_found_cannot_get_room,
+                errorMess = message,
+                onConfirm = {
+
+                }
+            )
         }
     }
 

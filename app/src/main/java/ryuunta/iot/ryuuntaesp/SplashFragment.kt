@@ -5,16 +5,24 @@ import android.os.Handler
 import android.os.Looper
 import ryuunta.iot.ryuuntaesp.authentication.AuthViewModel
 import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
+import ryuunta.iot.ryuuntaesp.core.base.Config
+import ryuunta.iot.ryuuntaesp.data.model.HouseObj
 import ryuunta.iot.ryuuntaesp.data.model.UserInfo
 import ryuunta.iot.ryuuntaesp.databinding.FragmentSplashScreenBinding
 import ryuunta.iot.ryuuntaesp.helper.AuthenticationHelper
 import ryuunta.iot.ryuuntaesp.helper.ControlHelper
+import ryuunta.iot.ryuuntaesp.helper.GroupHelper
+import ryuunta.iot.ryuuntaesp.preference.AppPref
+import ryuunta.iot.ryuuntaesp.preference.SettingPreference
+import ryuunta.iot.ryuuntaesp.utils.randomId
 import ryuunta.iot.ryuuntaesp.utils.showDialogNotification
 
 class SplashFragment : BaseFragment<FragmentSplashScreenBinding, AuthViewModel>(
     FragmentSplashScreenBinding::inflate,
     AuthViewModel::class.java
 ) {
+
+    private val dataPreference = SettingPreference
     override fun initViews(savedInstanceState: Bundle?) {
         // This is used to hide the status bar and make
         // the splash screen as a full screen activity.
@@ -42,7 +50,32 @@ class SplashFragment : BaseFragment<FragmentSplashScreenBinding, AuthViewModel>(
             )
             ControlHelper().generateUserData(currentUser.uid, userInfo,
                 onSuccess = {
-                    (activity as InitiationActivity).nextToHomePage()
+                    GroupHelper().getHouseList { houses ->
+                        if (houses.isEmpty()) {     //auto generate a house if not exist
+                            GroupHelper().createHouse(
+                                HouseObj(
+                                    randomId(),
+                                    "My House",
+                                     mapOf(),
+                                    mapOf()
+                                )
+                            ) {
+                                Config.currentHouseId = it
+                                (activity as? InitiationActivity)?.nextToHomePage()
+
+                            }
+                        } else {
+                            SettingPreference.getData(requireContext(), listOf(AppPref.CURRENT_HOUSE_ID)) {
+                                if (it.data.isNotEmpty()) {
+                                    Config.currentHouseId = it.data
+                                } else {
+                                    Config.currentHouseId = houses[0].id
+                                }
+                                (activity as? InitiationActivity)?.nextToHomePage()
+
+                            }
+                        }
+                    }
                 },
                 onFailure = { code, message ->
                     requireContext().showDialogNotification(

@@ -120,4 +120,9 @@
   <string name="txt_develop_in_progress">zzz..Vẫn chưa làm xong..zzz</string>
   <string name="oops">Oops!!</string>
     <string name="txt_cannot_get_data_user">Không thể lấy dữ liệu người dùng!!</string>
+    <string name="txt_house_created">Nhà mới đã được tạo</string>
+    <string name="txt_room_created">Phòng mới đã được tạo</string>
+  <string name="txt_device_signed">Thiết bị đã được chuyển tới phòng mới</string>
+    <string name="txt_house_not_found_cannot_get_room">Không tìm thấy Id nhà này, không thể lấy danh sách phòng.</string>
+    <string name="all">Tất cả</string>
 </resources>

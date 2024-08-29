@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.MotionLayout.TransitionListener
+import ryuunta.iot.ryuuntaesp.InitiationActivity
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.common.DialogLottie
@@ -131,10 +132,10 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, AuthViewModel>(
                 is AuthenticationState.Success -> {
                     RLog.d("AuthenticationState", "Success ${it.isSuccess}")
                     if (it.isSuccess) {
-                        viewModel.fetchDataUser().observe(viewLifecycleOwner) {
-                            if (it == true) {
+                        viewModel.fetchDataUser().observe(viewLifecycleOwner) { fetchDataSuccess ->
+                            if (fetchDataSuccess == true) {
                                 dialogLottie.onDismissWhenAnimationDone {
-                                    nextToHomePage()
+                                    (activity as? InitiationActivity)?.nextToHomePage()
                                 }
                             }
                         }
@@ -196,14 +197,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, AuthViewModel>(
                 }
             }
         }
-    }
-
-    private fun nextToHomePage() {
-        val intent = Intent(requireActivity(), RMainActivity::class.java)
-        intent.flags =
-            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-
     }
 
     internal val signInGoogleForResult =

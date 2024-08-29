@@ -6,37 +6,35 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import ryuunta.iot.ryuuntaesp.core.base.Config
 import ryuunta.iot.ryuuntaesp.data.model.ElementInfoObj
-import ryuunta.iot.ryuuntaesp.data.model.RItem
 import ryuunta.iot.ryuuntaesp.data.model.UserInfo
-import ryuunta.iot.ryuuntaesp.helper.DatabaseNode.BUTTON_LIST
-import ryuunta.iot.ryuuntaesp.helper.DatabaseNode.DEVICES
-import ryuunta.iot.ryuuntaesp.helper.DatabaseNode.USERS
+import ryuunta.iot.ryuuntaesp.helper.FirebaseRealtimeHelper
 import ryuunta.iot.ryuuntaesp.utils.RLog
 
 class ControlHelper {
-    private val TAG = "ControlHelper"
+    private val TAG = FirebaseRealtimeHelper.TAG
+    private val ref = FirebaseRealtimeHelper()
     private val db: FirebaseDatabase by lazy {
         FirebaseDatabase.getInstance()
     }
 
-    private val userRef = db.getReference(USERS)
-    private val myRef = db.getReference(USERS).child(Config.userUid).child(DEVICES)
+    private val userRef = db.getReference(DBNode.USERS.path)
+    private val myRef = db.getReference(DBNode.USERS.path).child(Config.userUid).child(DBNode.DEVICES.path)
 
     fun generateUserData(
         uid: String,
         user: UserInfo,
-        onSuccess: () -> Unit = {},
+        onSuccess: (UserInfo) -> Unit = {},
         onFailure: (code: Int, message: String) -> Unit = { code, message -> }
     ) {
         RLog.d(TAG, "fetch user data from node")
-        userRef.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+        ref.getUsersReference().child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (!snapshot.exists()) {
                     RLog.d(TAG, "create new user")
                     userRef.child(uid).setValue(user)
                 }
                 Config.userUid = uid
-                onSuccess()
+                onSuccess(user)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -66,7 +64,7 @@ class ControlHelper {
             return
         }
         elements.forEach { (key, element) ->
-            val myElmRef = myRef.child(deviceId).child(BUTTON_LIST).child(key)
+            val myElmRef = ref.getElementReference(deviceId, key)
             if (state == null) {
                 myElmRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {

@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import ryuunta.iot.ryuuntaesp.MainViewModel
 import ryuunta.iot.ryuuntaesp.authentication.AuthViewModel
 import ryuunta.iot.ryuuntaesp.main.devices.AddDeviceViewModel
-import ryuunta.iot.ryuuntaesp.main.home.HomeViewModel
 import ryuunta.iot.ryuuntaesp.main.home.content.DevicesViewModel
 import ryuunta.iot.ryuuntaesp.main.manage.ManageViewModel
 import ryuunta.iot.ryuuntaesp.main.notification.NotiViewModel
@@ -16,10 +15,6 @@ open class ViewModelFactory() : ViewModelProvider.Factory {
         when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 return MainViewModel() as T
-            }
-
-            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-                return HomeViewModel() as T
             }
 
             modelClass.isAssignableFrom(ManageViewModel::class.java) -> {

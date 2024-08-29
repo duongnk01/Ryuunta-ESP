@@ -1,6 +1,5 @@
 package ryuunta.iot.ryuuntaesp.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.wifi.WifiManager
@@ -11,9 +10,13 @@ import ryuunta.iot.ryuuntaesp.data.model.WifiSSID
 import java.util.Random
 import java.util.UUID
 
-fun randomId() = UUID.randomUUID().toString()
+fun randomId() : String {
+    Thread.sleep(1)     //delay to avoid duplicate timestamp
+    //add timestamp in id for sorted
+    return "${System.currentTimeMillis()}+${UUID.randomUUID()}"       //uuid form: timestamp.uuid
+}
 
-@SuppressLint("MissingPermission")
+
 fun scanWifi(context: Context): List<WifiSSID> {
     val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
     val wifiList = arrayListOf<WifiSSID>()
@@ -45,7 +48,7 @@ fun scanWifi(context: Context): List<WifiSSID> {
     }
 
     // Trả về danh sách mạng
-    return wifiList.sortedBy { it.level }.asReversed()
+    return wifiList.filter { it.frequency < 2500 }.sortedBy { it.level }.asReversed()
 }
 
 fun Context.convertDpToPixel(dp: Float): Float {

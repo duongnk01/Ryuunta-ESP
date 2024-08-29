@@ -6,17 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import ryuunta.iot.ryuuntaesp.R
-import ryuunta.iot.ryuuntaesp.data.model.IconWithTextObj
+import ryuunta.iot.ryuuntaesp.data.model.HouseObj
 import ryuunta.iot.ryuuntaesp.databinding.ItemSpinHomeBinding
 import ryuunta.iot.ryuuntaesp.databinding.SpinHomeBinding
-import ryuunta.iot.ryuuntaesp.utils.gone
 import ryuunta.iot.ryuuntaesp.utils.show
 
 class HomeSpinnerAdapter(
     val context: Context,
-    val listHomeUser: List<IconWithTextObj>,
 ) : BaseAdapter() {
+
+    private val _listHomeUser: MutableList<HouseObj> = mutableListOf()
+
+    var listHomeUser: List<HouseObj>
+        get() = _listHomeUser
+        set(value) {
+            _listHomeUser.clear()
+            _listHomeUser.addAll(value)
+        }
 
     private var currentPosHomeSelected: Int = 0
 
@@ -26,11 +32,11 @@ class HomeSpinnerAdapter(
             currentPosHomeSelected = value
         }
     override fun getCount(): Int {
-        return listHomeUser.size
+        return _listHomeUser.size
     }
 
-    override fun getItem(position: Int): IconWithTextObj {
-        return listHomeUser[position]
+    override fun getItem(position: Int): HouseObj {
+        return _listHomeUser[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -44,12 +50,12 @@ class HomeSpinnerAdapter(
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val v = SpinHomeBinding.inflate(LayoutInflater.from(context), parent, false)
-        if (position == listHomeUser.size) {
+        if (position == _listHomeUser.size) {
 //            v.imgHomeAvatar.setImageResource(R.drawable.baseline_add_home_24)
 //            v.txtHomeName.text = context.getString(R.string.add_more_home)
         } else {
-            v.imgHomeAvatar.setImageResource(listHomeUser[position].icon)
-            v.txtHomeName.text = listHomeUser[position].text
+//            v.imgHomeAvatar.setImageResource(_listHomeUser[position].icon)
+            v.txtHomeName.text = _listHomeUser[position].name
         }
 //        if (getItem(position) == homeSelected) {
 //            v.imgHomeSelected.visibility = View.VISIBLE
@@ -70,8 +76,8 @@ class HomeSpinnerAdapter(
 //        } else {
 //
 //        }
-        v.imgHomeAvatar.setImageResource(listHomeUser[position].icon)
-        v.txtHomeName.text = listHomeUser[position].text
+//        v.imgHomeAvatar.setImageResource(_listHomeUser[position].icon)
+        v.txtHomeName.text = _listHomeUser[position].name
         if (position == currentPosSelected) {
             v.imgHomeSelected.show()
         }

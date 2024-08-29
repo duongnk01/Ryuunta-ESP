@@ -30,6 +30,7 @@
                 android:layout_height="@dimen/_space128dp"
                 android:layout_marginVertical="@dimen/_space32dp"
                 app:lottie_autoPlay="true"
+                app:lottie_speed="1.75"
                 app:lottie_rawRes="@raw/anim_nana_wisher"
                 tools:lottie_progress="0.6" />
 

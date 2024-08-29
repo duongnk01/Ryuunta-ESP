@@ -3,12 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     
     <data>
-        <variable
-            name="ssid"
-            type="String" />
-        <variable
-            name="rssi"
-            type="Integer" />
+
     </data>
 
     <LinearLayout
@@ -21,19 +16,19 @@
         android:orientation="vertical">
         
         <TextView
+            android:id="@+id/txt_ssid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{String.format("ssid: %s", ssid)}'
             tools:text="ssid: {}"
             android:textSize="14sp"/>
 
         <TextView
+            android:id="@+id/txt_rssi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:textColor="@color/blue"
             android:textStyle="bold"
-            android:text='@{String.format("rssi = %d", rssi)}'
             tools:text="rssi = 0"
             android:textSize="14sp"/>
     </LinearLayout>

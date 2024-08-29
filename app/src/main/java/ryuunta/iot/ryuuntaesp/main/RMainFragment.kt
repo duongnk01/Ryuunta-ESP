@@ -4,11 +4,19 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ryuunta.iot.ryuuntaesp.MainViewModel
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.adapter.HomeSpinnerAdapter
 import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
+import ryuunta.iot.ryuuntaesp.core.base.Config
 import ryuunta.iot.ryuuntaesp.databinding.FragmentRyuuntaMainBinding
+import ryuunta.iot.ryuuntaesp.preference.AppPref
+import ryuunta.iot.ryuuntaesp.preference.SettingPreference
+import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.gone
 import ryuunta.iot.ryuuntaesp.utils.show
 
@@ -17,10 +25,12 @@ class RMainFragment : BaseFragment<FragmentRyuuntaMainBinding, MainViewModel>(
     MainViewModel::class.java
 ) {
 
+    private var TAG = "RMainFragment"
+
     private var currentHomePos: Int = 0
 
     private val userHomeAdapter: HomeSpinnerAdapter by lazy {
-        HomeSpinnerAdapter(requireContext(), viewModel.listHomeUser)
+        HomeSpinnerAdapter(requireContext())
     }
 
     override fun initViews(savedInstanceState: Bundle?) {
@@ -61,33 +71,26 @@ class RMainFragment : BaseFragment<FragmentRyuuntaMainBinding, MainViewModel>(
                 }
                 return@setOnItemSelectedListener true
             }
+
+//            SettingPreference.getData(
+//                requireContext(),
+//                listOf(AppPref.CURRENT_HOUSE_ID)
+//            ) { pref ->
+//                if (pref.data.isNotEmpty()) {
+//                    currentHomePos =
+//                        userHomeAdapter.listHomeUser.indexOfFirst { house -> house.id == pref.data }
+//                    spinHome.setSelection(currentHomePos)
+//                }
+//            }
             spinHome.adapter = userHomeAdapter
-            spinHome.onItemSelectedListener = object : OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-//                    if (position == userHomeAdapter.count - 1) {
-//                        Toast.makeText(requireContext(), "add more", Toast.LENGTH_SHORT).show()
-//
-//                    } else {
-//
-//                    }
-                    //                        Toast.makeText(this@MainActivity, userHomeAdapter.getItem(position).text, Toast.LENGTH_SHORT).show()
-                    currentHomePos = position
-                    userHomeAdapter.currentPosSelected = currentHomePos
-                    userHomeAdapter.notifyDataSetChanged()
-                    spinHome.setSelection(currentHomePos)
 
-                }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                }
+            viewModel.fetchHousesData {
+                RLog.d(TAG, "fetchHousesData: ${it.size}")
+                userHomeAdapter.listHomeUser = it
+                userHomeAdapter.notifyDataSetChanged()
 
             }
+
         }
 
     }
@@ -98,6 +101,41 @@ class RMainFragment : BaseFragment<FragmentRyuuntaMainBinding, MainViewModel>(
             navController.navigate(R.id.action_ryuuntaMainFragment_to_addDeviceFragment)
             viewModel.currentPager = binding.vpMain.currentItem
         }
+
+        binding.spinHome.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+
+                currentHomePos = position
+                userHomeAdapter.currentPosSelected = currentHomePos
+//                userHomeAdapter.notifyDataSetChanged()
+//                binding.spinHome.setSelection(currentHomePos)
+
+                val currHouseId = userHomeAdapter.getItem(currentHomePos).id
+                CoroutineScope(Dispatchers.Default).launch {
+                    SettingPreference.saveData(
+                        requireContext(),
+                        mapOf(AppPref.CURRENT_HOUSE_ID to currHouseId)
+                    )
+                    withContext(Dispatchers.Main) {
+                        Config.currentHouseId = currHouseId
+                    }
+                }
+
+                viewModel.mappingRoomSpin {  }
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+        }
+
 
     }
 }

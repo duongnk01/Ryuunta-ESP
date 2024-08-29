@@ -15,9 +15,38 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 
 object PermissionUtils {
+    val listPermission: List<String>
+        get() = if (Build.VERSION.SDK_INT == Build.VERSION_CODES.S)
+            listOf(
+                Manifest.permission.BLUETOOTH,
+                Manifest.permission.BLUETOOTH_SCAN,
+                Manifest.permission.BLUETOOTH_CONNECT,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+            )
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            listOf(
+                Manifest.permission.BLUETOOTH,
+                Manifest.permission.BLUETOOTH_SCAN,
+                Manifest.permission.BLUETOOTH_CONNECT,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                Manifest.permission.POST_NOTIFICATIONS
+            )
+        else
+            listOf(
+                Manifest.permission.BLUETOOTH,
+                Manifest.permission.BLUETOOTH_ADMIN,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_WIFI_STATE
+            )
+
     fun checkPermission(
         context: Activity,
-        permission:String
+        permission: String
     ) {
 //        Dexter.withContext(context)
 //            .withPermissions(
@@ -45,13 +74,15 @@ object PermissionUtils {
             ) == PackageManager.PERMISSION_GRANTED -> {
                 // You can use the API that requires the permission.
             }
-            shouldShowRequestPermissionRationale(context,permission) -> {
+
+            shouldShowRequestPermissionRationale(context, permission) -> {
                 // In an educational UI, explain to the user why your app requires this
                 // permission for a specific feature to behave as expected. In this UI,
                 // include a "cancel" or "no thanks" button that allows the user to
                 // continue using your app without granting the permission.
 
             }
+
             else -> {
 
             }
@@ -114,7 +145,12 @@ object PermissionUtils {
 //        return listPermission
 //    }
 
-    fun checkPermission(context: Context, permission: String, onSuccess: () -> Unit = {}, onCancel: () -> Unit = {}) {
+    fun checkPermission(
+        context: Context,
+        permission: String,
+        onSuccess: () -> Unit = {},
+        onCancel: () -> Unit = {}
+    ) {
         Dexter.withContext(context)
             .withPermissions(
                 permission
@@ -139,7 +175,12 @@ object PermissionUtils {
             })
             .check()
     }
-    fun checkPermissions(context: Context, permissions: List<String>, onSuccess: (Boolean) -> Unit = {}) {
+
+    fun checkPermissions(
+        context: Context,
+        permissions: List<String>,
+        onSuccess: (Boolean) -> Unit = {}
+    ) {
         Dexter.withContext(context)
             .withPermissions(
                 permissions
@@ -161,7 +202,12 @@ object PermissionUtils {
             .check()
     }
 
-    fun checkPermissionsNew(context: Context, permissions: List<String>, onSuccess: () -> Unit = {}, onCancel: (List<PermissionDeniedResponse>) -> Unit) {
+    fun checkPermissionsNew(
+        context: Context,
+        permissions: List<String>,
+        onSuccess: () -> Unit = {},
+        onCancel: (List<PermissionDeniedResponse>) -> Unit
+    ) {
         Dexter.withContext(context)
             .withPermissions(permissions)
             .withListener(object : MultiplePermissionsListener {
@@ -191,6 +237,7 @@ object PermissionUtils {
     private val permissionNames = hashMapOf(
         "ACCESS_FINE_LOCATION" to "Truy cập vị trí"
     )
+
     fun getNamePermission(keys: List<String>): MutableList<String> {
         val listName = mutableListOf<String>()
         keys.forEach {
@@ -236,3 +283,5 @@ object PermissionUtils {
 
 fun getStoragePermission() =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) Manifest.permission.READ_EXTERNAL_STORAGE else Manifest.permission.WRITE_EXTERNAL_STORAGE
+
+

@@ -16,13 +16,14 @@ import kotlinx.coroutines.withContext
 import ryuunta.iot.ryuuntaesp.core.base.BaseViewModel
 import ryuunta.iot.ryuuntaesp.data.model.DeviceItem
 import ryuunta.iot.ryuuntaesp.data.model.DeviceObj
+import ryuunta.iot.ryuuntaesp.data.model.HouseObj
 import ryuunta.iot.ryuuntaesp.data.model.IconWithTextObj
 import ryuunta.iot.ryuuntaesp.data.model.RItem
-import ryuunta.iot.ryuuntaesp.data.model.RoomObj
 import ryuunta.iot.ryuuntaesp.data.model.ScenarioItem
 import ryuunta.iot.ryuuntaesp.data.model.WeatherDataCompilation
 import ryuunta.iot.ryuuntaesp.data.network.ResponseCode
 import ryuunta.iot.ryuuntaesp.helper.DeviceHelper
+import ryuunta.iot.ryuuntaesp.helper.GroupHelper
 import ryuunta.iot.ryuuntaesp.main.home.devices.DeviceViewType
 import ryuunta.iot.ryuuntaesp.main.home.devices.listDeviceType
 
@@ -34,6 +35,7 @@ class MainViewModel : BaseViewModel() {
     var currentPager = 0
 
     private var deviceHelper: DeviceHelper = DeviceHelper()
+    private var groupHelper: GroupHelper = GroupHelper()
 
     val listHomeUser = listOf(
         IconWithTextObj(0, R.drawable.ic_no_face, "Ryuunta"),
@@ -41,13 +43,6 @@ class MainViewModel : BaseViewModel() {
         IconWithTextObj(2, R.drawable.ic_no_face, "Ryuunta 3")
     )
 
-    val roomList = listOf(
-        RoomObj(0, "Tất cả"),
-        RoomObj(1, "Phòng khách"),
-        RoomObj(2, "Nhà bếp"),
-        RoomObj(3, "Gara"),
-        RoomObj(4, "Phòng ngủ")
-    )
     val quickScenarioList = listOf(
         ScenarioItem.QuickScenario("Tắt đèn hành lang"),
         ScenarioItem.QuickScenario("Đi ngủ"),
@@ -55,6 +50,22 @@ class MainViewModel : BaseViewModel() {
         ScenarioItem.QuickScenario("bật tất cả quạt"),
         ScenarioItem.QuickScenario("Đi làm"),
     )
+
+    fun fetchHousesData(onCompleted: (List<HouseObj>) -> Unit) {
+        groupHelper.getHouseList {
+            onCompleted(it)
+        }
+    }
+
+    fun mappingRoomSpin(onRoomUIReady: (List<HouseObj.RoomObj>) -> Unit) {
+
+        groupHelper.getRoomsInHouse {
+            val rooms = mutableListOf<HouseObj.RoomObj>()
+            rooms.addAll(it)
+            onRoomUIReady(rooms)
+        }
+    }
+
 
     fun fetchCurrWeather(context: Context) {
         val lat = 21.0294498
@@ -92,11 +103,11 @@ class MainViewModel : BaseViewModel() {
 
     }
 
-    fun refreshDeviceList() {
-        deviceHelper.getAllDevices {
-            _deviceLiveData.value =it
+    //roomId = null is mean get all device of house
+    fun refreshDeviceListByRoom(roomId: String = "0") {
+        deviceHelper.getDevicesByRoom(roomId) {
+            _deviceLiveData.value = it
         }
-
     }
 
     fun mappingDeviceUI(onDeviceUIReady: (List<RItem>) -> Unit) {
@@ -155,6 +166,11 @@ class MainViewModel : BaseViewModel() {
         withContext(Dispatchers.Main) {
             onHomeUIReady(rItemList)
         }
+
+    }
+
+    override fun onCleared() {
+        super.onCleared()
 
     }
 

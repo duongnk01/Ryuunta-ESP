@@ -7,15 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import ryuunta.iot.ryuuntaesp.R
-import ryuunta.iot.ryuuntaesp.data.model.RoomObj
+import ryuunta.iot.ryuuntaesp.data.model.HouseObj
 import ryuunta.iot.ryuuntaesp.databinding.ItemSpinRoomBinding
 import ryuunta.iot.ryuuntaesp.databinding.SpinRoomBinding
 import ryuunta.iot.ryuuntaesp.utils.gone
 
 class RoomSpinnerAdapter (
     private val context: Context,
-    private val listRoom: List<RoomObj>
 ) : BaseAdapter(){
+
+    private val _listRoom: MutableList<HouseObj.RoomObj> = mutableListOf()
+
+    var listRoom: List<HouseObj.RoomObj>
+        get() = _listRoom
+        set(value) {
+            _listRoom.clear()
+            _listRoom.add(0, HouseObj.RoomObj("0", context.getString(R.string.all)))
+            _listRoom.addAll(value)
+        }
 
     private var posRoomSelected: Int = 0
 
@@ -26,11 +35,11 @@ class RoomSpinnerAdapter (
         }
 
     override fun getCount(): Int {
-        return listRoom.size
+        return _listRoom.size
     }
 
-    override fun getItem(position: Int): RoomObj {
-        return listRoom[position]
+    override fun getItem(position: Int): HouseObj.RoomObj {
+        return _listRoom[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -40,8 +49,8 @@ class RoomSpinnerAdapter (
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val v = SpinRoomBinding.inflate(LayoutInflater.from(context), parent, false)
-        if (position != listRoom.size) {
-            v.txtRoomName.text = listRoom[position].name
+        if (position != _listRoom.size) {
+            v.txtRoomName.text = _listRoom[position].name
         }
         return v.root
     }
@@ -51,16 +60,14 @@ class RoomSpinnerAdapter (
         when (position) {
             0 -> {
                 v.imgShowMore.visibility = View.VISIBLE
-                v.txtRoomName.text = listRoom[position].name
+                v.txtRoomName.text = _listRoom[position].name
             }
-            listRoom.size - 1 -> {
+            _listRoom.size - 1 -> {
                 v.baseLine.gone()
             }
-            else -> {
-                v.txtRoomName.text = listRoom[position].name
-            }
+            else -> {}
         }
-
+        v.txtRoomName.text = _listRoom[position].name
         return v.root
     }
 }
