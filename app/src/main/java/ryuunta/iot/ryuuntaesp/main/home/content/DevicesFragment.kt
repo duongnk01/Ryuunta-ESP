@@ -69,15 +69,13 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
             deviceHelper.getDeviceById(deviceId) {
                 device = it
                 device?.let { deviceItem ->
-                    //when view created -> get state of device elm from firebase and update UI
-                    controlStateElement(deviceItem.buttonList)
 
                     layoutElementButton.initView(deviceItem, onElementClick =  { elm, state ->
                         RLog.d(
                             TAG,
-                            "initView: onElementClick ${elm.label} -- state is ${elm.value}"
+                            "initView: onElementClick ${elm.values.first().label} -- state is ${elm.values.first().value}"
                         )
-                        controlStateElement(mapOf(elm.id to elm), state)
+                        controlStateElement(elm, state)
                     },
                         onElmLongClick = { elmId ->
                             dialogUpdateNameDevice.show(lifecycle, deviceId, elmId)
@@ -91,7 +89,8 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
                             txtRoomLabel.text = deviceName
                         }
                     }
-
+                    //when view created -> get state of device elm from firebase and update UI
+                    controlStateElement(deviceItem.buttonList)
                 }
             }
             viewModel.getDeviceName(deviceId) {

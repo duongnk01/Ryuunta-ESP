@@ -21,7 +21,9 @@ class SwitchButtonViewHolder(val binding: ItemSwitchButtonBinding) :
                     controlHelper.controlDevice(
                         (item as DeviceItem.SwitchButton).device.id,
                         item.device.buttonList,
-                        state == 1, onStateUpdated = { elm ->
+                        state == 1, onStateUpdated = { mapElm ->
+                            val elm = mapElm.values.first()
+
                             btnQuickSwitch.isClickable = true
                             if (elm.value == 0) {
                                 btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_off)
@@ -52,7 +54,9 @@ class SwitchButtonViewHolder(val binding: ItemSwitchButtonBinding) :
             imgDeviceIcon.setImageResource(switchButton.resIcon)
 
             controlHelper.controlDevice(switchButton.device.id,
-                switchButton.device.buttonList, null, { elm ->
+                switchButton.device.buttonList, null, { mapElm ->
+                    val elm = mapElm.values.first()
+
                     state = elm.value
                     if (state == 0) {
                         btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_off)

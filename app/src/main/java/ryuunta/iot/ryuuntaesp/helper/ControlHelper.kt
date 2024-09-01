@@ -56,8 +56,8 @@ class ControlHelper {
         deviceId: String,
         elements: Map<String, ElementInfoObj>,
         state: Boolean?,
-        onStateUpdated: (ElementInfoObj) -> Unit = { elm -> },
-        onError: (code: Int, message: String) -> Unit = { code, message -> }
+        onStateUpdated: (Map<String, ElementInfoObj>) -> Unit = { _ -> },
+        onError: (code: Int, message: String) -> Unit = { _, _ -> }
     ) {
         if (elements.isEmpty()) {
             RLog.e(TAG, "elementPath is empty")
@@ -69,9 +69,10 @@ class ControlHelper {
                 myElmRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val elm = snapshot.getValue(ElementInfoObj::class.java)
+                        val elmKey = snapshot.key
                         RLog.d(TAG, "${elm?.label} state = ${elm?.value}")
-                        if (elm != null) {
-                            onStateUpdated(elm)
+                        if (elmKey != null && elm != null) {
+                            onStateUpdated((mapOf(elmKey to elm)))
                         } else {
                             onError(-1, "Element is null")
                         }
@@ -89,7 +90,7 @@ class ControlHelper {
             } else {
                 element.value = if (state) 1 else 0
                 myElmRef.setValue(element)
-                onStateUpdated(element)
+                onStateUpdated(mapOf(key to element))
             }
         }
 

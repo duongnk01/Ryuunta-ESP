@@ -140,7 +140,7 @@ class AddDeviceFragment : BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMo
             val pwd = binding.edtInputPass.text.toString().trim()
 
             CoroutineScope(Dispatchers.IO).launch {
-                val dataToSend = "$ssid:$pwd:${Config.userUid}/houses/${Config.currentHouseId}/devices/$devId/:"
+                val dataToSend = "$ssid:$pwd:${Config.userUid}/houses/${Config.currentHouseId}/devices/$devId:"
                 val espIp = "192.168.4.16"
                 val espIp2 = "192.168.4.1"
                 val port = 8888
@@ -397,9 +397,9 @@ class AddDeviceFragment : BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMo
             null,
             DeviceViewType.SWITCH_BUTTON.name,
             mutableMapOf(
-                "1_btn" to ElementInfoObj("1_btn", "Button 1", 0),
-                "2_btn" to ElementInfoObj("2_btn", "Button 2", 0),
-                "3_btn" to ElementInfoObj("3_btn", "Button 3", 0)
+//                "1_btn" to ElementInfoObj("1_btn", "Button 1", 0),
+//                "2_btn" to ElementInfoObj("2_btn", "Button 2", 0),
+//                "3_btn" to ElementInfoObj("3_btn", "Button 3", 0)
             )
         )
         deviceHelper.addNewDevice(deviceObj, onComplete)

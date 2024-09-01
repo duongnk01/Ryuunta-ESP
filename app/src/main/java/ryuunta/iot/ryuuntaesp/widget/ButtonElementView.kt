@@ -9,7 +9,6 @@ import android.widget.TextView
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.data.model.ElementInfoObj
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
-import ryuunta.iot.ryuuntaesp.utils.setPreventLongClick
 
 class ButtonElementView constructor(context: Context, attrs: AttributeSet? = null) :
     LinearLayout(context, attrs) {
@@ -73,18 +72,18 @@ class ButtonElementView constructor(context: Context, attrs: AttributeSet? = nul
     }
 
     fun initView(
-        elm: ElementInfoObj,
-        onButtonClick: (Boolean) -> Unit,
+        elm: Map<String, ElementInfoObj>,
+        onButtonClick: (Map<String, ElementInfoObj>, Boolean) -> Unit,
         onChangeElmName: (elmId: String) -> Unit
     ) {
-        _label = elm.label
-        _id = elm.id
+        _label = elm.values.first().label
+        _id = elm.keys.first()
         tvLabel.text = label
 //        imgPower.setImageResource(if (_state) R.drawable.ic_power_switch_on else R.drawable.ic_power_switch_off)
         btnButton.setPreventDoubleClick {
             _state = !_state
 //            imgPower.setImageResource(if (_state) R.drawable.ic_power_switch_on else R.drawable.ic_power_switch_off)
-            onButtonClick(_state)
+            onButtonClick(elm, _state)
         }
 
         btnButton.setOnLongClickListener {
