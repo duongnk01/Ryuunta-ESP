@@ -59,17 +59,10 @@
             android:text="create room" />
 
         <Button
-            android:id="@+id/btn_sign_devices"
+            android:id="@+id/btn_change_name_room"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="sign devices" />
-
-        <Button
-            android:id="@+id/btn_change_room"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="change room" />
-
+            android:text="change name room" />
 
     </LinearLayout>
 

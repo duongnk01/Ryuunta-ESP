@@ -3,17 +3,13 @@ package ryuunta.iot.ryuuntaesp.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.LinearLayout
-import android.widget.Toast
-import com.google.gson.Gson
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.data.model.DeviceObj
 import ryuunta.iot.ryuuntaesp.data.model.ElementInfoObj
 import ryuunta.iot.ryuuntaesp.main.home.devices.DeviceViewType
 import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.show
-import ryuunta.iot.ryuuntaesp.utils.splitHashMap
 
 class DeviceButtonView : LinearLayout {
 
@@ -37,16 +33,23 @@ class DeviceButtonView : LinearLayout {
         layout3 = findViewById(R.id.layout_3)
     }
 
-    fun initView(deviceItem: DeviceObj, onElementClick: (ElementInfoObj, Boolean) -> Unit) {
+    fun initView(
+        deviceItem: DeviceObj,
+        onElementClick: (ElementInfoObj, Boolean) -> Unit,
+        onElmLongClick: (elmId: String) -> Unit
+    ) {
         when (deviceItem.type) {
             DeviceViewType.SWITCH_BUTTON.name, DeviceViewType.FAN_REMOTE.name -> {
-                val listElms = deviceItem.buttonList.values.toList().sortedBy { it.id.split('+')[0].toLong() }      //sort by timestamp it added at first of id
+                val listElms =
+                    deviceItem.buttonList.values.toList().sortedBy { it.id.take(1).toInt() }
 
                 listElms.forEachIndexed { index, elm ->
                     val button = ButtonElementView(context)
-                    button.initView(elm) { state ->
+                    button.initView(elm, onButtonClick = { state ->
                         onElementClick(elm, state)
-                    }
+                    }, onChangeElmName = { elmId ->
+                        onElmLongClick(elmId)
+                    })
                     listElement.add(button)
                     when (index) {
                         0, 1 -> layout1.addView(button)     //button 1, 2
@@ -54,10 +57,12 @@ class DeviceButtonView : LinearLayout {
                             layout2.show()
                             layout2.addView(button)
                         }
+
                         4, 5 -> {                           //buttom 5, 6
                             layout3.show()
                             layout3.addView(button)
                         }
+
                         else -> {}
                     }
                 }

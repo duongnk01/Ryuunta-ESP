@@ -1,6 +1,8 @@
 package ryuunta.iot.ryuuntaesp.utils
 
 import android.graphics.Rect
+import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.view.MotionEvent
 import android.view.View
@@ -44,6 +46,32 @@ fun View.gone() {
 fun View.inv() {
     if (!isInvisible())
         visibility = View.INVISIBLE
+}
+
+fun View.setPreventLongClick(debounceTime: Long = 500, action: () -> Unit) {
+    val handler = Handler(Looper.getMainLooper())
+
+    this.setOnTouchListener { view, motionEvent ->
+        when (motionEvent.action) {
+            MotionEvent.ACTION_DOWN -> {
+                handler.postDelayed({
+                    action()
+                }, debounceTime)
+
+                return@setOnTouchListener true
+            }
+
+            MotionEvent.ACTION_UP -> {
+                handler.removeCallbacksAndMessages(null)
+                if (motionEvent.downTime < 300) {
+                    view.performClick()
+                }
+                return@setOnTouchListener true
+            }
+        }
+        false
+    }
+
 }
 
 fun View.setPreventDoubleClick(debounceTime: Long = 300, action: (view: View?) -> Unit) {

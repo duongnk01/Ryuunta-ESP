@@ -1,30 +1,18 @@
 package ryuunta.iot.ryuuntaesp.main.devices
 
-import android.Manifest
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Toast
-import com.espressif.iot.esptouch.EsptouchTask
 import com.espressif.iot.esptouch.IEsptouchTask
-import com.espressif.iot.esptouch.util.ByteUtil
-import com.espressif.iot.esptouch.util.TouchNetUtil
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import com.ryuunta.iot.esp.widget.hideSoftKeyboard
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.RMainActivity
 import ryuunta.iot.ryuuntaesp.adapter.WifiListAdapter
 import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
+import ryuunta.iot.ryuuntaesp.core.base.Config
 import ryuunta.iot.ryuuntaesp.data.model.DeviceObj
 import ryuunta.iot.ryuuntaesp.data.model.ElementInfoObj
 import ryuunta.iot.ryuuntaesp.data.model.WifiSSID
@@ -32,17 +20,22 @@ import ryuunta.iot.ryuuntaesp.databinding.FragmentAddDeviceBinding
 import ryuunta.iot.ryuuntaesp.helper.ControlHelper
 import ryuunta.iot.ryuuntaesp.helper.DeviceHelper
 import ryuunta.iot.ryuuntaesp.main.home.devices.DeviceViewType
-import ryuunta.iot.ryuuntaesp.utils.PermissionUtils.checkPermissions
 import ryuunta.iot.ryuuntaesp.utils.PermissionUtils.checkPermissionsNew
 import ryuunta.iot.ryuuntaesp.utils.PermissionUtils.listPermission
 import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.randomId
+import ryuunta.iot.ryuuntaesp.utils.scanESP8266Wifi
 import ryuunta.iot.ryuuntaesp.utils.scanWifi
+import ryuunta.iot.ryuuntaesp.utils.sendDataToESP8266
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
+import ryuunta.iot.ryuuntaesp.utils.showDialogNegative
+import ryuunta.iot.ryuuntaesp.widget.StepView
 
-class AddDeviceFragment: BaseFragment<FragmentAddDeviceBinding, AddDeviceViewModel>(FragmentAddDeviceBinding::inflate, AddDeviceViewModel::class.java) {
+class AddDeviceFragment : BaseFragment<FragmentAddDeviceBinding, AddDeviceViewModel>(
+    FragmentAddDeviceBinding::inflate,
+    AddDeviceViewModel::class.java
+) {
     private val TAG = "AddDeviceActivity"
-
 
 
     private val pathDB = "esp8266"
@@ -57,7 +50,13 @@ class AddDeviceFragment: BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMod
 
     private var listSSID: List<WifiSSID> = listOf()
 
+    private var devId = ""
+
     private var mEsptouchTask: IEsptouchTask? = null
+
+    private val stepView: StepView by lazy {
+        StepView(requireContext())
+    }
 
 
     private val ssidAdapter: WifiListAdapter by lazy {
@@ -65,35 +64,66 @@ class AddDeviceFragment: BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMod
             binding.currentSSIDPickup = it
         }
     }
+
     override fun initViews(savedInstanceState: Bundle?) {
         (activity as RMainActivity).requestBluetooth()
-//        checkPermissionsNew(
-//            requireContext(),
-//            listPermission, {
-////            if (it) {
-//                listSSID = scanWifi(requireContext())
-//                ssidAdapter.submitList(listSSID)
-//
-////            }
-//        },
-//            onCancel = { deniedPermissions ->
-//                deniedPermissions.forEach {
-//                    RLog.d(TAG, it.permissionName.toString())
-//
-//                }
-//
-//            })
+        checkPermissionsNew(
+            requireContext(),
+            listPermission, {
+//            if (it) {
+                listSSID = scanWifi(requireContext())
+                ssidAdapter.submitList(listSSID)
+
+//            }
+            },
+            onCancel = { deniedPermissions ->
+                deniedPermissions.forEach {
+                    RLog.d(TAG, it.permissionName.toString())
+
+                }
+
+            })
+        stepView.setStep(
+            StepView.Step(binding.layoutStart),
+            StepView.Step(binding.layoutFirst),
+            StepView.Step(binding.layoutConfigEspDevice)
+        )
+
         listSSID = scanWifi(requireContext())
+        val listESP8266SSID = scanESP8266Wifi(requireContext())
+
         RLog.d(TAG, "Wifi list:  ${Gson().toJson(listSSID)}")
+        RLog.d(TAG, "Wifi esp8266 list:  ${Gson().toJson(listESP8266SSID)}")
         ssidAdapter.submitList(listSSID)
         binding.rcvListSsid.adapter = ssidAdapter
-        initFirebase()
+//        initFirebase()
 
 
     }
 
     override fun initEvents() {
         super.initEvents()
+        binding.btnNextStep.setPreventDoubleClick {
+            when (stepView.currentStep) {
+                binding.layoutStart.id -> {
+                    createDeviceOnFirebase { devId ->
+                        this.devId = devId
+                        stepView.nextStep()
+                        binding.btnNextStep.text = "Đi tiếp"
+                    }
+                }
+
+                binding.layoutFirst.id -> {
+                    stepView.nextStep()
+                    binding.btnNextStep.text = getString(R.string.txt_done)
+                }
+
+                else -> {
+                    navController.popBackStack()
+                }
+            }
+
+        }
         binding.swiperRefresh.setOnRefreshListener {
             binding.swiperRefresh.isRefreshing = true
             listSSID = scanWifi(requireContext())
@@ -104,10 +134,23 @@ class AddDeviceFragment: BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMod
         }
 
         binding.btnAuthorize.setOnClickListener {
+            hideSoftKeyboard(requireActivity())
+
             val ssid = binding.currentSSIDPickup?.ssid.toString()
             val pwd = binding.edtInputPass.text.toString().trim()
-            hideSoftKeyboard(requireActivity())
-            executeEspTouch()
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val dataToSend = "$ssid:$pwd:${Config.userUid}/houses/${Config.currentHouseId}/devices/$devId/:"
+                val espIp = "192.168.4.16"
+                val espIp2 = "192.168.4.1"
+                val port = 8888
+
+//                sendDataToESP8266(requireContext(), dataToSend, espIp, port)
+                sendDataToESP8266(requireContext(), dataToSend, espIp2, port)
+            }
+
+
+//            executeEspTouch()
 
 //            CoroutineScope(Dispatchers.IO).launch {
 //                // Xác thực SSID với password
@@ -129,53 +172,53 @@ class AddDeviceFragment: BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMod
 //            }
         }
 
-        binding.apply {
-            swLed.setOnCheckedChangeListener { _, isChecked ->
-                nodeLed.setValue(if (isChecked) 0 else 1)
-                binding.root.setBackgroundColor(if (isChecked) Color.BLUE else Color.WHITE)
+        /* binding.apply {
+             swLed.setOnCheckedChangeListener { _, isChecked ->
+                 nodeLed.setValue(if (isChecked) 0 else 1)
+                 binding.root.setBackgroundColor(if (isChecked) Color.BLUE else Color.WHITE)
 
-            }
-            swRelay1.setOnCheckedChangeListener { _, isChecked ->
-                nodeRelay1.setValue(if (isChecked) 0 else 1)
-                binding.root.setBackgroundColor(if (isChecked) Color.CYAN else Color.WHITE)
-            }
-            swRelay2.setOnCheckedChangeListener { _, isChecked ->
-                nodeRelay2.setValue(if (isChecked) 0 else 1)
-                binding.root.setBackgroundColor(if (isChecked) Color.RED else Color.WHITE)
-            }
+             }
+             swRelay1.setOnCheckedChangeListener { _, isChecked ->
+                 nodeRelay1.setValue(if (isChecked) 0 else 1)
+                 binding.root.setBackgroundColor(if (isChecked) Color.CYAN else Color.WHITE)
+             }
+             swRelay2.setOnCheckedChangeListener { _, isChecked ->
+                 nodeRelay2.setValue(if (isChecked) 0 else 1)
+                 binding.root.setBackgroundColor(if (isChecked) Color.RED else Color.WHITE)
+             }
 
-            swRelayEsp01.setOnCheckedChangeListener { _, isChecked ->
-                relayEsp01.setValue(if (isChecked) 0 else 1)
-                binding.root.setBackgroundColor(if (isChecked) Color.CYAN else Color.WHITE)
-            }
+             swRelayEsp01.setOnCheckedChangeListener { _, isChecked ->
+                 relayEsp01.setValue(if (isChecked) 0 else 1)
+                 binding.root.setBackgroundColor(if (isChecked) Color.CYAN else Color.WHITE)
+             }
 
-            btnLockDoor.setOnClickListener {
-                doorLock.setValue(0)
-            }
-            btnOpenDoor.setOnClickListener {
-                doorLock.setValue(1)
-            }
+             btnLockDoor.setOnClickListener {
+                 doorLock.setValue(0)
+             }
+             btnOpenDoor.setOnClickListener {
+                 doorLock.setValue(1)
+             }
 
-            button.setPreventDoubleClick {
-                val listElm = mutableMapOf<String, ElementInfoObj>()
-                for (i in 1..4) {
-                    val randomId = randomId()
-                    listElm[randomId] = ElementInfoObj(randomId, "Nút $i")
-                }
-                deviceHelper.addNewDevice(
-                    DeviceObj(
-                        randomId(),
-                        "test",
-                        null,
-                        DeviceViewType.SWITCH_BUTTON.name,
-                        listElm
-                    )
-                ) {}
-            }
-        }
+             button.setPreventDoubleClick {
+                 val listElm = mutableMapOf<String, ElementInfoObj>()
+                 for (i in 1..4) {
+                     val randomId = randomId()
+                     listElm[randomId] = ElementInfoObj(randomId, "Nút $i")
+                 }
+                 deviceHelper.addNewDevice(
+                     DeviceObj(
+                         randomId(),
+                         "test",
+                         null,
+                         DeviceViewType.SWITCH_BUTTON.name,
+                         listElm
+                     )
+                 ) {}
+             }
+         }*/
     }
 
-    private fun initFirebase() {
+    /*private fun initFirebase() {
         val db = FirebaseDatabase.getInstance()
         nodeLed = db.reference.child("fan_remote/level1")
         nodeLed.addValueEventListener(object : ValueEventListener {
@@ -285,9 +328,9 @@ class AddDeviceFragment: BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMod
             }
 
         })
-    }
+    }*/
 
-    private fun executeEspTouch() {
+    /*private fun executeEspTouch() {
         val byteSSID = ByteUtil.getBytesByString(binding.currentSSIDPickup?.ssid)
         val pwdStr: String = binding.edtInputPass.text.toString().trim()
         val bytePwd = ByteUtil.getBytesByString((pwdStr))
@@ -338,10 +381,50 @@ class AddDeviceFragment: BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMod
 
             }
         }
+    }*/
+
+    /* private fun cancelEsptouch() {
+         mEsptouchTask?.interrupt()
+     }*/
+
+    private var idDeviceCache = ""
+
+    private fun createDeviceOnFirebase(onComplete: (deviceId: String) -> Unit) {
+        idDeviceCache = randomId()
+        val deviceObj = DeviceObj(
+            idDeviceCache,
+            "esp test ${System.currentTimeMillis().toString().takeLast(3)}",
+            null,
+            DeviceViewType.SWITCH_BUTTON.name,
+            mutableMapOf(
+                "1_btn" to ElementInfoObj("1_btn", "Button 1", 0),
+                "2_btn" to ElementInfoObj("2_btn", "Button 2", 0),
+                "3_btn" to ElementInfoObj("3_btn", "Button 3", 0)
+            )
+        )
+        deviceHelper.addNewDevice(deviceObj, onComplete)
     }
 
-    private fun cancelEsptouch() {
-        mEsptouchTask?.interrupt()
+    private fun confirmCancel() {
+        requireContext().showDialogNegative(
+            R.string.txt_cancel_add_device,
+            R.string.txt_you_dont_to_want_add_device_anymore,
+            lifecycle = lifecycle,
+            lottieAnim = R.raw.anim_nahida_question,
+            cancelRes = R.string.txt_no,
+            isAnimLoop = true,
+            confirmRes = R.string.txt_next,
+            onCancel = {
+                if (idDeviceCache.isNotEmpty()) {
+                    deviceHelper.deleteDevice(idDeviceCache) {
+                        navController.popBackStack()
+
+                    }
+                } else {
+                    navController.popBackStack()
+                }
+            }
+        )
     }
 
     override fun isCustomBackPress(): Boolean {
@@ -350,8 +433,8 @@ class AddDeviceFragment: BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMod
 
     override fun customBackPress() {
         super.customBackPress()
-        cancelEsptouch()
-        navController.popBackStack()
+//        cancelEsptouch()
+        confirmCancel()
 
     }
 }

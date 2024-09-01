@@ -80,4 +80,8 @@
   <string name="txt_chane_room">Đổi phòng</string>
   <string name="txt_new_device_name_updated">Thiết bị đã đổi sang tên mới</string>
   <string name="name_cannot_be_empty">Chưa nhập tên mới kìa!</string>
+    <string name="txt_new_room_updated">Đã đổi tên phòng</string>
+    <string name="txt_cancel_add_device">Bỏ thêm thiết bị mới?</string>
+    <string name="txt_you_dont_to_want_add_device_anymore">Bạn không muốn thêm thiết bị mới nữa ư?</string>
+    <string name="txt_next">Tiếp tục</string>
 </resources>

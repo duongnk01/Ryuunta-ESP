@@ -72,13 +72,16 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
                     //when view created -> get state of device elm from firebase and update UI
                     controlStateElement(deviceItem.buttonList)
 
-                    layoutElementButton.initView(deviceItem) { elm, state ->
+                    layoutElementButton.initView(deviceItem, onElementClick =  { elm, state ->
                         RLog.d(
                             TAG,
                             "initView: onElementClick ${elm.label} -- state is ${elm.value}"
                         )
                         controlStateElement(mapOf(elm.id to elm), state)
-                    }
+                    },
+                        onElmLongClick = { elmId ->
+                            dialogUpdateNameDevice.show(lifecycle, deviceId, elmId)
+                        })
                     txtDeviceLabel.text = deviceItem.label
 
                     if (deviceItem.roomId == null) {

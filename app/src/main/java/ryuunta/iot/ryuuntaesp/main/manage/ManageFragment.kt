@@ -20,7 +20,7 @@ class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(
     private val groupHelper = GroupHelper()
     private val deviceHelper = DeviceHelper()
 
-    private var currRoomId = ""
+    private var currRoomId = "${System.currentTimeMillis()}+${Config.userUid}"
     private var currDevicesId = listOf<String>()
 
     override fun initViews(savedInstanceState: Bundle?) {
@@ -46,6 +46,20 @@ class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(
 
             }
 
+            btnChangeNameRoom.setPreventDoubleClick {
+                val newName = edtNewNameHouse.text?.trim()
+                if (!newName.isNullOrEmpty()) {
+                    groupHelper.changeRoomName(currRoomId, newName.toString()) {
+                        requireContext().showDialogNotification(
+                            R.string.txt_done,
+                            R.raw.anim_paimon_like,
+                            lifecycle,
+                            R.string.txt_new_room_updated
+                        )
+                    }
+                }
+            }
+
             btnCreataRoom.setPreventDoubleClick {
                 groupHelper.addRoom(HouseObj.RoomObj(
                     randomId(),
@@ -63,45 +77,6 @@ class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(
                     }
                 }
 
-            }
-
-            btnSignDevices.setPreventDoubleClick {
-                deviceHelper.getDevicesByRoom { listDev ->
-                    val listDevId = listDev.map {it.id}
-
-                    groupHelper.signDevicesInRoom(currRoomId, listDevId ) { roomId, deviceIds ->
-                        currRoomId = roomId
-                        currDevicesId = deviceIds
-                        requireContext().showDialogNotification(
-                            R.string.txt_done,
-                            R.raw.anim_paimon_like,
-                            lifecycle,
-                            R.string.txt_device_signed
-                        ) {
-//                            refreshHomeData()
-                        }
-                    }
-                }
-            }
-            btnChangeRoom.setPreventDoubleClick {
-                groupHelper.getHouseById(Config.currentHouseId, onSuccess = {
-                    val rooms = it.rooms
-                    var newRoomId = rooms.keys.random()
-                    while (newRoomId == currRoomId) {
-                        newRoomId = rooms.keys.random()
-                    }
-                    groupHelper.changeRoom(currDevicesId[0], currRoomId, newRoomId) {
-                        requireContext().showDialogNotification(
-                            R.string.txt_done,
-                            R.raw.anim_paimon_like,
-                            lifecycle,
-                            R.string.txt_device_signed
-                        ) {
-//                            refreshHomeData()
-                        }
-                    }
-
-                }, onError = { code, message -> })
             }
         }
     }

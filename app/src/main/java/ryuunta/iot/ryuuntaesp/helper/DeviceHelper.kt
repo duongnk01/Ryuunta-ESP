@@ -20,10 +20,10 @@ class DeviceHelper {
     private val myRef =
         db.getReference(DBNode.USERS.path).child(Config.userUid).child(DBNode.DEVICES.path)
 
-    fun addNewDevice(device: DeviceObj, onCompleted: () -> Unit) {
+    fun addNewDevice(device: DeviceObj, onCompleted: (deviceId: String) -> Unit) {
         ref.getDeviceReference(device.id).setValue(device)
             .addOnCompleteListener {
-                onCompleted()
+                onCompleted(device.id)
             }
     }
 
@@ -121,6 +121,19 @@ class DeviceHelper {
                 onCompleted()
             }
 
+    }
+
+    fun changeNameElement(deviceId: String, elementId: String, newName: String, onCompleted: () -> Unit) {
+        ref.getDevicesReference().child(deviceId).child(DBNode.BUTTON_LIST.path).child(elementId).updateChildren(mapOf("label" to newName))
+            .addOnCompleteListener {
+                onCompleted()
+            }
+    }
+
+    fun deleteDevice(idDevice: String, onCompleted: () -> Unit) {
+        ref.getDeviceReference(idDevice).removeValue().addOnCompleteListener {
+            onCompleted()
+        }
     }
 
 }

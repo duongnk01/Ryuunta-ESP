@@ -8,8 +8,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.data.model.ElementInfoObj
+import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
+import ryuunta.iot.ryuuntaesp.utils.setPreventLongClick
 
-class ButtonElementView constructor(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {
+class ButtonElementView constructor(context: Context, attrs: AttributeSet? = null) :
+    LinearLayout(context, attrs) {
 
 //    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
 //        setAttrs(context, attrs)
@@ -69,16 +72,24 @@ class ButtonElementView constructor(context: Context, attrs: AttributeSet? = nul
 
     }
 
-    fun initView(elm: ElementInfoObj, onButtonClick: (Boolean) -> Unit) {
+    fun initView(
+        elm: ElementInfoObj,
+        onButtonClick: (Boolean) -> Unit,
+        onChangeElmName: (elmId: String) -> Unit
+    ) {
         _label = elm.label
         _id = elm.id
         tvLabel.text = label
 //        imgPower.setImageResource(if (_state) R.drawable.ic_power_switch_on else R.drawable.ic_power_switch_off)
-
-        btnButton.setOnClickListener {
+        btnButton.setPreventDoubleClick {
             _state = !_state
 //            imgPower.setImageResource(if (_state) R.drawable.ic_power_switch_on else R.drawable.ic_power_switch_off)
             onButtonClick(_state)
+        }
+
+        btnButton.setOnLongClickListener {
+            onChangeElmName(_id)
+            false
         }
 
     }

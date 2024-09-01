@@ -14,11 +14,15 @@ class DialogUpdateNameDevice(context: Context, val onComplete: () -> Unit) : Ryu
     private val deviceHelper = DeviceHelper()
 
     private var deviceId = ""
+    private var elementId = ""
 
     override fun onDialogShown() {
         super.onDialogShown()
-
         deviceHelper.getDeviceById(deviceId) {
+            if (elementId.isNotEmpty()) {
+                binding.edtDevice.setText(it.buttonList[elementId]?.label)
+                return@getDeviceById
+            }
             binding.name = it.label
         }
 
@@ -32,6 +36,13 @@ class DialogUpdateNameDevice(context: Context, val onComplete: () -> Unit) : Ryu
         binding.btnConfirm.setPreventDoubleClick {
             val newName = binding.edtDevice.text?.trim()
             if (!newName.isNullOrEmpty()) {
+                if (elementId.isNotEmpty()) {
+                    deviceHelper.changeNameElement(deviceId, elementId, newName.toString()) {
+                        onDismissAndRemoveRes()
+                        onComplete()
+                    }
+                    return@setPreventDoubleClick
+                }
                 deviceHelper.changeNameDevice(deviceId, newName.toString()) {
                     onDismissAndRemoveRes()
                     onComplete()
@@ -43,8 +54,9 @@ class DialogUpdateNameDevice(context: Context, val onComplete: () -> Unit) : Ryu
 
     }
 
-    fun show(lifecycle: Lifecycle, deviceId: String) {
+    fun show(lifecycle: Lifecycle, deviceId: String, elementId: String = "") {
         this.deviceId = deviceId
+        this.elementId = elementId
         show(lifecycle)
     }
 
