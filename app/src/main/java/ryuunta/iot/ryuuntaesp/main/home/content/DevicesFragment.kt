@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.navigation.fragment.navArgs
+import ryuunta.iot.ryuuntaesp.MainViewModel
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.data.model.DeviceObj
@@ -20,9 +21,9 @@ import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
 import ryuunta.iot.ryuuntaesp.utils.showDialogError
 import ryuunta.iot.ryuuntaesp.utils.showDialogNotification
 
-class DevicesFragment : BaseFragment<FragmentDevicesBinding, DevicesViewModel>(
+class DevicesFragment : BaseFragment<FragmentDevicesBinding, MainViewModel>(
     FragmentDevicesBinding::inflate,
-    DevicesViewModel::class.java
+    MainViewModel::class.java
 ) {
     private val TAG = "DevicesFragment"
 

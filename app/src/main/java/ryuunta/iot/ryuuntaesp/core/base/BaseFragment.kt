@@ -108,6 +108,9 @@ abstract class BaseFragment<VB : ViewBinding, V : BaseViewModel>(
 //        }
     }
 
+    /**
+     * Fill data for view etc call api, submit data to adapters
+     */
     protected open fun onSetViewInfo() {}
 
     protected open fun onViewModelObserve() {}

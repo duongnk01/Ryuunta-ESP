@@ -64,6 +64,12 @@
             android:layout_height="wrap_content"
             android:text="change name room" />
 
+        <Button
+            android:id="@+id/btn_send_udp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send UDP" />
+
     </LinearLayout>
 
 </layout>

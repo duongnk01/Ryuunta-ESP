@@ -59,14 +59,30 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
         binding.apply {
             rcvQuickScenarios.adapter = quickScenarioListAdapter
             rcvQuickScenarios.overScrollMode = View.OVER_SCROLL_NEVER
-            quickScenarioListAdapter.submitList(viewModel.quickScenarioList)
             rcvDevices.adapter = deviceListAdapter
             rcvDevices.overScrollMode = View.OVER_SCROLL_NEVER
 
+
+
+
+        }
+
+//        viewModel.fetchHousesData {
+//            RLog.d(TAG, "fetchHousesData: ${it.size}")
+//            userHomeAdapter.listHomeUser = it
+//            userHomeAdapter.notifyDataSetChanged()
+//
+//        }
+//        binding.spinHome.adapter = userHomeAdapter
+    }
+
+    override fun onSetViewInfo() {
+        super.onSetViewInfo()
+        binding.apply {
+            quickScenarioListAdapter.submitList(viewModel.quickScenarioList)
             viewModel.getHouseName {
                 txtHeaderLabel.text = it
             }
-
             viewModel.fetchCurrWeather(requireContext())
 
             viewModel.mappingRoomSpin {
@@ -92,13 +108,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>(
             }
         }
 
-//        viewModel.fetchHousesData {
-//            RLog.d(TAG, "fetchHousesData: ${it.size}")
-//            userHomeAdapter.listHomeUser = it
-//            userHomeAdapter.notifyDataSetChanged()
-//
-//        }
-//        binding.spinHome.adapter = userHomeAdapter
     }
 
     override fun initEvents() {

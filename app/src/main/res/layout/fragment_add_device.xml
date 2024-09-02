@@ -213,14 +213,55 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
+                <LinearLayout
                     android:id="@+id/layout_start"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:layout_marginHorizontal="@dimen/_space16dp"
+                    android:orientation="vertical"
                     android:visibility="gone"
-                    style="@style/theme_content_text"
-                    android:text="Sau đây sẽ cần thay đổi kết nối wifi của điện thoại"/>
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/theme_header_text"
+                        android:text="Chọn loại thiết bị"
+                        android:gravity="center"
+                        android:layout_marginBottom="@dimen/_space24dp"/>
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="Switch 1 button"
+                            android:checked="true"
+                            android:id="@+id/sw_1_btn"/>
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="Switch 4 button"
+                            android:enabled="true"
+                            android:id="@+id/sw_4_btn"/>
+
+                    </RadioGroup>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:visibility="visible"
+                        style="@style/theme_content_text"
+                        android:text="Sau đây sẽ cần thay đổi kết nối wifi của điện thoại"/>
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/layout_first"
@@ -259,7 +300,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    tools:visibility="visible"
+                    tools:visibility="gone"
                     android:visibility="gone"
                     android:padding="16dp">
 

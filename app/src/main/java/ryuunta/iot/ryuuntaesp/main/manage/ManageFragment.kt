@@ -1,6 +1,9 @@
 package ryuunta.iot.ryuuntaesp.main.manage
 
 import android.os.Bundle
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.core.base.Config
@@ -9,6 +12,7 @@ import ryuunta.iot.ryuuntaesp.databinding.FragmentManageBinding
 import ryuunta.iot.ryuuntaesp.helper.DeviceHelper
 import ryuunta.iot.ryuuntaesp.helper.GroupHelper
 import ryuunta.iot.ryuuntaesp.utils.randomId
+import ryuunta.iot.ryuuntaesp.utils.sendDataToESP8266
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
 import ryuunta.iot.ryuuntaesp.utils.showDialogNotification
 
@@ -77,6 +81,16 @@ class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(
                     }
                 }
 
+            }
+
+            btnSendUdp.setPreventDoubleClick {
+                CoroutineScope(Dispatchers.IO).launch {
+                    val dataToSend = edtNewNameHouse.text.toString()
+                    val espIp2 = "192.168.4.1"
+                    val port = 8888
+
+                    sendDataToESP8266(requireContext(), dataToSend, espIp2, port)
+                }
             }
         }
     }

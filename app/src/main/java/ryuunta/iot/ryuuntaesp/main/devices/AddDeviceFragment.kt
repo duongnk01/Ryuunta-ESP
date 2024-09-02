@@ -140,7 +140,8 @@ class AddDeviceFragment : BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMo
             val pwd = binding.edtInputPass.text.toString().trim()
 
             CoroutineScope(Dispatchers.IO).launch {
-                val dataToSend = "$ssid:$pwd:${Config.userUid}/houses/${Config.currentHouseId}/devices/$devId:"
+                val dataToSend =
+                    "$ssid:$pwd:${Config.userUid}/houses/${Config.currentHouseId}/devices/$devId:"
                 val espIp = "192.168.4.16"
                 val espIp2 = "192.168.4.1"
                 val port = 8888
@@ -390,17 +391,24 @@ class AddDeviceFragment : BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMo
     private var idDeviceCache = ""
 
     private fun createDeviceOnFirebase(onComplete: (deviceId: String) -> Unit) {
+        val listButton = mutableMapOf<String, ElementInfoObj>()
+        if (binding.sw1Btn.isChecked) {
+            listButton["1_btn"] = ElementInfoObj("1_btn", "Button 1", 0)
+        }
+        if (binding.sw4Btn.isChecked) {
+            listButton["1_btn"] = ElementInfoObj("1_btn", "Button 1", 0)
+            listButton["2_btn"] = ElementInfoObj("2_btn", "Button 2", 0)
+            listButton["3_btn"] = ElementInfoObj("3_btn", "Button 3", 0)
+            listButton["4_btn"] = ElementInfoObj("4_btn", "Button 4", 0)
+
+        }
         idDeviceCache = randomId()
         val deviceObj = DeviceObj(
             idDeviceCache,
-            "esp test ${System.currentTimeMillis().toString().takeLast(3)}",
+            "Switch ${System.currentTimeMillis().toString().takeLast(3)}",
             null,
             DeviceViewType.SWITCH_BUTTON.name,
-            mutableMapOf(
-//                "1_btn" to ElementInfoObj("1_btn", "Button 1", 0),
-//                "2_btn" to ElementInfoObj("2_btn", "Button 2", 0),
-//                "3_btn" to ElementInfoObj("3_btn", "Button 3", 0)
-            )
+            listButton
         )
         deviceHelper.addNewDevice(deviceObj, onComplete)
     }
@@ -434,7 +442,12 @@ class AddDeviceFragment : BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMo
     override fun customBackPress() {
         super.customBackPress()
 //        cancelEsptouch()
-        confirmCancel()
+        if (stepView.currentStep != binding.layoutStart.id) {
+            confirmCancel()
+
+        } else {
+            navController.popBackStack()
+        }
 
     }
 }

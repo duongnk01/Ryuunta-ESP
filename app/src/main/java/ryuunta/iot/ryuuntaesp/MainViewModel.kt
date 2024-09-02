@@ -55,6 +55,17 @@ class MainViewModel : BaseViewModel() {
         groupHelper.getHouseName(onCompleted)
     }
 
+    fun getRoomName(roomId: String, onCompleted: (String) -> Unit) {
+        groupHelper.getRoomName(roomId) {
+            onCompleted(it)
+        }
+
+    }
+
+    fun getDeviceName(deviceId: String, onCompleted: (String) -> Unit) {
+        deviceHelper.getDeviceName(deviceId, onCompleted)
+    }
+
     fun fetchHousesData(onCompleted: (List<HouseObj>) -> Unit) {
         groupHelper.getHouseList {
             onCompleted(it)

@@ -11,40 +11,16 @@ class SwitchButtonViewHolder(val binding: ItemSwitchButtonBinding) :
     RViewHolder<RItem>(binding.root) {
 
     private val controlHelper = ControlHelper()
-    private var state = 0
 
     init {
         binding.apply {
-            btnQuickSwitch.setOnClickListener {
-                currentItem?.let { item ->
-                    btnQuickSwitch.isClickable = false
-                    controlHelper.controlDevice(
-                        (item as DeviceItem.SwitchButton).device.id,
-                        item.device.buttonList,
-                        state == 1, onStateUpdated = { mapElm ->
-                            val elm = mapElm.values.first()
-
-                            btnQuickSwitch.isClickable = true
-                            if (elm.value == 0) {
-                                btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_off)
-                            } else {
-                                btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_on)
-                            }
-                            state = if (elm.value == 1) 0 else 1
-                        }, onError = { code, message ->
-                            btnQuickSwitch.isClickable = true
-                        })
-
-                }
-
-
-            }
         }
     }
 
     override fun onBind(item: RItem) {
         super.onBind(item)
         val switchButton = item as DeviceItem.SwitchButton
+        var state = false
         binding.apply {
             if (switchButton.device.label.isNotEmpty()) {
                 txtDeviceLabel.text = switchButton.device.label
@@ -56,15 +32,34 @@ class SwitchButtonViewHolder(val binding: ItemSwitchButtonBinding) :
             controlHelper.controlDevice(switchButton.device.id,
                 switchButton.device.buttonList, null, { mapElm ->
                     val elm = mapElm.values.first()
-
-                    state = elm.value
-                    if (state == 0) {
-                        btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_off)
-                    } else {
+                    state = elm.value == 1
+                    if (state) {
                         btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_on)
+                    } else {
+                        btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_off)
                     }
                 }, onError = { code, message ->
                 })
+
+            btnQuickSwitch.setOnClickListener {
+                btnQuickSwitch.isClickable = false
+                controlHelper.controlDevice(
+                    switchButton.device.id,
+                    switchButton.device.buttonList,
+                    !state, onStateUpdated = { mapElm ->
+                        val elm = mapElm.values.first()
+                        btnQuickSwitch.isClickable = true
+                        if (elm.value == 0) {
+                            btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_off)
+                        } else {
+                            btnQuickSwitch.setImageResource(R.drawable.ic_power_switch_on)
+                        }
+                    }, onError = { code, message ->
+                        btnQuickSwitch.isClickable = true
+                    })
+
+            }
+
         }
     }
 }
