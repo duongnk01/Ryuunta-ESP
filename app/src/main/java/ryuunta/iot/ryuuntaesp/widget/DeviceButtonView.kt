@@ -41,7 +41,9 @@ class DeviceButtonView : LinearLayout {
         onElmLongClick: (elmId: String) -> Unit
     ) {
         when (deviceItem.type) {
-            DeviceViewType.SWITCH_BUTTON.name, DeviceViewType.FAN_REMOTE.name -> {
+            DeviceViewType.SWITCH_BUTTON.name,
+            DeviceViewType.SWITCH_4_BUTTON.name,
+            DeviceViewType.FAN_REMOTE.name -> {
                 val listElms = splitHashMap(deviceItem.buttonList, 1).sortedBy {
                     it.values.first().id.take(1).toInt()
                 }
@@ -123,12 +125,11 @@ class DeviceButtonView : LinearLayout {
         }
     }
 
-//    override fun onViewRemoved(child: View?) {
-//        super.onViewRemoved(child)
-//        listElement.clear()
-//        layout1.removeAllViews()
-//        layout2.removeAllViews()
-//        layout3.removeAllViews()
-//    }
+    fun removedAllView() {
+        listElement.clear()
+        layout1.removeAllViews()
+        layout2.removeAllViews()
+        layout3.removeAllViews()
+    }
 }
 

@@ -20,11 +20,12 @@ class DeviceHelper {
     private val myRef =
         db.getReference(DBNode.USERS.path).child(Config.userUid).child(DBNode.DEVICES.path)
 
-    fun addNewDevice(device: DeviceObj, onCompleted: (deviceId: String) -> Unit) {
+    fun addNewDevice(device: DeviceObj, onCompleted: (deviceId: String) -> Unit, onFailure: (message: String?) -> Unit) {
         ref.getDeviceReference(device.id).setValue(device)
             .addOnCompleteListener {
                 onCompleted(device.id)
             }
+            .addOnFailureListener { onFailure(it.message) }
     }
 
     fun getAllDevices(onCompleted: (List<DeviceObj>) -> Unit) {

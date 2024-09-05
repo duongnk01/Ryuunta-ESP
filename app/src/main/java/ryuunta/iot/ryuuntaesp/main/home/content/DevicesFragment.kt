@@ -3,6 +3,7 @@ package ryuunta.iot.ryuuntaesp.main.home.content
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 import ryuunta.iot.ryuuntaesp.MainViewModel
 import ryuunta.iot.ryuuntaesp.R
@@ -10,7 +11,7 @@ import ryuunta.iot.ryuuntaesp.core.base.BaseFragment
 import ryuunta.iot.ryuuntaesp.data.model.DeviceObj
 import ryuunta.iot.ryuuntaesp.data.model.ElementInfoObj
 import ryuunta.iot.ryuuntaesp.databinding.FragmentDevicesBinding
-import ryuunta.iot.ryuuntaesp.dialog.DialogChangeRoom
+import ryuunta.iot.ryuuntaesp.dialog.DialogChangeInfoDevice
 import ryuunta.iot.ryuuntaesp.dialog.DialogUpdateNameDevice
 import ryuunta.iot.ryuuntaesp.helper.ControlHelper
 import ryuunta.iot.ryuuntaesp.helper.DeviceHelper
@@ -19,7 +20,9 @@ import ryuunta.iot.ryuuntaesp.utils.developInProgress
 import ryuunta.iot.ryuuntaesp.utils.hideKeyboard
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
 import ryuunta.iot.ryuuntaesp.utils.showDialogError
+import ryuunta.iot.ryuuntaesp.utils.showDialogNegative
 import ryuunta.iot.ryuuntaesp.utils.showDialogNotification
+import ryuunta.iot.ryuuntaesp.utils.showDialogNotificationAutoDismiss
 
 class DevicesFragment : BaseFragment<FragmentDevicesBinding, MainViewModel>(
     FragmentDevicesBinding::inflate,
@@ -34,6 +37,17 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, MainViewModel>(
 
     private var device: DeviceObj? = null
 
+    private val dialogChangeInfoDevice: DialogChangeInfoDevice by lazy {
+        DialogChangeInfoDevice(requireContext()) {
+            requireContext().showDialogNotificationAutoDismiss(
+                R.string.txt_done,
+                R.raw.anim_paimon_like,
+                lifecycle,
+                R.string.txt_device_info_updated
+            )
+        }
+    }
+
     private val dialogUpdateNameDevice: DialogUpdateNameDevice by lazy {
         DialogUpdateNameDevice(requireContext()) {
             requireContext().showDialogNotification(
@@ -45,21 +59,17 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, MainViewModel>(
         }
     }
 
-    private val dialogChangeRoom: DialogChangeRoom by lazy {
-        DialogChangeRoom(requireContext())
-    }
-
     private val onError: (Int, String) -> Unit = { code, message ->
         RLog.e(TAG, "onError: $message -- code $code")
-        try {
-            requireContext().showDialogError(lifecycle, message) {
-                if (code == -1) {
-                    navController.popBackStack()
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+//        try {
+//            requireContext().showDialogError(lifecycle, message) {
+//                if (code == -1) {
+//                    navController.popBackStack()
+//                }
+//            }
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
 
     }
 
@@ -71,7 +81,7 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, MainViewModel>(
                 device = it
                 device?.let { deviceItem ->
 
-                    layoutElementButton.initView(deviceItem, onElementClick =  { elm, state ->
+                    layoutElementButton.initView(deviceItem, onElementClick = { elm, state ->
                         RLog.d(
                             TAG,
                             "initView: onElementClick ${elm.values.first().label} -- state is ${elm.values.first().value}"
@@ -160,15 +170,54 @@ class DevicesFragment : BaseFragment<FragmentDevicesBinding, MainViewModel>(
     private fun showPopUpMenu(view: View) {
         PopupMenu(requireContext(), view).run {
             menuInflater.inflate(R.menu.menu_edit_device, menu)
+            val itemDelete = menu.getItem(menu.size() - 1)
+            itemDelete.actionView?.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red_error
+                )
+            )
             setOnMenuItemClickListener {
-                if (it.itemId == R.id.btn_edit_name) {
-                    device?.let { dev ->
-                        dialogUpdateNameDevice.show(lifecycle, dev.id)
+                when (it.itemId) {
+                    R.id.btn_edit -> {
+                        device?.let { dev ->
+                            dialogChangeInfoDevice.show(lifecycle, dev.id, dev.label, dev.roomId)
+                        }
                     }
-                } else {
-                    device?.let { dev ->
-//                        dialogChangeRoom.show(lifecycle, dev.id)
-                        requireContext().developInProgress(lifecycle)
+
+                    R.id.btn_delete_device -> {
+                        device?.let { dev ->
+                            requireContext().showDialogNegative(
+                                R.string.txt_delete_device,
+                                R.string.txt_are_you_sure_delete_device,
+                                lottieAnim = R.raw.anim_nahida_question,
+                                lifecycle = lifecycle,
+                                cancelRes = R.string.delete,
+                                confirmRes = R.string.cancel,
+                                onCancel = {
+                                    deviceHelper.deleteDevice(dev.id) {
+                                        requireContext().showDialogNotificationAutoDismiss(
+                                            R.string.txt_done,
+                                            R.raw.anim_paimon_like,
+                                            lifecycle,
+                                            R.string.txt_device_deleted,
+                                            timeDismiss = 1000
+                                        ) {
+                                            navController.popBackStack()
+
+                                        }
+                                    }
+                                }
+                            )
+                        }
+
+
+                    }
+
+                    else -> {
+                        device?.let { dev ->
+                            requireContext().developInProgress(lifecycle)
+                        }
                     }
                 }
                 true

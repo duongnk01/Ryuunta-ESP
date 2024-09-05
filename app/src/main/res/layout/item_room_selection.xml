@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/txt_room_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/theme_content_text"
+        android:background="@drawable/bg_gray_item_ripple_24"
+        tools:text="Phòng ngủ"
+        android:layout_marginEnd="@dimen/_space4dp"
+        android:paddingHorizontal="@dimen/_space12dp"
+        android:paddingVertical="@dimen/_space8dp"/>
+
+</layout>

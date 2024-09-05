@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="@dimen/_space8dp"
+            android:layout_marginBottom="@dimen/_space4dp"
+            android:background="@drawable/bg_dialog_corner_20"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_space8dp"
+            android:paddingVertical="@dimen/_space16dp">
+
+            <TextView
+                android:id="@+id/title_set_name"
+                style="@style/theme_title_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_set_name"
+                android:textSize="@dimen/text_size_16" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_space8dp"
+                android:layout_marginTop="@dimen/_space24dp"
+                app:boxBackgroundMode="none"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/txt_input_name_home"
+                    android:background="@drawable/bg_item_no_ripple_12"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:paddingTop="@dimen/space_screen_super_small"
+                    tools:ignore="LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                style="@style/theme_hint_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_space8dp"
+                android:layout_marginTop="@dimen/_space16dp"
+                android:text="@string/txt_select_room" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_room"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_space12dp"
+                android:layout_marginBottom="@dimen/_space24dp"
+                android:overScrollMode="never"
+                android:requiresFadingEdge="horizontal"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <TextView
+                android:id="@+id/btn_confirm"
+                style="@style/theme_button_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_space16dp"
+                android:layout_marginTop="@dimen/_space16dp"
+                android:text="@string/ok" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

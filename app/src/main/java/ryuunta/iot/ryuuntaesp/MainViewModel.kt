@@ -143,7 +143,7 @@ class MainViewModel : BaseViewModel() {
             }.toList()
             if (deviceViewType.isNotEmpty()) {
                 when (type) {
-                    DeviceViewType.SWITCH_BUTTON -> {
+                    DeviceViewType.SWITCH_BUTTON, DeviceViewType.SWITCH_4_BUTTON -> {
                         deviceViewType.forEach { item ->
                             rItemList.add(
                                 DeviceItem.SwitchButton(

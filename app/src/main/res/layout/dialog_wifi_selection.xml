@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="@dimen/_space8dp"
+            android:layout_marginBottom="@dimen/_space4dp"
+            android:background="@drawable/bg_dialog_corner_20"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_space8dp"
+            android:paddingVertical="@dimen/_space16dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_ssid_list"
+                    android:textAlignment="center"
+                    android:layout_centerInParent="true"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/btn_refresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_refresh"
+                    android:textColor="@color/white"
+                    android:layout_centerVertical="true"
+                    style="@style/theme_hint_text"
+                    android:paddingVertical="@dimen/_space4dp"
+                    android:paddingHorizontal="@dimen/_space8dp"
+                    android:background="@drawable/bg_button_blue_corner_12"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/_space200dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcv_list_ssid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:requiresFadingEdge="vertical"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                <ImageView
+                    android:id="@+id/img_empty"
+                    android:layout_width="@dimen/_space128dp"
+                    android:layout_height="@dimen/_space128dp"
+                    android:src="@drawable/paimon_sleep"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:alpha="0.1"/>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/anim_loading"
+                    android:layout_width="@dimen/_space128dp"
+                    android:layout_height="@dimen/_space128dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:alpha="0.7"
+                    app:lottie_rawRes="@raw/anim_arona_kururu"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"/>
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

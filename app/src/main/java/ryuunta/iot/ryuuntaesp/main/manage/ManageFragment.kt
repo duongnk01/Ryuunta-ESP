@@ -11,9 +11,12 @@ import ryuunta.iot.ryuuntaesp.data.model.HouseObj
 import ryuunta.iot.ryuuntaesp.databinding.FragmentManageBinding
 import ryuunta.iot.ryuuntaesp.helper.DeviceHelper
 import ryuunta.iot.ryuuntaesp.helper.GroupHelper
+import ryuunta.iot.ryuuntaesp.main.home.devices.DeviceViewType
+import ryuunta.iot.ryuuntaesp.utils.RLog
 import ryuunta.iot.ryuuntaesp.utils.randomId
 import ryuunta.iot.ryuuntaesp.utils.sendDataToESP8266
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
+import ryuunta.iot.ryuuntaesp.utils.showDialogError
 import ryuunta.iot.ryuuntaesp.utils.showDialogNotification
 
 class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(
@@ -85,11 +88,32 @@ class ManageFragment : BaseFragment<FragmentManageBinding, ManageViewModel>(
 
             btnSendUdp.setPreventDoubleClick {
                 CoroutineScope(Dispatchers.IO).launch {
-                    val dataToSend = edtNewNameHouse.text.toString()
-                    val espIp2 = "192.168.4.1"
-                    val port = 8888
+                    val dataToSend = "Duongnk:10101010:qbxZxgTnS1SxRP8xR80blXUjXKy2/houses/1724860403770+7736fc7a-0f0a-4acf-a659-48b673171e5f/devices/1725529993959+b36925cf-d56b-4207-a969-28bfed12e13f:"
+                    val espIp2 = Config.softAPIPAddress
+                    val port = Config.espPort
 
-                    sendDataToESP8266(requireContext(), dataToSend, espIp2, port)
+                    sendDataToESP8266(dataToSend, espIp2, port, { isSuccess ->
+                        //on received boolean
+                        if (isSuccess) {
+
+                            //connect thành công
+                            RLog.d("duongnk", "connect thành công")
+
+                        } else {
+                            //connect thất bại
+                            RLog.d("duongnk", "connect thất bại")
+
+
+                        }
+
+                    }, onError = { errorMess ->
+                        requireContext().showDialogError(
+                            lifecycle,
+                            errorMess
+                        ) {
+                        }
+
+                    })
                 }
             }
         }

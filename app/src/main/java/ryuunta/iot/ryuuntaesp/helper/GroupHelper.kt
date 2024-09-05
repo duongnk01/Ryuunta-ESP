@@ -140,15 +140,12 @@ class GroupHelper {
 
     fun changeRoom(
         deviceId: String,
-        oldRoomId: String,
         newRoomId: String,
         onSuccess: () -> Unit
     ) {
-        //delete device if from old room
-        ref.getRoomReference(oldRoomId).child(deviceId).removeValue()
 
         //add device to new room
-        ref.getRoomReference(newRoomId).child(deviceId).setValue(deviceId)
+        ref.getDeviceReference(deviceId).child("roomId").setValue(newRoomId)
             .addOnCompleteListener { onSuccess() }
     }
 }

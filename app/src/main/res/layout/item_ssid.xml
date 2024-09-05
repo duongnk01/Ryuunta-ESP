@@ -4,14 +4,18 @@
     
     <data>
 
+        <variable
+            name="wifi"
+            type="ryuunta.iot.ryuuntaesp.data.model.WifiSSID"/>
+
     </data>
 
     <LinearLayout
         android:id="@+id/ln_ssid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:layout_margin="4dp"
+        android:padding="@dimen/_space8dp"
+        android:layout_margin="@dimen/_space4dp"
         android:background="@drawable/bg_gray_item_ripple_12"
         android:orientation="vertical">
         
@@ -26,8 +30,7 @@
             android:id="@+id/txt_rssi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:textColor="@color/blue"
+            android:layout_marginTop="@dimen/_space4dp"
             android:textStyle="bold"
             tools:text="rssi = 0"
             android:textSize="14sp"/>

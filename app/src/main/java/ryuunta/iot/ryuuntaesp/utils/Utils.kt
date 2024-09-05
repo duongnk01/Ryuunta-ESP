@@ -3,15 +3,16 @@ package ryuunta.iot.ryuuntaesp.utils
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
-import android.net.MacAddress
-import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.net.wifi.WifiManager
 import android.net.wifi.WifiNetworkSpecifier
-import android.os.PatternMatcher
 import android.widget.ImageView
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ryuunta.iot.ryuuntaesp.R
 import ryuunta.iot.ryuuntaesp.data.model.WifiSSID
 import java.net.DatagramPacket
@@ -19,6 +20,7 @@ import java.net.DatagramSocket
 import java.net.InetAddress
 import java.util.Random
 import java.util.UUID
+
 
 fun randomId(): String {
     Thread.sleep(1)     //delay to avoid duplicate timestamp
@@ -79,7 +81,7 @@ fun scanESP8266Wifi(context: Context): List<WifiSSID> {
     // Duyệt qua danh sách mạng
     for (scanResult in scanResults) {
         RLog.d("scanWifi", "Wifi esp8266scan:  ${Gson().toJson(scanResult)}")
-        if (scanResult.SSID.contains("RYUUNTA")) {
+        if (!scanResult.SSID.contains("RYUUNTA_ESP")) {
             // Thêm mạng vào danh sách
             wifiList.add(
                 WifiSSID(
@@ -98,11 +100,37 @@ fun scanESP8266Wifi(context: Context): List<WifiSSID> {
     return wifiList.filter { it.frequency < 2500 }.sortedBy { it.level }.asReversed()
 }
 
-fun Context.connectToWifi(ssid: String, bssid: String) {
+fun getCurrentWifiConnection(context: Context): String {
+    val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
+    val wifiInfo = wifiManager.connectionInfo
+
+
+    if (wifiInfo.networkId != -1) {
+        // Connected to a Wi-Fi network
+        val ssid = wifiInfo.ssid
+        return ssid ?: ""
+    } else {
+        // Not connected to a Wi-Fi network
+        return ""
+    }
+}
+
+fun isWifiConnectedWithInternet(context: Context): Boolean {
+    val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val networkInfo = connectivityManager.activeNetworkInfo
+    return networkInfo != null && networkInfo.isConnected
+}
+
+fun Context.connectToWifi(
+    ssid: String,
+    pass: String,
+    nwtCallback: ConnectivityManager.NetworkCallback
+) {
 
     val wifiNetworkSpecifier = WifiNetworkSpecifier.Builder()
-        .setSsidPattern(PatternMatcher(ssid, PatternMatcher.PATTERN_PREFIX))
-        .setBssidPattern(MacAddress.fromString(bssid), MacAddress.fromString("ff:ff:ff:00:00:00"))
+        .setSsid(ssid)
+        .setWpa2Passphrase(pass)
         .build()
 
     val request = NetworkRequest.Builder()
@@ -113,42 +141,82 @@ fun Context.connectToWifi(ssid: String, bssid: String) {
 
     val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-    val nwtCallback = object : ConnectivityManager.NetworkCallback() {
-        override fun onAvailable(network: Network) {
-            RLog.d("duongnk", "onAvailable")
-
-        }
-
-        override fun onUnavailable() {
-            RLog.d("duongnk", "onUnavailable")
-
-        }
-
-    }
-
+//    val nwtCallback = object : ConnectivityManager.NetworkCallback() {
+//        override fun onAvailable(network: Network) {
+//            RLog.d("duongnk", "onAvailable")
+//
+//        }
+//
+//        override fun onUnavailable() {
+//            RLog.d("duongnk", "onUnavailable")
+//
+//        }
+//
+//    }
+    connectivityManager.bindProcessToNetwork(null)
     connectivityManager.requestNetwork(request, nwtCallback)
-    connectivityManager.unregisterNetworkCallback(nwtCallback)
+//    connectivityManager.unregisterNetworkCallback(nwtCallback)
 
 }
 
-fun sendDataToESP8266(context: Context, data: String, ipAddress: String, port: Int) {
-//    val queue = Volley.newRequestQueue(context) // Thay thế 'context' bằng context của Activity/Fragment
+/**
+ * Điện thoại phải kết nối tới access point của ESP8266 mở ra để gửi gói tin UDP tới ESP
+ * Trường hợp thiết bị dùng kết nối 4G thì phải ngắt kết nối 4G vì wifi của ESP là không kết nối internet
+ * -> thiết bị sẽ tự động sử dụng 4G để gửi UDP dẫn đến gói tin không đến được ESP
+ */
+fun sendDataToESP8266(
+    data: String,
+    ipAddress: String,
+    port: Int,
+    onReceived: (Boolean) -> Unit,
+    onError: (mess: String) -> Unit
+) {
+    CoroutineScope(Dispatchers.IO).launch {
+        try {
+            RLog.e("Send Data", "data = $data")
 
-    try {
-        RLog.e("Sending", "data = $data")
-        RLog.e("Sending", "sending data...")
+            val socket = DatagramSocket()
+            val message = data.toByteArray()
+            val packet =
+                DatagramPacket(message, message.size, InetAddress.getByName(ipAddress), port)
 
-        val socket = DatagramSocket()
-        val message = data.toByteArray()
-        val packet = DatagramPacket(message, message.size, InetAddress.getByName(ipAddress), port)
-        socket.send(packet)
-        socket.close()
-        RLog.e("Sending", "sending data done")
-    } catch (e: Exception) {
-        // Xử lý lỗi
-        e.printStackTrace()
-        RLog.e("Error", "Error sending data: ${e.message}")
+            //gửi gói tin
+            socket.send(packet)
+            RLog.e("UDP", "sending data..")
+
+
+            // Nhận gói tin trả lời
+            val receivePacket = DatagramPacket(ByteArray(1024), 1024)
+            socket.receive(receivePacket)
+            val receivedMessage = String(receivePacket.data, 0, receivePacket.length)
+            RLog.d("UDP", "Received: $receivedMessage")
+            withContext(Dispatchers.Main) {
+                onReceived(receivedMessage == "ryuuntaesp_code_success")
+            }
+
+            val startTime = System.currentTimeMillis()
+//            while (System.currentTimeMillis() - startTime < 60000) {    //chờ trong 60s
+//
+////                Thread.sleep(500)
+//                if (receivedMessage == "ryuuntaesp success" || receivedMessage == "ryuuntaesp failure") {
+//                    break
+//                }
+//            }
+
+            socket.close()
+
+        } catch (e: Exception) {
+            // Xử lý lỗi
+            e.printStackTrace()
+            RLog.e("UDP", "Error sending data: ${e.message}")
+            withContext(Dispatchers.Main) {
+                onError("Error sending data: ${e.message}")
+
+            }
+
+        }
     }
+
 }
 
 fun Context.convertDpToPixel(dp: Float): Float {

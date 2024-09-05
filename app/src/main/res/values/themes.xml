@@ -107,7 +107,7 @@
     </style>
 
     <style name="theme_input_text">
-        <item name="android:fontFamily">@font/sfprodisplay_light</item>
+        <item name="android:fontFamily">@font/sfprodisplay_regular</item>
         <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:textColor">?textNormalColor</item>
         <item name="android:textColorHint">?textHintColor</item>

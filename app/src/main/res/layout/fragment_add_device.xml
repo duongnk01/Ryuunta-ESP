@@ -4,413 +4,226 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="currentSSIDPickup"
-            type="ryuunta.iot.ryuuntaesp.data.model.WifiSSID" />
+
     </data>
 
-<!--    <FrameLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:paddingTop="@dimen/_space36dp"-->
-<!--        android:background="?backgroundColor">-->
-
-<!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-<!--            android:id="@+id/swiperRefresh"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent">-->
-
-<!--            <androidx.core.widget.NestedScrollView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:background="@android:color/transparent">-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:orientation="vertical"-->
-<!--                    android:padding="16dp">-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Danh sách SSID"-->
-<!--                        android:textAlignment="center"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:textStyle="bold" />-->
-
-<!--                    <androidx.recyclerview.widget.RecyclerView-->
-<!--                        android:id="@+id/rcv_list_ssid"-->
-<!--                        android:requiresFadingEdge="vertical"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="@dimen/_space200dp"-->
-<!--                        android:layout_marginTop="16dp"-->
-<!--                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="24dp"-->
-<!--                        android:text='@{String.format(@string/custom_text_current_ssid, currentSSIDPickup.ssid)}'-->
-<!--                        tools:text="@string/custom_text_current_ssid"-->
-<!--                        android:textAlignment="textStart"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:textStyle="bold" />-->
-
-<!--                    <EditText-->
-<!--                        android:id="@+id/edt_input_pass"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:hint="pass"-->
-<!--                        android:text="10101010"-->
-<!--                        android:textAlignment="textStart"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:textStyle="normal" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/txt_error"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text='@{String.format(@string/custom_text_current_ssid, currentSSIDPickup.ssid)}'-->
-<!--                        tools:text="@string/custom_text_current_ssid"-->
-<!--                        android:textAlignment="textStart"-->
-<!--                        android:textSize="12sp"-->
-<!--                        android:visibility="gone"-->
-<!--                        android:textColor="@color/red_error"-->
-<!--                        android:textStyle="normal" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/btn_authorize"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="24dp"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:background="@drawable/bg_gray_item_ripple_12"-->
-<!--                        android:padding="16dp"-->
-<!--                        android:text="Authorize"-->
-<!--                        android:textSize="24sp"-->
-<!--                        android:textStyle="bold" />-->
-
-<!--                    <LinearLayout-->
-<!--                        android:id="@+id/layout_content"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:background="@android:color/transparent"-->
-<!--                        android:padding="@dimen/_space16dp"-->
-<!--                        android:orientation="vertical">-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:gravity="center"-->
-<!--                            style="@style/theme_header_text"-->
-<!--                            android:text="Example ESP"/>-->
-
-<!--                        <androidx.appcompat.widget.SwitchCompat-->
-<!--                            android:id="@+id/sw_led"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            style="@style/theme_title_text"-->
-<!--                            android:text="ESP LED"-->
-<!--                            app:switchPadding="8dp" />-->
-
-<!--                        <androidx.appcompat.widget.SwitchCompat-->
-<!--                            android:id="@+id/sw_relay_1"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            style="@style/theme_title_text"-->
-<!--                            android:layout_marginTop="24dp"-->
-<!--                            android:text="SWITCH 1"-->
-<!--                            app:switchPadding="8dp" />-->
-
-
-<!--                        <androidx.appcompat.widget.SwitchCompat-->
-<!--                            android:id="@+id/sw_relay_2"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            style="@style/theme_title_text"-->
-<!--                            android:layout_marginTop="24dp"-->
-<!--                            android:text="SWITCH 2"-->
-<!--                            app:switchPadding="8dp" />-->
-
-<!--                        <androidx.appcompat.widget.SwitchCompat-->
-<!--                            android:id="@+id/sw_relay_esp_01"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            style="@style/theme_title_text"-->
-<!--                            android:layout_marginTop="24dp"-->
-<!--                            android:text="SWITCH ESP 01"-->
-<!--                            app:switchPadding="8dp" />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/txt_door"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            style="@style/theme_title_text"-->
-<!--                            android:layout_marginTop="28dp"-->
-<!--                            android:text="Door Lock"/>-->
-
-<!--                        <Button-->
-<!--                            android:id="@+id/btn_lock_door"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="8dp"-->
-<!--                            android:text="Lock"-->
-<!--                            android:textAllCaps="true"-->
-<!--                            app:layout_constraintEnd_toStartOf="@id/btn_open_door"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toBottomOf="@+id/txt_door" />-->
-
-<!--                        <Button-->
-<!--                            android:id="@+id/btn_open_door"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="8dp"-->
-<!--                            android:text="Open"-->
-<!--                            android:textAllCaps="true"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintStart_toEndOf="@+id/btn_lock_door"-->
-<!--                            app:layout_constraintTop_toBottomOf="@+id/txt_door" />-->
-
-<!--                        <Button-->
-<!--                            android:id="@+id/button"-->
-<!--                            android:layout_marginTop="@dimen/_space24dp"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="add new device" />-->
-<!--                    </LinearLayout>-->
-
-<!--                </LinearLayout>-->
-<!--            </androidx.core.widget.NestedScrollView>-->
-
-
-<!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
-
-<!--        <ProgressBar-->
-<!--            android:id="@+id/pb_loading"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:visibility="gone"-->
-<!--            android:layout_gravity="center"/>-->
-<!--    </FrameLayout>-->
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/_space36dp"
-        android:orientation="vertical"
-        android:background="?backgroundColor">
+        android:background="?backgroundColor"
+        android:paddingHorizontal="@dimen/_space16dp"
+        android:paddingTop="@dimen/_space16dp"
+        android:layout_marginTop="@dimen/_space36dp">
 
         <LinearLayout
-            android:id="@+id/layout_content_step"
+            android:id="@+id/layout_select_device"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="gone">
 
-            <FrameLayout
+            <TextView
+                style="@style/theme_header_text"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_space24dp"
+                android:gravity="center"
+                android:text="@string/title_select_device_type" />
 
-                <LinearLayout
-                    android:id="@+id/layout_start"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="@dimen/_space16dp"
-                    android:orientation="vertical"
-                    android:visibility="gone"
-                    android:gravity="center">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_device_type"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_space16dp"
+                android:layout_weight="1"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        style="@style/theme_header_text"
-                        android:text="Chọn loại thiết bị"
-                        android:gravity="center"
-                        android:layout_marginBottom="@dimen/_space24dp"/>
-
-                    <RadioGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1">
-
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:text="Switch 1 button"
-                            android:checked="true"
-                            android:id="@+id/sw_1_btn"/>
-
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:text="Switch 4 button"
-                            android:enabled="true"
-                            android:id="@+id/sw_4_btn"/>
-
-                    </RadioGroup>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:visibility="visible"
-                        style="@style/theme_content_text"
-                        android:text="Sau đây sẽ cần thay đổi kết nối wifi của điện thoại"/>
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/layout_first"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    tools:visibility="gone"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/theme_header_text"
-                        android:layout_marginTop="@dimen/_space64dp"
-                        android:text="First"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        style="@style/theme_content_text"
-                        android:text="Tìm mạng wifi có tên bắt đầu kiểu như RYUUNTA_ESP_.....\n và kết nối thiết bị tới mạng đó"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        style="@style/theme_content_text"
-                        android:text="Xong rồi thì đi tiếp.."/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_config_esp_device"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    tools:visibility="gone"
-                    android:visibility="gone"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Danh sách SSID"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                        android:id="@+id/swiperRefresh"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_height="0dp">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rcv_list_ssid"
-                            android:requiresFadingEdge="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:minHeight="@dimen/_space160dp"
-                            android:layout_marginTop="16dp"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-
-                    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:text='@{String.format(@string/custom_text_current_ssid, currentSSIDPickup.ssid)}'
-                        tools:text="@string/custom_text_current_ssid"
-                        android:textAlignment="textStart"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/edt_input_pass"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="pass"
-                        android:text="10101010"
-                        android:textAlignment="textStart"
-                        android:textSize="16sp"
-                        android:textStyle="normal" />
-
-                    <TextView
-                        android:id="@+id/txt_error"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text='@{String.format(@string/custom_text_current_ssid, currentSSIDPickup.ssid)}'
-                        tools:text="@string/custom_text_current_ssid"
-                        android:textAlignment="textStart"
-                        android:textSize="12sp"
-                        android:visibility="gone"
-                        android:textColor="@color/red_error"
-                        android:textStyle="normal" />
-
-                    <TextView
-                        android:id="@+id/btn_authorize"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/bg_gray_item_ripple_12"
-                        android:padding="16dp"
-                        android:text="Authorize"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        style="@style/theme_hint_text"
-                        android:layout_marginTop="24dp"
-                        android:layout_gravity="center"
-                        android:text="Chọn mạng ở trên để thiết lập cho thiết bị ESP" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        style="@style/theme_hint_text"
-                        android:layout_gravity="center"
-                        android:text="Bấm authoize xong mà thấy đèn ở thiết bị nhấp nháy tức là thiết bị đang được thiết lập, đợi hết nháy là đã thêm thiết bị thành công." />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        style="@style/theme_hint_text"
-                        android:layout_gravity="center"
-                        android:text="Nếu bấm authorize mà đèn vẫn không nháy thì thử bấm lại vài lần xem :v." />
-                </LinearLayout>
-
-
-
-            </FrameLayout>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/btn_next_step"
+        <RelativeLayout
+            android:id="@+id/layout_connect_esp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_space16dp"
-            android:layout_marginBottom="@dimen/_space24dp"
-            android:layout_marginTop="@dimen/_space24dp"
-            style="@style/theme_button_confirm"
-            android:text="Bắt đầu"/>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="gone">
+
+            <TextView
+                style="@style/theme_header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/title_connect_to_esp" />
+
+            <TextView
+                android:id="@+id/txt_guide_setup"
+                style="@style/theme_content_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/guide_setup_esp_wifi" />
+
+            <TextView
+                android:id="@+id/btn_go_to_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_guide_setup"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_space16dp"
+                android:background="@drawable/bg_button_blue_corner_12"
+                android:fontFamily="@font/sfprodisplay_semibold"
+                android:paddingHorizontal="@dimen/_space12dp"
+                android:paddingVertical="@dimen/_space8dp"
+                android:text="@string/txt_go_to_setting"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_16" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_config_esp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="gone">
+
+            <TextView
+                style="@style/theme_header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/txt_config_esp_network" />
+
+
+            <TextView
+                style="@style/theme_title_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_space64dp"
+                android:gravity="center"
+                android:text="@string/txt_select_wifi_for_connect_esp" />
+
+            <TextView
+                style="@style/theme_hint_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/_space36dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/desc_config_network_for_esp" />
+
+            <TextView
+                android:id="@+id/edt_input_ssid"
+                style="@style/theme_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_space36dp"
+                android:layout_marginTop="@dimen/_space16dp"
+                android:background="@drawable/bg_gray_item_ripple_12"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/_space16dp"
+                android:paddingVertical="@dimen/_space12dp"
+                app:drawableEndCompat="@drawable/ic_swap" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_space36dp"
+                android:layout_marginTop="@dimen/_space16dp"
+                android:background="@drawable/bg_gray_item_ripple_12"
+                app:boxBackgroundMode="none"
+                app:hintEnabled="false"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_input_pass"
+                    style="@style/theme_input_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_password"
+                    android:inputType="textPassword"
+                    android:padding="@dimen/_space12dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/btn_authorize"
+                style="@style/theme_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_button_blue_corner_12"
+                android:paddingHorizontal="@dimen/_space16dp"
+                android:paddingVertical="@dimen/_space12dp"
+                android:text="@string/txt_authorize"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_18" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_generate_device"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+
+            <TextView
+                style="@style/theme_header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/txt_generate_device" />
+
+<!--            <TextView-->
+<!--                android:id="@+id/txt_countdown"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_marginTop="@dimen/_space64dp"-->
+<!--                android:text="60"-->
+<!--                android:textSize="@dimen/text_size_48"-->
+<!--                android:textColor="?accentColor"/>-->
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="@dimen/_space128dp"
+                android:layout_height="@dimen/_space128dp"
+                android:layout_marginTop="@dimen/_space64dp"
+                app:lottie_rawRes="@raw/anim_sus_running"
+                android:layout_gravity="center"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"/>
+
+            <TextView
+                android:id="@+id/txt_desc_setup"
+                style="@style/theme_hint_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_space48dp"
+                tools:text="Kết nối internet để setup thiết bị" />
+
+
+        </LinearLayout>
+
+
+        <include
+            android:id="@+id/btn_nav_back"
+            layout="@layout/view_button_nav_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
 </layout>

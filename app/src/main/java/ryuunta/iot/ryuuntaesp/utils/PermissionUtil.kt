@@ -44,6 +44,24 @@ object PermissionUtils {
                 Manifest.permission.ACCESS_WIFI_STATE
             )
 
+    val permissionsForScanWifi: List<String>
+        get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            listOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.CHANGE_WIFI_STATE,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+//                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+            )
+        else
+            listOf(
+                Manifest.permission.BLUETOOTH,
+                Manifest.permission.BLUETOOTH_ADMIN,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_WIFI_STATE
+            )
+
     fun checkPermission(
         context: Activity,
         permission: String

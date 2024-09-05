@@ -90,7 +90,7 @@ class ControlHelper {
             } else {
                 element.value = if (state) 1 else 0
                 myElmRef.setValue(element)
-                onStateUpdated(mapOf(key to element))
+//                onStateUpdated(mapOf(key to element))
             }
         }
 

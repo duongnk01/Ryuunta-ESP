@@ -127,4 +127,8 @@ dependencies {
     // circle image view
 //    implementation libs.circleimageview
 
+    //wifi utils
+    implementation(libs.wifiutils)
+
+
 }

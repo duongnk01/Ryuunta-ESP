@@ -11,9 +11,9 @@
 
         <ImageView
             android:id="@+id/img_device_icon"
-            android:layout_width="@dimen/_space64dp"
-            android:layout_height="@dimen/_space64dp"
-            android:layout_marginTop="@dimen/_space12dp"
+            android:layout_width="@dimen/_space48dp"
+            android:layout_height="@dimen/_space48dp"
+            android:layout_marginTop="@dimen/_space20dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/ic_switch_button" />
 
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_margin="@dimen/_space12dp"
+            android:layout_margin="@dimen/_space20dp"
             android:layout_below="@id/img_device_icon"
             android:layout_centerHorizontal="true"
             android:text="@string/txt_switch_button"

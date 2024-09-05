@@ -30,7 +30,9 @@ class RMainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewM
                 arrayOf(
                     Manifest.permission.BLUETOOTH_SCAN,
                     Manifest.permission.BLUETOOTH_CONNECT,
-                )
+//                    Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+
+                    )
             )
         } else {
             val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
