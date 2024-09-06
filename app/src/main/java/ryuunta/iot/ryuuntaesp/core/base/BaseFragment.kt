@@ -13,7 +13,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import ryuunta.iot.ryuuntaesp.utils.RLog
-import ryuunta.iot.ryuuntaesp.utils.hideKeyboard
 import javax.inject.Inject
 
 

@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_space24dp"
                 android:gravity="center"
-                android:text="@string/title_select_device_type" />
+                android:text="@string/title_add_device" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_device_type"

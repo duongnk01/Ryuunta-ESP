@@ -17,6 +17,7 @@ android {
         targetSdk 34
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -64,6 +65,12 @@ dependencies {
     implementation libs.androidx.databinding.runtime
     implementation libs.androidx.swiperefreshlayout
     implementation libs.androidx.viewpager2
+
+    //dagger
+//    implementation 'com.google.dagger:dagger:2.44'
+//    kapt 'com.google.dagger:dagger-compiler:2.44'
+//    implementation 'com.google.dagger:hilt-android:2.44'
+//    kapt 'com.google.dagger:hilt-compiler:2.44'
 
     // Room
     implementation libs.androidx.room.runtime

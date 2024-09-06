@@ -27,7 +27,7 @@ class DeviceHomeDiff : UIDiff() {
 
     override fun areContentsTheSame(oldItem: RItem, newItem: RItem): Boolean {
         if (oldItem is DeviceItem && newItem is DeviceItem) {
-            return oldItem.device.label == newItem.device.label
+            return oldItem.device == newItem.device
         }
         return super.areContentsTheSame(oldItem, newItem)
     }
