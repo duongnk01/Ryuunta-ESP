@@ -15,13 +15,13 @@ import ryuunta.iot.ryuuntaesp.dialog.DialogSetInfoDevice
 import ryuunta.iot.ryuuntaesp.dialog.DialogWifiSelection
 import ryuunta.iot.ryuuntaesp.helper.DeviceHelper
 import ryuunta.iot.ryuuntaesp.main.devices.ResourceFactory.getListDeviceType
+import ryuunta.iot.ryuuntaesp.main.home.devices.DeviceViewType
 import ryuunta.iot.ryuuntaesp.utils.PermissionUtils.checkPermissionsNew
 import ryuunta.iot.ryuuntaesp.utils.PermissionUtils.permissionsForScanWifi
 import ryuunta.iot.ryuuntaesp.utils.RLog
-import ryuunta.iot.ryuuntaesp.utils.TimeUtils
+import ryuunta.iot.ryuuntaesp.utils.developInProgress
 import ryuunta.iot.ryuuntaesp.utils.getCurrentWifiConnection
 import ryuunta.iot.ryuuntaesp.utils.hideKeyboard
-import ryuunta.iot.ryuuntaesp.utils.scanWifi
 import ryuunta.iot.ryuuntaesp.utils.setPreventDoubleClick
 import ryuunta.iot.ryuuntaesp.utils.showDialogResultAnnounce
 import ryuunta.iot.ryuuntaesp.widget.StepView
@@ -62,6 +62,10 @@ class AddDeviceFragment : BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMo
 
     private val selectDeviceTypeAdapter: SelectDeviceTypeAdapter by lazy {
         SelectDeviceTypeAdapter {
+            if (it.deviceType == DeviceViewType.DOOR_LOCK.code || it.deviceType == DeviceViewType.FAN_REMOTE.code) {
+                requireContext().developInProgress(lifecycle)
+                return@SelectDeviceTypeAdapter
+            }
             devType = it.deviceType
             generateDeviceObj(it.deviceType)
             stepView.nextStep()
@@ -71,7 +75,7 @@ class AddDeviceFragment : BaseFragment<FragmentAddDeviceBinding, AddDeviceViewMo
     internal val changeWifiESPForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (getCurrentWifiConnection(requireContext()).contains("RYUUNTA_ESP")) {
-               connectESPWifi()
+                connectESPWifi()
 
             } else {
                 Toast.makeText(

@@ -30,10 +30,10 @@ fun AddDeviceFragment.generateDeviceObj(devType: Int) {
             listButton["4_btn"] = ElementInfoObj("4_btn", "Button 4", 0)
         }
 
-        DeviceViewType.FAN_REMOTE.code, DeviceViewType.DOOR_LOCK.code -> {
-            requireContext().developInProgress(lifecycle)
-            return
-        }
+//        DeviceViewType.FAN_REMOTE.code, DeviceViewType.DOOR_LOCK.code -> {
+//            requireContext().developInProgress(lifecycle)
+//            return
+//        }
     }
 
     deviceObj.id = randomId()
