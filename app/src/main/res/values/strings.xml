@@ -123,4 +123,6 @@
     <string name="txt_device_deleted">Đã xoá thiết bị</string>
     <string name="txt_cannot_config_wifi_fo_esp">Không thể cấu hình wifi cho ESP</string>
     <string name="title_add_device">Thêm thiết bị mới</string>
+    <string name="room">phòng</string>
+    <string name="device">thiết bị</string>
 </resources>

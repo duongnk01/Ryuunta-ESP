@@ -46,6 +46,7 @@
     <dimen name="_space16dp">16dp</dimen>
     <dimen name="_space64dp">64dp</dimen>
     <dimen name="_space72dp">72dp</dimen>
+    <dimen name="_space80dp">80dp</dimen>
     <dimen name="_space128dp">128dp</dimen>
     <dimen name="_space256dp">256dp</dimen>
     <dimen name="_space20dp">20dp</dimen>

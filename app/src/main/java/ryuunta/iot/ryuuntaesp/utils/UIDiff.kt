@@ -2,6 +2,7 @@ package ryuunta.iot.ryuuntaesp.utils
 
 import androidx.recyclerview.widget.DiffUtil
 import ryuunta.iot.ryuuntaesp.data.model.DeviceItem
+import ryuunta.iot.ryuuntaesp.data.model.HouseObj
 import ryuunta.iot.ryuuntaesp.data.model.RItem
 import ryuunta.iot.ryuuntaesp.data.model.ScenarioItem
 
@@ -49,4 +50,15 @@ class ScenarioItemDiff : DiffUtil.ItemCallback<ScenarioItem>() {
         }
         return oldItem.viewType == newItem.viewType
     }
+}
+
+class HouseManageDiff : DiffUtil.ItemCallback<HouseObj>() {
+    override fun areItemsTheSame(oldItem: HouseObj, newItem: HouseObj): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: HouseObj, newItem: HouseObj): Boolean {
+        return oldItem == newItem
+    }
+
 }
